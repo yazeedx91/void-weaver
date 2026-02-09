@@ -103,12 +103,12 @@ export default function AssessmentPage() {
 
   if (!started) {
     return (
-      <main className=\"min-h-screen bg-obsidian-gradient flex items-center justify-center px-4\">
-        <div className=\"max-w-2xl w-full\">
+      <main className="min-h-screen bg-obsidian-gradient flex items-center justify-center px-4">
+        <div className="max-w-2xl w-full">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className=\"glass p-12 text-center breathing\"
+            className="glass p-12 text-center breathing"
           >
             <div className=\"text-6xl mb-6\">🧘‍♂️</div>
             <h1 className=\"text-4xl font-bold text-emerald-400 mb-4\">

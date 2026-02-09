@@ -51,8 +51,8 @@ export default function SanctuaryPage() {
           initial={{ x: 100 }}
           animate={{ x: 0 }}
           onClick={quickExit}
-          className=\"fixed top-4 right-4 z-50 bg-red-500 text-white px-6 py-3 rounded-full font-bold shadow-2xl hover:bg-red-600 transition-colors\"
-          title=\"Quick exit to weather.com\"
+          className="fixed top-4 right-4 z-50 bg-red-500 text-white px-6 py-3 rounded-full font-bold shadow-2xl hover:bg-red-600 transition-colors"
+          title="Quick exit to weather.com"
         >
           ⚠️ QUICK EXIT
         </motion.button>
