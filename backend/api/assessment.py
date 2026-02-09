@@ -109,20 +109,49 @@ async def send_message(request: SendMessageRequest):
     try:
         claude = get_claude_service()
         
-        # Recreate chat session (in production, store this in Redis/DB)
-        # For now, we'll create a new chat instance
-        # TODO: Implement proper session storage
+        # Get session context
+        session = _conversation_sessions.get(request.session_id, {})
+        persona = session.get("persona", "al_hakim")
+        language = session.get("language", "en")
+        
+        # Create chat with context from previous messages
         chat = await claude.create_conversation(
             session_id=request.session_id,
-            persona="al_hakim",
-            language="en"
+            persona=persona,
+            language=language
         )
         
-        response = await claude.send_message(chat, request.message)
+        # Build context from previous messages
+        context = ""
+        if session.get("messages"):
+            for msg in session["messages"][-10:]:  # Last 10 messages for context
+                role = "User" if msg["role"] == "user" else "Al-Hakim"
+                context += f"{role}: {msg['content']}\n\n"
+        
+        # Add context and new message
+        full_message = f"Previous conversation:\n{context}\n\nUser's new response: {request.message}\n\nContinue the assessment naturally, asking the next question or providing insights."
+        
+        response = await claude.send_message(chat, full_message)
+        
+        # Update session
+        if request.session_id in _conversation_sessions:
+            _conversation_sessions[request.session_id]["messages"].append(
+                {"role": "user", "content": request.message}
+            )
+            _conversation_sessions[request.session_id]["messages"].append(
+                {"role": "assistant", "content": response}
+            )
+        
+        # Check if assessment seems complete (simple heuristic)
+        assessment_complete = len(session.get("messages", [])) > 20 and any(
+            phrase in response.lower() 
+            for phrase in ["complete", "finished", "concluded", "thank you for sharing", "assessment is complete"]
+        )
         
         return {
             "response": response,
-            "session_id": request.session_id
+            "session_id": request.session_id,
+            "assessment_complete": assessment_complete
         }
         
     except Exception as e:
