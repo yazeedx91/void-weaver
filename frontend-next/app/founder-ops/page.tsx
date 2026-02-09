@@ -10,6 +10,7 @@ export default function FounderDashboard() {
   const [authenticated, setAuthenticated] = useState(false);
   const [metrics, setMetrics] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+  const [pulseSending, setPulseSending] = useState(false);
 
   const login = async () => {
     setLoading(true);
@@ -28,12 +29,28 @@ export default function FounderDashboard() {
     }
   };
 
+  const sendPulse = async () => {
+    setPulseSending(true);
+    try {
+      const result = await apiClient.sendDailyPulse(password);
+      if (result.status === "sent") {
+        alert("✅ Daily pulse email sent to Yazeedx91@gmail.com!");
+      } else {
+        alert("❌ Failed to send pulse: " + (result.error || "Unknown error"));
+      }
+    } catch (error) {
+      alert("❌ Failed to send pulse email");
+    } finally {
+      setPulseSending(false);
+    }
+  };
+
   const fetchRealMetrics = async () => {
     try {
       const { getFounderMetrics } = await import('@/lib/supabase');
       const realData = await getFounderMetrics();
       
-      setMetrics(prev => ({
+      setMetrics((prev: any) => ({
         ...prev,
         metrics: {
           ...prev?.metrics,
