@@ -14,9 +14,13 @@ export default function FounderDashboard() {
   const login = async () => {
     setLoading(true);
     try {
+      // Verify password with backend
       const data = await apiClient.getFounderMetrics(password);
       setMetrics(data);
       setAuthenticated(true);
+      
+      // Start fetching real Supabase data
+      fetchRealMetrics();
     } catch (error) {
       alert("Invalid password");
     } finally {
@@ -24,29 +28,39 @@ export default function FounderDashboard() {
     }
   };
 
-  const sendPulse = async () => {
+  const fetchRealMetrics = async () => {
     try {
-      await apiClient.sendDailyPulse(password);
-      alert("Daily pulse email sent!");
+      const { getFounderMetrics } = await import('@/lib/supabase');
+      const realData = await getFounderMetrics();
+      
+      setMetrics(prev => ({
+        ...prev,
+        metrics: {
+          ...prev?.metrics,
+          total_users: realData.totalUsers,
+          assessments_completed: realData.completedAssessments,
+          sanctuary_access: realData.sanctuaryAccess,
+        },
+        last_24h: {
+          ...prev?.last_24h,
+          new_users: realData.newUsers,
+        },
+      }));
     } catch (error) {
-      alert("Failed to send pulse");
+      console.error('Failed to fetch real metrics:', error);
     }
   };
 
   useEffect(() => {
     if (authenticated) {
-      const interval = setInterval(async () => {
-        try {
-          const data = await apiClient.getFounderMetrics(password);
-          setMetrics(data);
-        } catch (error) {
-          console.error("Failed to refresh metrics");
-        }
-      }, 30000); // Refresh every 30 seconds
-
+      // Fetch real data immediately
+      fetchRealMetrics();
+      
+      // Refresh every 30 seconds
+      const interval = setInterval(fetchRealMetrics, 30000);
       return () => clearInterval(interval);
     }
-  }, [authenticated, password]);
+  }, [authenticated]);
 
   if (!authenticated) {
     return (
