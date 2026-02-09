@@ -32,7 +32,7 @@ export default function FounderDashboard() {
   const sendPulse = async () => {
     setPulseSending(true);
     try {
-      const result = await apiClient.sendDailyPulse(password);
+      const result: any = await apiClient.sendDailyPulse(password);
       if (result.status === "sent") {
         alert("✅ Daily pulse email sent to Yazeedx91@gmail.com!");
       } else {
