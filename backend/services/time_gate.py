@@ -7,9 +7,9 @@ import os
 from typing import Dict, Optional
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
-import redis
 import json
 import uuid
+import requests
 
 load_dotenv()
 
@@ -18,25 +18,79 @@ class TimeGateService:
     """
     The Time-Gate: 24-Hour / 3-Click Self-Destruct Links
     Security mechanism for results delivery
+    Supports both Redis protocol and REST API (Upstash)
     """
     
     def __init__(self):
+        # Check for REST API credentials first (Upstash)
+        rest_url = os.environ.get('UPSTASH_REDIS_REST_URL')
+        rest_token = os.environ.get('UPSTASH_REDIS_REST_TOKEN')
+        
+        # Fallback to standard Redis
         redis_url = os.environ.get('UPSTASH_REDIS_URL')
         redis_token = os.environ.get('UPSTASH_REDIS_TOKEN')
         
-        if not redis_url or not redis_token:
-            raise ValueError("UPSTASH_REDIS_URL and UPSTASH_REDIS_TOKEN required for Time-Gate security")
-        
-        # Upstash Redis connection
-        # Format: redis://default:token@host:port
-        self.redis_client = redis.from_url(
-            redis_url,
-            password=redis_token,
-            decode_responses=True
+        if rest_url and rest_token:
+            # Use REST API
+            self.mode = 'rest'
+            self.rest_url = rest_url.rstrip('/')
+            self.rest_token = rest_token
+            self.headers = {'Authorization': f'Bearer {rest_token}'}
+            print("✅ Time-Gate: Using Upstash Redis REST API")
+        elif redis_url:
+            # Use standard Redis protocol
+            self.mode = 'redis'
+            try:
+                import redis
+                self.redis_client = redis.from_url(
+                    redis_url,
+                    password=redis_token if redis_token else None,
+                    decode_responses=True
+                )
+                self.redis_client.ping()
+                print("✅ Time-Gate: Using Redis protocol")
+            except ImportError:
+                raise ValueError("redis package not installed. Run: pip install redis")
+        else:
+            raise ValueError(
+                "UPSTASH_REDIS_REST_URL + UPSTASH_REDIS_REST_TOKEN or "
+                "UPSTASH_REDIS_URL required for Time-Gate security"
+            )
+    
+    def _rest_set(self, key: str, value: str, ex: int):
+        """Set key with expiration using REST API"""
+        response = requests.post(
+            f"{self.rest_url}/set/{key}/EX/{ex}",
+            headers=self.headers,
+            json=value
         )
-        
-        # Test connection
-        self.redis_client.ping()
+        return response.json()
+    
+    def _rest_get(self, key: str):
+        """Get key using REST API"""
+        response = requests.get(
+            f"{self.rest_url}/get/{key}",
+            headers=self.headers
+        )
+        result = response.json()
+        return result.get('result')
+    
+    def _rest_ttl(self, key: str):
+        """Get TTL using REST API"""
+        response = requests.get(
+            f"{self.rest_url}/ttl/{key}",
+            headers=self.headers
+        )
+        result = response.json()
+        return result.get('result', -1)
+    
+    def _rest_delete(self, key: str):
+        """Delete key using REST API"""
+        response = requests.post(
+            f"{self.rest_url}/del/{key}",
+            headers=self.headers
+        )
+        return response.json()
     
     def create_time_gate_link(
         self,
@@ -80,11 +134,14 @@ class TimeGateService:
         redis_key = f"time_gate:{link_token}"
         ttl_seconds = expiry_hours * 3600
         
-        self.redis_client.setex(
-            redis_key,
-            ttl_seconds,
-            json.dumps(link_data)
-        )
+        if self.mode == 'rest':
+            self._rest_set(redis_key, json.dumps(link_data), ttl_seconds)
+        else:
+            self.redis_client.setex(
+                redis_key,
+                ttl_seconds,
+                json.dumps(link_data)
+            )
         
         return {
             'link_token': link_token,
@@ -107,7 +164,10 @@ class TimeGateService:
         redis_key = f"time_gate:{link_token}"
         
         # Get link data
-        link_data_str = self.redis_client.get(redis_key)
+        if self.mode == 'rest':
+            link_data_str = self._rest_get(redis_key)
+        else:
+            link_data_str = self.redis_client.get(redis_key)
         
         if not link_data_str:
             return {
@@ -131,7 +191,11 @@ class TimeGateService:
             # Deactivate link
             link_data['is_active'] = False
             link_data['deactivation_reason'] = 'max_clicks_reached'
-            self.redis_client.set(redis_key, json.dumps(link_data))
+            
+            if self.mode == 'rest':
+                self._rest_set(redis_key, json.dumps(link_data), 3600)  # Keep for 1h for audit
+            else:
+                self.redis_client.set(redis_key, json.dumps(link_data))
             
             return {
                 'valid': False,
@@ -144,8 +208,13 @@ class TimeGateService:
         link_data['last_accessed'] = datetime.utcnow().isoformat()
         
         # Update in Redis
-        ttl = self.redis_client.ttl(redis_key)
-        self.redis_client.setex(redis_key, ttl, json.dumps(link_data))
+        if self.mode == 'rest':
+            ttl = self._rest_ttl(redis_key)
+            if ttl > 0:
+                self._rest_set(redis_key, json.dumps(link_data), ttl)
+        else:
+            ttl = self.redis_client.ttl(redis_key)
+            self.redis_client.setex(redis_key, ttl, json.dumps(link_data))
         
         # Calculate remaining
         clicks_remaining = link_data['max_clicks'] - link_data['current_clicks']
@@ -174,7 +243,11 @@ class TimeGateService:
             Success status
         """
         redis_key = f"time_gate:{link_token}"
-        link_data_str = self.redis_client.get(redis_key)
+        
+        if self.mode == 'rest':
+            link_data_str = self._rest_get(redis_key)
+        else:
+            link_data_str = self.redis_client.get(redis_key)
         
         if not link_data_str:
             return False
@@ -184,9 +257,14 @@ class TimeGateService:
         link_data['deactivation_reason'] = reason
         link_data['revoked_at'] = datetime.utcnow().isoformat()
         
-        # Keep for audit trail but mark as revoked
-        ttl = self.redis_client.ttl(redis_key)
-        self.redis_client.setex(redis_key, ttl, json.dumps(link_data))
+        # Keep for audit trail
+        if self.mode == 'rest':
+            ttl = self._rest_ttl(redis_key)
+            if ttl > 0:
+                self._rest_set(redis_key, json.dumps(link_data), ttl)
+        else:
+            ttl = self.redis_client.ttl(redis_key)
+            self.redis_client.setex(redis_key, ttl, json.dumps(link_data))
         
         return True
     
@@ -201,44 +279,24 @@ class TimeGateService:
             Link status or None if not found
         """
         redis_key = f"time_gate:{link_token}"
-        link_data_str = self.redis_client.get(redis_key)
+        
+        if self.mode == 'rest':
+            link_data_str = self._rest_get(redis_key)
+            ttl = self._rest_ttl(redis_key)
+        else:
+            link_data_str = self.redis_client.get(redis_key)
+            ttl = self.redis_client.ttl(redis_key)
         
         if not link_data_str:
             return None
         
         link_data = json.loads(link_data_str)
-        ttl = self.redis_client.ttl(redis_key)
         
         return {
             **link_data,
             'ttl_seconds': ttl,
             'ttl_hours': round(ttl / 3600, 1)
         }
-    
-    def cleanup_expired_links(self) -> int:
-        """
-        Cleanup expired links (Redis handles this automatically with TTL)
-        This is for manual cleanup if needed
-        
-        Returns:
-            Number of links cleaned up
-        """
-        # Redis handles TTL automatically
-        # This method is for compatibility with database-based systems
-        pattern = "time_gate:*"
-        expired_count = 0
-        
-        for key in self.redis_client.scan_iter(pattern):
-            link_data_str = self.redis_client.get(key)
-            if link_data_str:
-                link_data = json.loads(link_data_str)
-                expires_at = datetime.fromisoformat(link_data['expires_at'])
-                
-                if datetime.utcnow() > expires_at:
-                    self.redis_client.delete(key)
-                    expired_count += 1
-        
-        return expired_count
 
 
 # Singleton instance
