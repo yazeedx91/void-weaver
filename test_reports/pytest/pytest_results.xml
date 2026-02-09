@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="19" time="169.292" timestamp="2026-02-09T22:43:36.902431+00:00" hostname="agent-env-32c29714-1329-4eba-ae74-0ba48dfa685e"><testcase classname="tests.test_flux_dna_api.TestHealthEndpoint" name="test_health_returns_fortress_active" time="0.089" /><testcase classname="tests.test_flux_dna_api.TestAssessmentAPI" name="test_start_assessment_english" time="7.825" /><testcase classname="tests.test_flux_dna_api.TestAssessmentAPI" name="test_start_assessment_arabic" time="6.180" /><testcase classname="tests.test_flux_dna_api.TestAssessmentAPI" name="test_send_message" time="16.011" /><testcase classname="tests.test_flux_dna_api.TestAssessmentAPI" name="test_get_scales" time="0.053" /><testcase classname="tests.test_flux_dna_api.TestAssessmentAPI" name="test_complete_assessment_creates_time_gate_link" time="24.661" /><testcase classname="tests.test_flux_dna_api.TestResultsTimeGate" name="test_get_results_with_valid_token" time="16.080" /><testcase classname="tests.test_flux_dna_api.TestResultsTimeGate" name="test_get_results_with_invalid_token" time="0.509" /><testcase classname="tests.test_flux_dna_api.TestResultsTimeGate" name="test_link_status_without_incrementing" time="17.909" /><testcase classname="tests.test_flux_dna_api.TestSanctuaryAPI" name="test_start_sanctuary_session" time="10.865" /><testcase classname="tests.test_flux_dna_api.TestSanctuaryAPI" name="test_start_sanctuary_all_pillars" time="41.980" /><testcase classname="tests.test_flux_dna_api.TestSanctuaryAPI" name="test_get_sanctuary_resources" time="0.051" /><testcase classname="tests.test_flux_dna_api.TestSanctuaryAPI" name="test_submit_evidence" time="26.458" /><testcase classname="tests.test_flux_dna_api.TestFounderDashboardAPI" name="test_get_metrics_with_correct_password" time="0.066" /><testcase classname="tests.test_flux_dna_api.TestFounderDashboardAPI" name="test_get_metrics_without_password" time="0.035" /><testcase classname="tests.test_flux_dna_api.TestFounderDashboardAPI" name="test_get_metrics_with_wrong_password" time="0.038" /><testcase classname="tests.test_flux_dna_api.TestFounderDashboardAPI" name="test_send_pulse_email" time="0.277" /><testcase classname="tests.test_flux_dna_api.TestFounderDashboardAPI" name="test_get_analytics_timeline" time="0.038" /><testcase classname="tests.test_flux_dna_api.TestRootEndpoint" name="test_root_returns_welcome" time="0.033"><failure message="requests.exceptions.JSONDecodeError: Expecting value: line 1 column 1 (char 0)">/root/.venv/lib/python3.11/site-packages/requests/models.py:976: in json
+    return complexjson.loads(self.text, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.11/json/__init__.py:346: in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.11/json/decoder.py:337: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.11/json/decoder.py:355: in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+E   json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+tests/test_flux_dna_api.py:382: in test_root_returns_welcome
+    data = response.json()
+           ^^^^^^^^^^^^^^^
+/root/.venv/lib/python3.11/site-packages/requests/models.py:980: in json
+    raise RequestsJSONDecodeError(e.msg, e.doc, e.pos)
+E   requests.exceptions.JSONDecodeError: Expecting value: line 1 column 1 (char 0)</failure></testcase></testsuite></testsuites>
