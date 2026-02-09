@@ -19,6 +19,7 @@ from api.health import router as health_router
 from api.assessment import router as assessment_router
 from api.founder import router as founder_router
 from api.sanctuary import router as sanctuary_router
+from api.certificate import router as certificate_router
 
 # Configure logging
 logging.basicConfig(
