@@ -6,7 +6,7 @@ from fastapi import APIRouter
 from datetime import datetime
 import os
 
-router = APIRouter()
+router = APIRouter(prefix="/api")
 
 
 @router.get("/")
@@ -28,9 +28,3 @@ async def health_check():
         "encryption": "AES-256-GCM",
         "ai_core": "Claude-4-Sonnet"
     }
-
-
-@router.get("/api/health")
-async def api_health_check():
-    """API-specific health check"""
-    return await health_check()
