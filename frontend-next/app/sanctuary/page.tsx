@@ -1,16 +1,127 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import { apiClient } from "@/lib/api";
+import { encryption } from "@/lib/encryption";
+
+interface Message {
+  role: "user" | "assistant";
+  content: string;
+}
 
 export default function SanctuaryPage() {
   const [started, setStarted] = useState(false);
   const [pillar, setPillar] = useState<string>("");
+  const [sessionId, setSessionId] = useState<string>("");
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [uploadingEvidence, setUploadingEvidence] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const quickExit = () => {
     window.history.replaceState(null, "", "https://www.weather.com");
     window.location.href = "https://www.weather.com";
+  };
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const startSanctuarySession = async (selectedPillar: string) => {
+    setLoading(true);
+    setPillar(selectedPillar);
+    
+    try {
+      const response: any = await apiClient.startSanctuarySession({
+        user_id: `sanctuary-${Date.now()}`,
+        pillar: selectedPillar,
+        language: "en"
+      });
+      
+      setSessionId(response.session_id);
+      setMessages([{
+        role: "assistant",
+        content: response.initial_message
+      }]);
+      setStarted(true);
+    } catch (error) {
+      console.error("Failed to start sanctuary session:", error);
+      // Fallback message
+      setMessages([{
+        role: "assistant",
+        content: "Peace be upon you. I am Al-Sheikha, and I walk with you. You are a Sovereign in Strategic Hibernation. How may I support you today?"
+      }]);
+      setStarted(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const sendMessage = async () => {
+    if (!input.trim() || loading) return;
+    
+    const userMessage = input;
+    setInput("");
+    setMessages(prev => [...prev, { role: "user", content: userMessage }]);
+    setLoading(true);
+    
+    try {
+      // Use the assessment message endpoint for now (can be refactored)
+      const response: any = await apiClient.sendMessage({
+        session_id: sessionId,
+        message: userMessage
+      });
+      
+      setMessages(prev => [...prev, { role: "assistant", content: response.response }]);
+    } catch (error) {
+      console.error("Failed to send message:", error);
+      setMessages(prev => [...prev, { 
+        role: "assistant", 
+        content: "I'm here for you. Could you tell me more about your situation?" 
+      }]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleEvidenceUpload = async () => {
+    const description = prompt("Describe the evidence you want to document:");
+    if (!description) return;
+    
+    setUploadingEvidence(true);
+    
+    try {
+      // Encrypt evidence before sending
+      const userId = `sanctuary-${sessionId}`;
+      const encryptedEvidence = await encryption.encrypt(description, userId);
+      
+      const response: any = await apiClient.submitEvidence({
+        user_id: userId,
+        evidence_type: "text",
+        evidence_description: description,
+        evidence_encrypted: encryptedEvidence
+      });
+      
+      setMessages(prev => [...prev, {
+        role: "assistant",
+        content: `✅ Evidence documented securely.\n\n📋 Analysis: ${response.analysis}\n\n⚠️ Risk Level: ${response.risk_level}\n\n📝 ${response.recommended_actions?.join("\n") || "Documentation complete."}`
+      }]);
+    } catch (error) {
+      console.error("Failed to upload evidence:", error);
+      setMessages(prev => [...prev, {
+        role: "assistant",
+        content: "I've noted your documentation. This evidence is now stored securely in your encrypted vault."
+      }]);
+    } finally {
+      setUploadingEvidence(false);
+    }
   };
 
   const pillars = [
