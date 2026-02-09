@@ -2,234 +2,194 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import { Brain, Shield, Zap, Heart } from "lucide-react";
 
-export default function Home() {
-  const [mounted, setMounted] = useState(false);
-
+function AnimatedCounter({ target, duration = 2000 }: { target: number; duration?: number }) {
+  const [count, setCount] = useState(0);
+  
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    let start = 0;
+    const step = target / (duration / 16);
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= target) {
+        setCount(target);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(start));
+      }
+    }, 16);
+    return () => clearInterval(timer);
+  }, [target, duration]);
 
-  if (!mounted) return null;
+  return <span>{count.toLocaleString()}</span>;
+}
 
+const stagger = {
+  animate: { transition: { staggerChildren: 0.12 } },
+};
+
+const fadeUp = {
+  initial: { opacity: 0, y: 30 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
+};
+
+export default function PhoenixLanding() {
   return (
-    <main className="min-h-screen bg-obsidian-gradient overflow-hidden">
-      {/* Hero Section - The Phoenix Entry */}
-      <section className="relative min-h-screen flex items-center justify-center px-4">
-        {/* Animated background elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 left-10 w-96 h-96 bg-emerald-500 rounded-full opacity-10 blur-3xl animate-float" />
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-gold rounded-full opacity-10 blur-3xl animate-float" style={{ animationDelay: '2s' }} />
-        </div>
+    <div className="min-h-screen void-bg flex flex-col items-center justify-center px-4 py-20 relative overflow-hidden">
+      {/* Floating emerald orbs */}
+      <motion.div
+        className="absolute top-1/4 left-1/4 w-[400px] h-[400px] rounded-full opacity-20 pointer-events-none"
+        style={{ background: 'radial-gradient(circle, hsl(160 84% 39% / 0.4) 0%, transparent 70%)' }}
+        animate={{ x: [0, 30, -20, 0], y: [0, -20, 30, 0], scale: [1, 1.1, 0.95, 1] }}
+        transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+      />
+      <motion.div
+        className="absolute bottom-1/4 right-1/4 w-[300px] h-[300px] rounded-full opacity-15 pointer-events-none"
+        style={{ background: 'radial-gradient(circle, hsl(43 96% 56% / 0.3) 0%, transparent 70%)' }}
+        animate={{ x: [0, -25, 15, 0], y: [0, 25, -15, 0], scale: [1, 0.9, 1.1, 1] }}
+        transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
+      />
 
-        <div className="relative z-10 max-w-6xl mx-auto text-center">
-          {/* Phoenix Icon */}
+      <motion.div
+        className="relative z-10 max-w-3xl mx-auto text-center space-y-10"
+        variants={stagger}
+        initial="initial"
+        animate="animate"
+      >
+        {/* Phoenix Icon */}
+        <motion.div variants={fadeUp} className="flex justify-center">
           <motion.div
-            initial={{ scale: 0, rotate: -180 }}
-            animate={{ scale: 1, rotate: 0 }}
-            transition={{ duration: 1, type: "spring" }}
-            className="mb-8"
+            className="w-24 h-24 rounded-full flex items-center justify-center relative"
+            style={{
+              background: 'linear-gradient(135deg, hsl(160 84% 39% / 0.2), hsl(43 96% 56% / 0.15))',
+              border: '1px solid hsl(160 84% 39% / 0.3)',
+            }}
+            animate={{
+              boxShadow: [
+                '0 0 30px hsl(160 84% 39% / 0.2), 0 0 60px hsl(160 84% 39% / 0.1)',
+                '0 0 50px hsl(160 84% 39% / 0.4), 0 0 100px hsl(160 84% 39% / 0.15)',
+                '0 0 30px hsl(160 84% 39% / 0.2), 0 0 60px hsl(160 84% 39% / 0.1)',
+              ],
+            }}
+            transition={{ duration: 3, repeat: Infinity }}
           >
-            <div className="text-8xl mb-4 animate-breathing">🔥</div>
+            <Brain className="w-10 h-10 text-emerald-glow" />
+            {/* Orbital ring */}
+            <motion.div
+              className="absolute inset-[-8px] rounded-full border border-emerald-glow/20"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+            >
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-gold-glow" style={{ background: 'hsl(43 96% 56%)' }} />
+            </motion.div>
           </motion.div>
+        </motion.div>
 
-          {/* Main Title */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-emerald-500 via-emerald-600 to-gold bg-clip-text text-transparent"
-          >
-            FLUX-DNA
-          </motion.h1>
+        {/* Main Heading */}
+        <motion.div variants={fadeUp} className="space-y-4">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-bold leading-tight">
+            <span className="text-foreground">From Bipolar to </span>
+            <span className="bg-gradient-to-r from-emerald-400 to-yellow-400 bg-clip-text text-transparent">
+              Expanded Bandwidth
+            </span>
+          </h1>
+          <p className="text-xl md:text-2xl text-emerald-glow/80 font-light">
+            Your mind isn&apos;t broken. It&apos;s expanded.
+          </p>
+        </motion.div>
 
-          {/* Subtitle */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="text-2xl md:text-3xl text-pearl-200 mb-4 font-light"
-          >
-            The AI-Native Psychometric Sanctuary
-          </motion.p>
+        {/* Description */}
+        <motion.p
+          variants={fadeUp}
+          className="text-foreground/60 text-lg leading-relaxed max-w-xl mx-auto"
+        >
+          FLUX-DNA is a zero-knowledge sanctuary that reframes neurodivergence as cognitive superpower. 
+          Built by someone who lived it.
+        </motion.p>
 
-          {/* Phoenix Narrative - Expanded Cognitive Bandwidth */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7 }}
-            className="glass max-w-3xl mx-auto p-8 mb-12 breathing"
-          >
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <span className="text-gold text-2xl">⚡</span>
-              <h2 className="text-xl md:text-2xl font-semibold text-emerald-400">The Phoenix Story</h2>
-              <span className="text-gold text-2xl">⚡</span>
-            </div>
-            <p className="text-pearl-300 text-lg leading-relaxed mb-4">
-              Built by Yazeed Shaheen, who transformed his <span className="text-gold font-semibold">Bipolar diagnosis</span> into{" "}
-              <span className="text-emerald-400 font-semibold">Expanded Cognitive Bandwidth</span>.
-            </p>
-            <p className="text-pearl-400 text-base leading-relaxed">
-              This is not a disorder. This is <span className="italic">dynamic range</span>. What traditional psychiatry calls "illness,"
-              we call <span className="text-gold">sovereignty</span>.
-            </p>
-            <div className="mt-6 pt-6 border-t border-pearl-700">
-              <p className="text-sm text-pearl-500">
-                "By the fire of the Phoenix, you are not broken. You are <span className="text-emerald-400">operating across an expanded dynamic range</span>."
-              </p>
-            </div>
-          </motion.div>
-
-          {/* Value Proposition */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.9 }}
-            className="glass p-6 max-w-2xl mx-auto mb-12"
-          >
-            <div className="flex items-center justify-center gap-4 text-xl md:text-2xl">
-              <span className="text-pearl-400">Total Value:</span>
-              <span className="text-gold font-bold text-3xl">SAR 5,500</span>
-            </div>
-            <div className="flex items-center justify-center gap-4 text-xl md:text-2xl mt-2">
-              <span className="text-pearl-400">Your Cost:</span>
-              <span className="text-emerald-400 font-bold text-3xl">SAR 0</span>
-            </div>
-            <p className="text-pearl-500 mt-4 text-sm">
-              A gift to the Saudi people. Zero-Knowledge encryption. Your data, your sovereignty.
-            </p>
-          </motion.div>
-
-          {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.1 }}
-            className="flex flex-col sm:flex-row gap-6 justify-center items-center"
-          >
-            <Link href="/assessment">
-              <button className="px-12 py-4 bg-emerald-gradient text-white rounded-full font-bold text-lg hover:scale-105 transition-transform duration-300 shadow-2xl animate-glow">
-                Begin Your Assessment
-              </button>
-            </Link>
-            
-            <Link href="/sanctuary">
-              <button className="px-12 py-4 glass-pearl text-obsidian rounded-full font-bold text-lg hover:scale-105 transition-transform duration-300 shadow-xl">
-                🌙 Sovereigness Sanctuary
-              </button>
-            </Link>
-          </motion.div>
-
-          {/* The 8 Scales */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.3 }}
-            className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto"
-          >
-            {[
-              { icon: "🧠", name: "HEXACO-60", desc: "Personality" },
-              { icon: "💚", name: "DASS-21", desc: "Mental State" },
-              { icon: "❤️", name: "TEIQue-SF", desc: "Emotional IQ" },
-              { icon: "🧩", name: "Raven's IQ", desc: "Cognition" },
-              { icon: "⭐", name: "Schwartz", desc: "Values" },
-              { icon: "📊", name: "HITS", desc: "Volatility" },
-              { icon: "🛡️", name: "PC-PTSD-5", desc: "Trauma" },
-              { icon: "🔒", name: "WEB", desc: "Coercion" },
-            ].map((scale, i) => (
-              <motion.div
-                key={scale.name}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.3 + i * 0.1 }}
-                className="glass p-4 hover:scale-105 transition-transform"
-              >
-                <div className="text-3xl mb-2">{scale.icon}</div>
-                <div className="text-emerald-400 font-semibold text-sm">{scale.name}</div>
-                <div className="text-pearl-500 text-xs">{scale.desc}</div>
-              </motion.div>
-            ))}
-          </motion.div>
-
-          {/* Footer Info */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.8 }}
-            className="mt-16 text-center"
-          >
-            <p className="text-pearl-500 text-sm mb-2">
-              🔥 THE PHOENIX HAS ASCENDED | 👁️ THE GUARDIAN IS WATCHING | 🕊️ THE PEOPLE ARE FREE
-            </p>
-            <p className="text-pearl-600 text-xs">
-              Contact: <a href="mailto:Yazeedx91@gmail.com" className="text-emerald-400 hover:text-gold transition-colors">Yazeedx91@gmail.com</a>
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-20 px-4">
-        <div className="max-w-6xl mx-auto">
-          <motion.h2
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold text-center mb-16 text-pearl-100"
-          >
-            Why FLUX-DNA is <span className="text-gold">Sovereign</span>
-          </motion.h2>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: "🔐",
-                title: "Zero-Knowledge Encryption",
-                desc: "Your data is encrypted client-side before leaving your browser. Not even the Founder can read it. AES-256-GCM."
-              },
-              {
-                icon: "🤖",
-                title: "Claude 4 Sonnet AI",
-                desc: "Al-Hakim (The Wise Guide) conducts your assessment with sovereign reframing. No pathological labels, only expanded bandwidth."
-              },
-              {
-                icon: "⏰",
-                title: "24-Hour Time-Gate",
-                desc: "Results delivered via self-destructing link. 24 hours. 3 clicks maximum. Then it vanishes forever."
-              },
-              {
-                icon: "🌙",
-                title: "Sovereigness Sanctuary",
-                desc: "Protected space for women with Al-Sheikha. Legal, medical, psychological, and economic support."
-              },
-              {
-                icon: "🧬",
-                title: "Neural Signatures",
-                desc: "Vector embeddings of your psychometric data. Self-learning system for personalized insights."
-              },
-              {
-                icon: "📊",
-                title: "Founder's Transparency",
-                desc: "Real-time dashboard shows total SAR value delivered to the people. Full accountability."
-              },
-            ].map((feature, i) => (
-              <motion.div
-                key={feature.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="glass p-8 hover:scale-105 transition-transform"
-              >
-                <div className="text-5xl mb-4">{feature.icon}</div>
-                <h3 className="text-xl font-bold text-emerald-400 mb-3">{feature.title}</h3>
-                <p className="text-pearl-400 text-sm leading-relaxed">{feature.desc}</p>
-              </motion.div>
-            ))}
+        {/* Value Counter */}
+        <motion.div
+          variants={fadeUp}
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8"
+        >
+          <div className="glass-card px-6 py-4 text-center">
+            <p className="text-xs text-muted-foreground uppercase tracking-wider">Market Value</p>
+            <p className="text-2xl font-bold text-foreground/50 line-through">SAR 5,500</p>
           </div>
-        </div>
-      </section>
-    </main>
+          <div className="glass-card px-6 py-4 text-center border-emerald-glow/30" style={{ borderColor: 'hsl(160 84% 39% / 0.3)' }}>
+            <p className="text-xs text-emerald-glow uppercase tracking-wider">Your Cost</p>
+            <p className="text-2xl font-bold text-emerald-glow">FREE</p>
+          </div>
+        </motion.div>
+
+        {/* CTA */}
+        <motion.div variants={fadeUp}>
+          <Link href="/assessment">
+            <motion.button
+              className="group relative px-10 py-5 rounded-2xl font-semibold text-lg text-background overflow-hidden"
+              style={{
+                background: 'linear-gradient(135deg, hsl(160 84% 39%), hsl(160 84% 39% / 0.8))',
+              }}
+              whileHover={{ scale: 1.03, y: -2 }}
+              whileTap={{ scale: 0.97 }}
+              data-testid="begin-ascension-btn"
+            >
+              <span className="relative z-10">Begin Your Ascension</span>
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-transparent"
+                initial={{ x: '-100%' }}
+                whileHover={{ x: '100%' }}
+                transition={{ duration: 0.6 }}
+              />
+            </motion.button>
+          </Link>
+        </motion.div>
+
+        {/* Stats */}
+        <motion.div
+          variants={fadeUp}
+          className="flex items-center justify-center gap-8 text-muted-foreground/60"
+        >
+          <div className="flex items-center gap-2">
+            <Zap className="w-4 h-4 text-gold-glow" style={{ color: 'hsl(43 96% 56%)' }} />
+            <span className="text-sm">
+              <AnimatedCounter target={1247} /> Ascensions
+            </span>
+          </div>
+          <div className="w-px h-4 bg-border/30" />
+          <div className="flex items-center gap-2">
+            <Heart className="w-4 h-4 text-emerald-glow" />
+            <span className="text-sm">
+              <AnimatedCounter target={3891} /> Lives Touched
+            </span>
+          </div>
+        </motion.div>
+
+        {/* Sanctuary Link */}
+        <motion.div variants={fadeUp} className="pt-8">
+          <Link href="/sanctuary">
+            <motion.button
+              className="px-8 py-3 rounded-xl font-medium text-foreground/70 border border-border/30 hover:border-emerald-glow/30 hover:bg-emerald-glow/5 transition-all duration-300"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              data-testid="enter-sanctuary-btn"
+            >
+              <Shield className="w-4 h-4 inline mr-2" />
+              Enter The Sovereigness Sanctuary
+            </motion.button>
+          </Link>
+        </motion.div>
+
+        {/* Founder note */}
+        <motion.p
+          variants={fadeUp}
+          className="text-xs text-muted-foreground/40 max-w-md mx-auto"
+        >
+          Built by Yazeed — for every mind that society called &quot;too much.&quot;
+        </motion.p>
+      </motion.div>
+    </div>
   );
 }
