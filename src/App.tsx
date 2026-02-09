@@ -10,6 +10,7 @@ import { VoidBackground } from "@/components/VoidBackground";
 import { LifeLine } from "@/components/LifeLine";
 import { TopBar } from "@/components/TopBar";
 import PhoenixLanding from "./pages/PhoenixLanding";
+import HakimChamber from "./pages/HakimChamber";
 import Onboarding from "./pages/Onboarding";
 import PersonalityAssessment from "./pages/PersonalityAssessment";
 import MentalHealthAssessment from "./pages/MentalHealthAssessment";
@@ -34,6 +35,7 @@ const App = () => (
                 <LifeLine />
                 <Routes>
                   <Route path="/" element={<PhoenixLanding />} />
+                  <Route path="/hakim" element={<HakimChamber />} />
                   <Route path="/onboarding" element={<Onboarding />} />
                   <Route path="/personality" element={<PersonalityAssessment />} />
                   <Route path="/mental-health" element={<MentalHealthAssessment />} />
