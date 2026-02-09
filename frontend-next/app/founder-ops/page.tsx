@@ -139,9 +139,10 @@ export default function FounderDashboard() {
             <p className="text-xs text-emerald-600">{new Date().toLocaleString()}</p>
             <button
               onClick={sendPulse}
-              className="text-xs bg-emerald-600 text-black px-3 py-1 mt-1 hover:bg-emerald-500"
+              disabled={pulseSending}
+              className="text-xs bg-emerald-600 text-black px-3 py-1 mt-1 hover:bg-emerald-500 disabled:opacity-50"
             >
-              SEND PULSE EMAIL
+              {pulseSending ? "SENDING..." : "SEND PULSE EMAIL"}
             </button>
           </div>
         </div>
