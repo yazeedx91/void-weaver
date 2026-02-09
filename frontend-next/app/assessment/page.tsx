@@ -54,6 +54,32 @@ export default function AssessmentPage() {
     }
   };
 
+  const completeAssessment = async () => {
+    try {
+      setLoading(true);
+      
+      // Collect all responses
+      const allResponses: any = {};
+      
+      // In production, encrypt each scale's responses
+      // For now, simulate completion
+      const response: any = await apiClient.completeAssessment({
+        session_id: sessionId,
+        user_id: "user-" + Date.now(), // In production, use real user ID
+        all_responses_encrypted: allResponses,
+      });
+
+      // Redirect to time-gated results
+      if (response.results_link) {
+        window.location.href = response.results_link;
+      }
+    } catch (error) {
+      console.error("Failed to complete assessment:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const sendMessage = async () => {
     if (!input.trim() || loading) return;
 
@@ -80,6 +106,11 @@ export default function AssessmentPage() {
       };
 
       setMessages((prev) => [...prev, assistantMessage]);
+      
+      // Check if assessment is complete (8 scales done)
+      if (response.assessment_complete) {
+        await completeAssessment();
+      }
     } catch (error) {
       console.error("Failed to send message:", error);
     } finally {
