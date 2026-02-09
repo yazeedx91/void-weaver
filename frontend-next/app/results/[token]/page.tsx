@@ -58,9 +58,24 @@ export default function ResultsPage() {
     }
   };
 
-  const downloadCertificate = () => {
-    // Generate and download PDF certificate
-    alert("Certificate download will be implemented in the next phase!");
+  const downloadCertificate = async () => {
+    try {
+      // Download certificate PDF using the same token
+      const certificateUrl = `${API_URL}/api/certificate/download/${token}`;
+      
+      // Create a temporary link and trigger download
+      const link = document.createElement('a');
+      link.href = certificateUrl;
+      link.target = '_blank';
+      link.click();
+      
+      // Update clicks remaining (the server will decrement)
+      setClicksRemaining(prev => Math.max(0, prev - 1));
+      
+    } catch (error) {
+      console.error("Certificate download error:", error);
+      alert("Failed to download certificate. The link may have expired.");
+    }
   };
 
   if (validating) {
