@@ -51,6 +51,7 @@ app.include_router(health_router, tags=["Health"])
 app.include_router(assessment_router, tags=["Assessment"])
 app.include_router(founder_router, tags=["Founder Dashboard"])
 app.include_router(sanctuary_router, tags=["Sovereigness Sanctuary"])
+app.include_router(certificate_router, tags=["Sovereign Certificate"])
 
 # Root endpoint
 @app.get("/")
