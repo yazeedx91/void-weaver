@@ -16,10 +16,14 @@ load_dotenv(ROOT_DIR / '.env')
 
 # Import API routers
 from api.health import router as health_router
+from api.assessment import router as assessment_router
+from api.founder import router as founder_router
+from api.sanctuary import router as sanctuary_router
 
 # Import services
 from services.claude_service import get_claude_service
 from services.encryption import get_encryption_service
+from services.email_service import get_email_service
 
 # Configure logging
 logging.basicConfig(
@@ -31,7 +35,7 @@ logger = logging.getLogger(__name__)
 # Create FastAPI app
 app = FastAPI(
     title="FLUX-DNA Sovereign API",
-    description="AI-Native Psychometric Sanctuary",
+    description="AI-Native Psychometric Sanctuary - The Phoenix Has Ascended",
     version="2026.1.0",
     docs_url="/api/docs",
     redoc_url="/api/redoc"
@@ -48,6 +52,9 @@ app.add_middleware(
 
 # Include routers
 app.include_router(health_router, tags=["Health"])
+app.include_router(assessment_router, tags=["Assessment"])
+app.include_router(founder_router, tags=["Founder Dashboard"])
+app.include_router(sanctuary_router, tags=["Sovereigness Sanctuary"])
 
 # Root endpoint
 @app.get("/")
@@ -59,7 +66,18 @@ async def root():
         "message": "Welcome to FLUX-DNA - The AI-Native Psychometric Sanctuary",
         "version": "2026.1.0",
         "phoenix": "ASCENDED",
-        "documentation": "/api/docs"
+        "guardian": "WATCHING",
+        "people": "FREE",
+        "features": {
+            "8_scale_oracle": "Claude 4 Sonnet (Al-Hakim & Al-Sheikha)",
+            "zero_knowledge": "AES-256-GCM Client-Side Encryption",
+            "sovereigness_sanctuary": "4-Pillar Protection System",
+            "time_gate_links": "24-Hour / 3-Click Self-Destruct",
+            "founder_dashboard": "/api/founder/metrics",
+            "bilingual": "English & Saudi Arabic"
+        },
+        "documentation": "/api/docs",
+        "founder_email": "Yazeedx91@gmail.com"
     }
 
 # Startup event
@@ -76,6 +94,10 @@ async def startup_event():
         # Initialize encryption service
         encryption = get_encryption_service()
         logger.info("✅ Zero-Knowledge Encryption active (AES-256-GCM)")
+        
+        # Initialize email service
+        email = get_email_service()
+        logger.info("✅ Email Service active (Resend)")
         
         logger.info("🚀 THE PHOENIX HAS ASCENDED")
         logger.info("👁️  THE GUARDIAN IS WATCHING")
@@ -101,7 +123,7 @@ if __name__ == "__main__":
     logger.info(f"🔥 Starting FLUX-DNA on 0.0.0.0:{port}")
     
     uvicorn.run(
-        "server:app",
+        "server_new:app",
         host="0.0.0.0",
         port=port,
         reload=False,  # Production mode
