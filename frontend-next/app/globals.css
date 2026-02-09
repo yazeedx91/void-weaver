@@ -1,69 +1,75 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Noto+Kufi+Arabic:wght@300;400;500;600;700&display=swap');
-
-@layer base {
-  :root {
-    --background: 222 47% 2%;
-    --foreground: 210 40% 96%;
-    --card: 222 47% 4%;
-    --card-foreground: 210 40% 96%;
-    --popover: 222 47% 4%;
-    --popover-foreground: 210 40% 96%;
-    --primary: 160 84% 39%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 222 47% 8%;
-    --secondary-foreground: 210 40% 96%;
-    --muted: 222 47% 12%;
-    --muted-foreground: 215 20% 55%;
-    --accent: 160 84% 39%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 222 30% 15%;
-    --input: 222 30% 15%;
-    --ring: 160 84% 39%;
-    --radius: 1rem;
-  }
+@theme {
+  --color-background: hsl(222 47% 2%);
+  --color-foreground: hsl(210 40% 96%);
+  --color-card: hsl(222 47% 4%);
+  --color-card-foreground: hsl(210 40% 96%);
+  --color-primary: hsl(160 84% 39%);
+  --color-primary-foreground: hsl(210 40% 98%);
+  --color-secondary: hsl(222 47% 8%);
+  --color-secondary-foreground: hsl(210 40% 96%);
+  --color-muted: hsl(222 47% 12%);
+  --color-muted-foreground: hsl(215 20% 55%);
+  --color-accent: hsl(160 84% 39%);
+  --color-accent-foreground: hsl(210 40% 98%);
+  --color-destructive: hsl(0 72% 51%);
+  --color-border: hsl(222 30% 15%);
+  --color-input: hsl(222 30% 15%);
+  --color-ring: hsl(160 84% 39%);
+  --radius: 1rem;
+  
+  /* Custom colors */
+  --color-emerald-glow: hsl(160 84% 39%);
+  --color-gold-glow: hsl(43 96% 56%);
+  --color-void: hsl(222 47% 2%);
+  --color-obsidian: hsl(222 47% 4%);
+  
+  /* Pearl theme colors */
+  --color-pearl-50: hsl(210 40% 98%);
+  --color-pearl-100: hsl(210 40% 96%);
+  --color-pearl-200: hsl(210 35% 92%);
+  --color-moonlight: hsl(222 47% 25%);
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-
   html {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', system-ui, sans-serif;
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
+    background: var(--color-background);
+    color: var(--color-foreground);
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Space Grotesk', system-ui, sans-serif;
   }
 }
 
 @layer components {
   .glass-card {
-    @apply relative overflow-hidden rounded-2xl;
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
     background: hsl(222 47% 8% / 0.4);
     backdrop-filter: blur(64px);
     border: 1px solid hsl(210 40% 96% / 0.1);
   }
 
   .glass {
-    @apply relative overflow-hidden rounded-2xl;
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
     background: hsl(222 47% 4% / 0.6);
     backdrop-filter: blur(24px);
     border: 1px solid hsl(160 84% 39% / 0.15);
   }
 
   .glass-pearl {
-    @apply relative overflow-hidden rounded-2xl;
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
     background: hsl(210 40% 96% / 0.9);
     backdrop-filter: blur(24px);
     border: 1px solid hsl(222 47% 25% / 0.1);
@@ -93,6 +99,7 @@
       transparent 50%
     );
     animation: drift 20s ease-in-out infinite;
+    pointer-events: none;
   }
 
   .text-emerald-glow {
@@ -138,6 +145,7 @@
   }
 }
 
+/* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -153,4 +161,12 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(160 84% 39% / 0.5);
+}
+
+/* Print styles */
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
 }
