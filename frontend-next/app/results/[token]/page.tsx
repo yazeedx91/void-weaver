@@ -3,8 +3,9 @@
 import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import { apiClient } from "@/lib/api";
 import Link from "next/link";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || '';
 
 export default function ResultsPage() {
   const params = useParams();
@@ -14,38 +15,52 @@ export default function ResultsPage() {
   const [data, setData] = useState<any>(null);
   const [clicksRemaining, setClicksRemaining] = useState(3);
   const [timeRemaining, setTimeRemaining] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     validateLink();
-  }, []);
+  }, [token]);
 
   const validateLink = async () => {
     try {
-      // In production, call backend to validate time-gate link
-      // const response = await apiClient.validateTimeGateLink(token);
+      const response = await fetch(`${API_URL}/api/assessment/results/${token}`);
       
-      // Simulated for now
-      setTimeout(() => {
-        setValid(true);
+      if (!response.ok) {
+        const errorData = await response.json();
+        setValid(false);
+        setErrorMessage(errorData.detail?.message || "This link has expired or is invalid.");
         setValidating(false);
-        setClicksRemaining(2);
-        setTimeRemaining("23 hours 45 minutes");
-        setData({
-          title: "The Strategic Phoenix",
-          stability: "Sovereign",
-          superpower: "You operate across an expanded dynamic range...",
-          sarValue: 5500,
-        });
-      }, 1000);
+        return;
+      }
+      
+      const result = await response.json();
+      
+      if (result.valid) {
+        setValid(true);
+        setData(result.results);
+        setClicksRemaining(result.time_gate.clicks_remaining);
+        
+        // Format time remaining
+        const hours = Math.floor(result.time_gate.time_remaining_hours);
+        const minutes = Math.round((result.time_gate.time_remaining_hours - hours) * 60);
+        setTimeRemaining(`${hours} hours ${minutes} minutes`);
+      } else {
+        setValid(false);
+        setErrorMessage(result.message || "Link validation failed.");
+      }
+      
+      setValidating(false);
     } catch (error) {
+      console.error("Validation error:", error);
       setValid(false);
+      setErrorMessage("Failed to validate link. Please try again.");
       setValidating(false);
     }
   };
 
   const downloadCertificate = () => {
     // Generate and download PDF certificate
-    alert("Certificate download will be implemented");
+    alert("Certificate download will be implemented in the next phase!");
   };
 
   if (validating) {
