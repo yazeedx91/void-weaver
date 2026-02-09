@@ -190,8 +190,16 @@ async def complete_assessment(request: CompleteAssessmentRequest):
         claude = get_claude_service()
         time_gate = get_time_gate_service()
         
-        # Get session data
-        session = _conversation_sessions.get(request.session_id, {})
+        # Get session data (or create a default)
+        session = _conversation_sessions.get(request.session_id, {
+            "persona": "al_hakim",
+            "language": "en",
+            "messages": []
+        })
+        
+        # Store session if it doesn't exist
+        if request.session_id not in _conversation_sessions:
+            _conversation_sessions[request.session_id] = session
         
         # Generate stability analysis with Claude
         analysis_prompt = """Based on our conversation, provide a comprehensive stability analysis:
