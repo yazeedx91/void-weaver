@@ -2,10 +2,13 @@
 # FLUX-DNA Daily Pulse Cron Job
 # Runs at 9:00 AM AST (6:00 AM UTC)
 
-# Configuration
-BACKEND_URL="http://localhost:8080"
+# Configuration - use environment variable or default
+BACKEND_URL="${FLUX_BACKEND_URL:-https://flux-sanctuary.preview.emergentagent.com}"
 FOUNDER_PASSWORD="PhoenixSovereign2026!"
 LOG_FILE="/var/log/flux-dna-pulse.log"
+
+# Ensure log directory exists
+mkdir -p "$(dirname "$LOG_FILE")" 2>/dev/null || LOG_FILE="/tmp/flux-dna-pulse.log"
 
 # Log timestamp
 echo "[$(date '+%Y-%m-%d %H:%M:%S')] Starting daily pulse..." >> "$LOG_FILE"
@@ -14,7 +17,9 @@ echo "[$(date '+%Y-%m-%d %H:%M:%S')] Starting daily pulse..." >> "$LOG_FILE"
 RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
   "${BACKEND_URL}/api/founder/send-pulse" \
   -H "Authorization: Bearer ${FOUNDER_PASSWORD}" \
-  -H "Content-Type: application/json")
+  -H "Content-Type: application/json" \
+  --connect-timeout 30 \
+  --max-time 60)
 
 HTTP_CODE=$(echo "$RESPONSE" | tail -n 1)
 BODY=$(echo "$RESPONSE" | head -n -1)
