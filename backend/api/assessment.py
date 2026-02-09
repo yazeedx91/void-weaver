@@ -64,8 +64,29 @@ async def start_assessment(request: StartAssessmentRequest):
         # Get initial greeting
         initial_message = await claude.send_message(
             chat,
-            "Begin the assessment. Introduce yourself and ask the first question."
+            "Begin the assessment. Introduce yourself warmly and ask the first question to understand who I am."
         )
+        
+        # Store session context
+        _conversation_sessions[session_id] = {
+            "persona": request.persona,
+            "language": request.language,
+            "email": request.user_email,
+            "messages": [{"role": "assistant", "content": initial_message}],
+            "started_at": datetime.utcnow().isoformat(),
+            "current_scale": "hexaco",
+            "responses": {}
+        }
+        
+        # Log to founder analytics
+        try:
+            db = get_database_service()
+            await db.log_founder_event("assessment_started", {
+                "language": request.language,
+                "persona": request.persona
+            })
+        except Exception:
+            pass  # Don't fail if analytics logging fails
         
         return {
             "session_id": session_id,
