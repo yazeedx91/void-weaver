@@ -372,18 +372,19 @@ class TestFounderDashboardAPI:
 
 
 class TestRootEndpoint:
-    """Test root endpoint"""
+    """Test root API endpoint"""
     
-    def test_root_returns_welcome(self):
-        """Test root endpoint returns welcome message"""
-        response = requests.get(f"{BASE_URL}/")
+    def test_api_root_returns_welcome(self):
+        """Test /api/ root endpoint returns welcome message"""
+        response = requests.get(f"{BASE_URL}/api/")
         assert response.status_code == 200
         
         data = response.json()
         assert data["status"] == "FORTRESS_ACTIVE"
-        assert "features" in data
-        assert "8_scale_oracle" in data["features"]
-        print(f"✅ Root endpoint: {data['status']}")
+        assert data["mission"] == "SOVEREIGN_LIBERATION"
+        assert "encryption" in data
+        assert data["encryption"] == "AES-256-GCM"
+        print(f"✅ API root endpoint: {data['status']}")
 
 
 if __name__ == "__main__":
