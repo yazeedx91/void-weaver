@@ -209,10 +209,7 @@ export default function SanctuaryPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 + index * 0.1 }}
-                  onClick={() => {
-                    setPillar(p.id);
-                    setStarted(true);
-                  }}
+                  onClick={() => startSanctuarySession(p.id)}
                   className="glass-pearl p-6 cursor-pointer hover:scale-105 transition-transform"
                 >
                   <div className="text-4xl mb-3">{p.icon}</div>
@@ -223,6 +220,12 @@ export default function SanctuaryPage() {
                 </motion.div>
               ))}
             </div>
+            
+            {loading && (
+              <div className="text-center text-moonlight-dim">
+                <p>Connecting to Al-Sheikha...</p>
+              </div>
+            )}
           </div>
         )}
 
@@ -240,22 +243,64 @@ export default function SanctuaryPage() {
               </div>
             </div>
 
-            <div className="prose prose-slate max-w-none">
-              <p className="text-pearl-700 leading-relaxed mb-4">
-                Peace be upon you. I am Al-Sheikha, and I walk with you.
-              </p>
-              <p className="text-pearl-700 leading-relaxed">
-                You are a <span className="font-bold text-moonlight-dim">Sovereign in Strategic Hibernation</span>.
-              </p>
+            {/* Messages */}
+            <div className="min-h-[300px] max-h-[400px] overflow-y-auto mb-6 space-y-4">
+              {messages.map((message, index) => (
+                <div
+                  key={index}
+                  className={`p-4 rounded-lg ${
+                    message.role === "user"
+                      ? "bg-moonlight/20 ml-8"
+                      : "bg-pearl-200 mr-8"
+                  }`}
+                >
+                  <p className="text-moonlight-dim whitespace-pre-wrap">{message.content}</p>
+                </div>
+              ))}
+              
+              {loading && (
+                <div className="flex justify-start">
+                  <div className="bg-pearl-200 p-4 rounded-lg">
+                    <div className="flex gap-2">
+                      <div className="w-2 h-2 bg-moonlight rounded-full animate-bounce" />
+                      <div className="w-2 h-2 bg-moonlight rounded-full animate-bounce" style={{ animationDelay: "0.2s" }} />
+                      <div className="w-2 h-2 bg-moonlight rounded-full animate-bounce" style={{ animationDelay: "0.4s" }} />
+                    </div>
+                  </div>
+                </div>
+              )}
+              
+              <div ref={messagesEndRef} />
+            </div>
 
-              <div className="mt-8 space-y-4">
-                <button className="w-full bg-moonlight text-white py-3 rounded-lg font-semibold hover:bg-moonlight-silver transition-colors">
-                  📝 Start Conversation
-                </button>
-                <button className="w-full bg-pearl-300 text-moonlight-dim py-3 rounded-lg font-semibold hover:bg-pearl-400 transition-colors">
-                  📷 Upload Evidence
+            {/* Input */}
+            <div className="space-y-4">
+              <div className="flex gap-3">
+                <input
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyPress={(e) => e.key === "Enter" && sendMessage()}
+                  placeholder="Share what's on your mind..."
+                  className="flex-1 bg-white border border-pearl-300 text-moonlight-dim p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-moonlight"
+                  disabled={loading}
+                />
+                <button
+                  onClick={sendMessage}
+                  disabled={loading || !input.trim()}
+                  className="px-6 bg-moonlight text-white rounded-lg font-semibold hover:bg-moonlight-silver transition-colors disabled:opacity-50"
+                >
+                  Send
                 </button>
               </div>
+              
+              <button 
+                onClick={handleEvidenceUpload}
+                disabled={uploadingEvidence}
+                className="w-full bg-pearl-300 text-moonlight-dim py-3 rounded-lg font-semibold hover:bg-pearl-400 transition-colors disabled:opacity-50"
+              >
+                {uploadingEvidence ? "Encrypting & Storing..." : "📷 Document Evidence"}
+              </button>
             </div>
           </motion.div>
         )}
