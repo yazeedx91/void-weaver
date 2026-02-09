@@ -72,3 +72,80 @@ body {
   background: rgba(79, 70, 229, 0.3);
   color: #FFD700;
 }
+
+/* Responsive Design - Mobile First */
+@media (max-width: 768px) {
+  /* Landing page adjustments */
+  h1 {
+    font-size: 2.5rem !important;
+  }
+  
+  h2 {
+    font-size: 1.5rem !important;
+  }
+  
+  /* Glass containers padding */
+  .glass, .glass-pearl {
+    padding: 1rem !important;
+  }
+  
+  /* Quick exit button mobile */
+  .quick-exit-mobile {
+    top: 1rem;
+    right: 1rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+  
+  /* Assessment chat mobile */
+  .chat-message {
+    max-width: 90% !important;
+  }
+  
+  /* Founder dashboard mobile */
+  .dashboard-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Extra small screens */
+  .phoenix-icon {
+    font-size: 3rem !important;
+  }
+  
+  /* Button sizing */
+  button {
+    padding: 0.75rem 1.5rem !important;
+    font-size: 0.875rem !important;
+  }
+  
+  /* Scales grid */
+  .scales-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.5rem !important;
+  }
+}
+
+/* Touch-friendly targets */
+@media (hover: none) and (pointer: coarse) {
+  button, a, input, textarea {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Landscape mobile optimization */
+@media (max-width: 896px) and (orientation: landscape) {
+  .min-h-screen {
+    min-height: auto;
+  }
+}
+
+/* Print styles */
+@media print {
+  .glass, .glass-pearl {
+    background: white;
+    border: 1px solid #ccc;
+  }
+}
