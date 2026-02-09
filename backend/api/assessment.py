@@ -257,6 +257,20 @@ Remember: No pathological labels. Focus on sovereignty and expanded dynamic rang
         except Exception:
             pass
         
+        # Generate certificate link
+        from api.certificate import _certificate_cache
+        cert_token = str(uuid.uuid4())
+        _certificate_cache[link_data["link_token"]] = {
+            "session_id": request.session_id,
+            "user_id": request.user_id,
+            "sovereign_title": sovereign_title,
+            "stability": "Sovereign",
+            "superpower": analysis[:500] if len(analysis) > 500 else analysis,
+            "scores": None,
+            "sar_value": 5500,
+            "created_at": datetime.utcnow().isoformat()
+        }
+        
         return {
             "session_id": request.session_id,
             "status": "complete",
@@ -266,6 +280,7 @@ Remember: No pathological labels. Focus on sovereignty and expanded dynamic rang
             "user_cost": 0,
             "certificate_ready": True,
             "results_link": link_data["link_url"],
+            "certificate_link": f"/api/certificate/download/{link_data['link_token']}",
             "link_token": link_data["link_token"],
             "expires_at": link_data["expires_at"],
             "max_clicks": link_data["max_clicks"]
