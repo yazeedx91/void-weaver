@@ -10,8 +10,14 @@ from datetime import datetime
 
 from services.claude_service import get_claude_service
 from services.encryption import get_encryption_service
+from services.time_gate import get_time_gate_service
+from services.database import get_database_service
 
 router = APIRouter(prefix="/api/assessment", tags=["Assessment"])
+
+# In-memory session storage (for conversation context)
+# In production, use Redis for session persistence
+_conversation_sessions: Dict[str, dict] = {}
 
 
 class StartAssessmentRequest(BaseModel):
