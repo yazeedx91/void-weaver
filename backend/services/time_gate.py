@@ -106,7 +106,8 @@ class TimeGateService:
         user_id: str,
         session_id: str,
         max_clicks: int = 3,
-        expiry_hours: int = 24
+        expiry_hours: int = 24,
+        link_type: str = "results"
     ) -> Dict:
         """
         Create a time-gated link with 24h expiration and 3-click limit
@@ -116,6 +117,7 @@ class TimeGateService:
             session_id: Assessment session ID
             max_clicks: Maximum allowed accesses (default: 3)
             expiry_hours: Link expiration in hours (default: 24)
+            link_type: Type of link - 'results' or 'certificate'
             
         Returns:
             Dictionary with link token and metadata
