@@ -133,6 +133,7 @@ class TimeGateService:
         link_data = {
             'user_id': user_id,
             'session_id': session_id,
+            'link_type': link_type,
             'created_at': created_at.isoformat(),
             'expires_at': expires_at.isoformat(),
             'max_clicks': max_clicks,
