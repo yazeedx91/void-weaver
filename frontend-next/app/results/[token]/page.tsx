@@ -91,7 +91,7 @@ export default function ResultsPage() {
           <div className="text-6xl mb-6">⏰</div>
           <h1 className="text-3xl font-bold text-pearl-200 mb-4">Time-Gate Closed</h1>
           <p className="text-pearl-400 mb-8">
-            This link has expired or reached its maximum access limit.
+            {errorMessage || "This link has expired or reached its maximum access limit."}
           </p>
           <p className="text-pearl-500 text-sm mb-8">
             Results links self-destruct after 24 hours or 3 accesses for your privacy and security.
@@ -135,30 +135,30 @@ export default function ResultsPage() {
         >
           <div className="text-center mb-8">
             <div className="text-6xl mb-4">👑</div>
-            <h1 className="text-4xl font-bold text-gold mb-2">{data.title}</h1>
+            <h1 className="text-4xl font-bold text-gold mb-2">{data?.sovereign_title || data?.title || "Your Sovereign Title"}</h1>
             <p className="text-emerald-400 text-xl">By the fire of the Phoenix, you are recognized</p>
           </div>
 
           <div className="prose prose-invert max-w-none">
             <div className="glass-pearl p-6 mb-6">
               <h3 className="text-xl font-bold text-moonlight-dim mb-3">Stability Classification</h3>
-              <p className="text-3xl font-bold text-emerald-400">{data.stability}</p>
+              <p className="text-3xl font-bold text-emerald-400">{data?.stability || "Sovereign"}</p>
             </div>
 
             <div className="bg-obsidian-light p-6 rounded-lg mb-6">
               <h3 className="text-xl font-bold text-pearl-200 mb-3">Your Sovereign Superpower</h3>
-              <p className="text-pearl-300 leading-relaxed">{data.superpower}</p>
+              <p className="text-pearl-300 leading-relaxed whitespace-pre-wrap">{data?.superpower || data?.analysis || "You operate across an expanded dynamic range..."}</p>
             </div>
 
             <div className="bg-gradient-to-r from-emerald-500/10 to-gold/10 p-6 rounded-lg">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-pearl-400 text-sm">Total Assessment Value</p>
-                  <p className="text-gold text-3xl font-bold">SAR {data.sarValue.toLocaleString()}</p>
+                  <p className="text-gold text-3xl font-bold">SAR {(data?.sar_value || data?.sarValue || 5500).toLocaleString()}</p>
                 </div>
                 <div>
                   <p className="text-pearl-400 text-sm">Your Cost</p>
-                  <p className="text-emerald-400 text-3xl font-bold">SAR 0</p>
+                  <p className="text-emerald-400 text-3xl font-bold">SAR {data?.user_cost || 0}</p>
                 </div>
               </div>
               <p className="text-pearl-500 text-xs mt-4">
