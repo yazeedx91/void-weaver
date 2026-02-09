@@ -44,7 +44,7 @@ export default function SanctuaryPage() {
   ];
 
   return (
-    <main className=\"min-h-screen bg-pearl-gradient relative\">
+    <main className="min-h-screen bg-pearl-gradient relative">
       {/* Quick Exit Button - ALWAYS VISIBLE */}
       {showQuickExit && (
         <motion.button

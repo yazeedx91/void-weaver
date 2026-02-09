@@ -243,7 +243,7 @@ export default function AssessmentPage() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder={language === \"en\" ? \"Type your response...\" : \"اكتب إجابتك...\"}
+              placeholder={language === "en" ? "Type your response..." : "اكتب إجابتك..."}
               className=\"flex-1 bg-obsidian-light text-pearl-100 rounded-xl p-4 focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none\"
               rows={3}
               disabled={loading}
