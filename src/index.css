@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Noto+Kufi+Arabic:wght@300;400;500;600;700&display=swap');
 
 @layer base {
   :root {
@@ -44,6 +44,7 @@
     --emerald-glow: 160 84% 39%;
     --crimson-glow: 0 72% 51%;
     --teal-glow: 174 84% 45%;
+    --gold-glow: 43 96% 56%;
     
     /* Glassmorphism */
     --glass-bg: 222 47% 8% / 0.4;
@@ -60,7 +61,8 @@
     --sidebar-ring: 239 84% 67%;
   }
 
-  .dark {
+  .dark,
+  .sanctuary-void {
     --background: 222 47% 2%;
     --foreground: 210 40% 96%;
     --card: 222 47% 4%;
@@ -81,6 +83,36 @@
     --input: 222 30% 15%;
     --ring: 239 84% 67%;
   }
+
+  /* Pearl Moonlight — Sovereigness Sanctuary Mode */
+  .sanctuary-pearl {
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
+    --card: 210 40% 96%;
+    --card-foreground: 222 47% 11%;
+    --popover: 210 40% 96%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 160 84% 36%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 93%;
+    --secondary-foreground: 222 47% 20%;
+    --muted: 210 40% 90%;
+    --muted-foreground: 215 20% 45%;
+    --accent: 160 60% 40%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214 32% 85%;
+    --input: 214 32% 85%;
+    --ring: 160 84% 36%;
+    --void: 210 40% 98%;
+    --obsidian: 210 40% 96%;
+    --glass-bg: 210 40% 96% / 0.6;
+    --glass-border: 222 47% 20% / 0.1;
+    --glass-highlight: 0 0% 100% / 0.3;
+    --emerald-glow: 160 84% 36%;
+    --gold-glow: 43 96% 46%;
+  }
 }
 
 @layer base {
@@ -90,6 +122,15 @@
 
   html {
     font-family: 'Inter', sans-serif;
+    transition: background-color 0.5s ease, color 0.3s ease;
+  }
+
+  .font-arabic {
+    font-family: 'Noto Kufi Arabic', sans-serif;
+  }
+
+  [dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3, [dir="rtl"] h4, [dir="rtl"] h5, [dir="rtl"] h6 {
+    font-family: 'Noto Kufi Arabic', sans-serif;
   }
 
   body {
