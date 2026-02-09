@@ -2,7 +2,7 @@
 FLUX-DNA Founder Dashboard API
 The Intelligence Director
 """
-from fastapi import APIRouter, HTTPException, Header
+from fastapi import APIRouter, HTTPException, Header, Depends
 from pydantic import BaseModel
 from typing import Dict, List, Optional
 from datetime import datetime, timedelta
