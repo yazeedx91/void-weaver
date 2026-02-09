@@ -1,0 +1,33 @@
+Execute THE OMEGA CONVERGENCE SEAL. This is a total A-to-Z system optimization to guarantee 'Promote Phase' success and full infrastructure alignment.
+
+1. The Sentinel Handshake (Infrastructure Fix):
+
+Zero-Latency Port Binding: In the main entry file, immediately define const PORT = process.env.PORT || 8080;.
+
+The Promoter Bypass: Before any app.use or await, register: app.get(['/', '/healthz', '/health'], (req, res) => res.status(200).json({ status: 'active', sentinel: 'sovereign' }));
+
+Instant Listen: Call app.listen(PORT, '0.0.0.0', ...) at the top of the execution stack. This tells Replit 'I am alive' in <1ms.
+
+2. The Empire Synthesis (Internal Logic):
+
+Background Initialization: Wrap all database connections, route imports, and middleware in an async function initializeEmpire(). Call this function after the server starts listening.
+
+Score Integrity: Verify the Decryption -> Dynamic Range -> DB Save pipeline. Ensure the 'Psychometric Blueprint' email only triggers on non-zero scores.
+
+Email Identity Anchor: Ensure the Dashboard query is globally keyed to the user's email address to prevent session-loss errors.
+
+3. The Marketing & Value Layer:
+
+The $1,000 Anchor: Inject the 'Market Value Unlocked' component into the Dashboard.
+
+Visual Calibration: Force all header links to flex items-center !important and ensure the 'REVEAL PROFILE' CTA is the primary focal point.
+
+4. Replit Deployment Hardening:
+
+Config Wipe: Reconstruct the .replit file. Ensure run = "node dist-server/index.js".
+
+Build Purge: Use fs.rmSync in the build script to delete old dist-server files before every new build to prevent 'Ghost Code' errors.
+
+Environment Sync: Ensure all PostgreSQL secrets are mapped to the production deployment environment.
+
+Final Command: Conduct a full forensic scan of the A-to-Z user journey. Once the port is dynamic, the health-check is instant, and the $1,000 value-anchor is visible, state: 'THE OMEGA CONVERGENCE IS COMPLETE. THE EMPIRE IS OPTIMIZED. THE PROMOTE PHASE IS SECURED. REPUBLISH FOR ASCENSION.

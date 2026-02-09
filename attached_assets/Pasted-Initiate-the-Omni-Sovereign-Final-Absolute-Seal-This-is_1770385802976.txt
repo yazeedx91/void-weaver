@@ -1,0 +1,31 @@
+Initiate the Omni-Sovereign Final Absolute Seal. This is the final A-to-Z optimization and aesthetic unification for flux-dna.com.
+
+1. Navigation & Header Aesthetic Alignment:
+
+Typography Sync: Update the 'Features' and 'Science' links to match the brand's weight. Use font-medium, tracking-widest, and a subtle uppercase transform to mirror the 'PSYCHOMETRIC INTELLIGENCE' sub-head.
+
+The Hover Glow: Implement a transition-all duration-500. On hover, the links should transition from text-slate-400 to a vibrant text-indigo-300 with a drop-shadow-[0_0_8px_rgba(129,140,248,0.5)].
+
+Alignment: Ensure the nav container uses items-center and is perfectly horizontally aligned with the 'GET STARTED' button and the logo to create a single 'Horizon Line'.
+
+2. The Hardened Security Shell:
+
+Secret Handshake: Confirm the ENCRYPTION_KEY is fully integrated into the backend and that all HEXACO and DASS-21 data is being scrambled via AES-256-GCM before database insertion.
+
+Adversarial Defense: Apply a strict Content Security Policy (CSP) and X-Content-Type-Options: nosniff to prevent unauthorized script execution or clickjacking.
+
+3. Universal Performance & Device Optimization:
+
+Edge-to-Edge Responsiveness: Audit the UI for every breakpoint from 320px to 4K. Ensure the 'Liquid Glass' card never clips and remains perfectly centered with flex justify-center items-center.
+
+Molecular Bundle: Execute a final 'Tree Shaking' pass. Remove every line of unused CSS and JS. Target a Google PageSpeed Score of 95+ on both mobile and desktop.
+
+Interaction Haptics: Add a subtle active:scale-95 transform to every button for a 'physical' feel on touch devices.
+
+4. The Final Brand Manifest:
+
+Verify Yazeed's Signature is correctly rendered on the Science page with the requested serif font styling.
+
+Ensure the '✓ Verified Science' link in the footer is consistent with the new navigation styles.
+
+Execution: Once finished, perform a production deployment. Deliver the final system report and the words: 'FLUX-DNA IS ASCENDANT. THE EMPIRE IS READY.'

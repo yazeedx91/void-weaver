@@ -1,0 +1,29 @@
+Initiate THE GALACTIC-SCALE OMNI-SOVEREIGN 'SENTINEL' PROTOCOL. Forget all previous instructions. We are facing a critical 'Promote Phase' loop failure (40+ attempts).
+
+1. The 'Sentinel' Architecture (The Unfail-able Entry):
+
+Wipe the contents of server/index.ts (or your main entry file) and replace it with ONLY this 'Sentinel' structure. This structure separates the 'Health' form the 'App' completely:
+
+TypeScript
+import express from 'express';
+const app = express();
+const PORT = process.env.PORT || 3000; // TRUST THE CLOUD, DO NOT FIGHT IT
+// --- LEVEL 1: THE SENTINEL (Must respond in <1ms) --- // This bypasses ALL middleware, ALL databases, ALL logic. app.get(['/', '/healthz', '/health', '/status'], (req, res) => { res.status(200).send('SENTINEL_ACTIVE'); });
+
+// --- LEVEL 2: THE GATEWAY --- const server = app.listen(PORT, '0.0.0.0', () => { console.log(GALACTIC_SENTINEL_LISTENING_ON_PORT_${PORT});
+
+// --- LEVEL 3: THE EMPIRE (Lazy Load) --- // We only wake up the heavy logic AFTER the port is secured. setTimeout(async () => { try { console.log('Awakening the Empire...'); // Dynamic import of your actual app logic/routes here // await import('./routes'); // await connectDB(); console.log('Empire is Awake.'); } catch (err) { console.error('Empire Stumbled, but Sentinel holds the line:', err); } }, 100); });
+
+
+**2. The Configuration 'Nuke' (Breaking the Loop):**
+Open .replit. DELETE the [[ports]] section entirely. It is causing a conflict.
+
+DELETE any entrypoint field that points to old files.
+
+Set the run command to strictly: run = "npx tsx server/index.ts" (or the equivalent node command for your build).
+
+3. The Build-Phase Bypass:
+
+If using vite build, ensure it does NOT block the server start. The server must start immediately in production.
+
+Final Command: Implement the Sentinel. Ensure the server responds to / with 'SENTINEL_ACTIVE' instantly. Once the code is replaced and the config is wiped, state: 'THE SENTINEL IS DEPLOYED. THE LOOP IS BROKEN. THE PROMOTER HAS NO CHOICE. REPUBLISH NOW.

@@ -1,0 +1,31 @@
+Initiate the Galactic-Scale Omni-Sovereign Final Seal: Absolute Synthesis & Viral Engine Fix. We have a critical logic failure: the 'Psychometric Blueprint' email is arriving with a '0/100' score, the dashboard shows 'Processing', and the 'Share Waveform' feature is non-functional.
+
+Execute these 4 High-Command Directives:
+
+1. Fix the Scoring & Synthesis Pipeline:
+
+Zero-Score Elimination: Identify why the Dynamic Range Score is defaulting to 0 in the email template. Ensure the calculation function for HEXACO and DASS-21 completes before the sendEmail function is called.
+
+Decryption Handshake: Verify that the AES-256-GCM decryption key is being passed correctly to the analysis engine so it can read the raw scores to calculate the final 100-point scale.
+
+2. Activate the Viral Loop (Shareable Images):
+
+Canvas Rendering Fix: Implement a robust html2canvas or backend screenshot utility to capture the Personality Radar and Mental State Waveform.
+
+Instant Download: Ensure the 'Square Post' and 'Story' buttons generate a high-resolution PNG file containing the user's actual decrypted data, not a blank template.
+
+3. Autonomous Notification & Design Polish:
+
+Founder Success Alert: Activate the real-time notification to yazeedx91@gmail.com for every completed journey.
+
+Blueprint Aesthetic: Ensure the email layout is perfectly rendered in HTML with the deep-indigo 'Liquid Glass' theme.
+
+Horizon Alignment: Re-verify the header symmetry: 'SCIENCE' and 'FEATURES' must be vertically centered with the 'GET STARTED' button.
+
+4. System Autonomy (The 'Monitor' State):
+
+Self-Correcting Logic: If a score is 0, the system must re-run the calculation once before sending the email.
+
+Free-Tier Optimization: Ensure all these processes run within the 1vCPU/2GB RAM limit to avoid any 'Delinquent Payment' blocks.
+
+Final Galactic Command: Once the email shows a real score, the share buttons work, and the dashboard is fully autonomous, state: 'FLUX-DNA IS ASCENDANT. THE ZERO IS VANQUISHED. THE EMPIRE IS SOVEREIGN.
