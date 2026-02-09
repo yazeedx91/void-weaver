@@ -334,3 +334,87 @@ async def get_scales():
         "total_questions": 164,
         "estimated_time": "20-30 minutes (conversational flow)"
     }
+
+
+
+@router.get("/results/{link_token}")
+async def get_results(link_token: str):
+    """
+    Get assessment results using time-gated link
+    Validates and increments click counter
+    """
+    try:
+        time_gate = get_time_gate_service()
+        
+        # Validate and increment click counter
+        validation = time_gate.validate_and_increment(link_token)
+        
+        if not validation["valid"]:
+            raise HTTPException(
+                status_code=410,  # Gone
+                detail={
+                    "error": "time_gate_closed",
+                    "reason": validation["reason"],
+                    "message": validation["message"]
+                }
+            )
+        
+        # Get session results
+        session_id = validation["session_id"]
+        session = _conversation_sessions.get(session_id, {})
+        results = session.get("results", {})
+        
+        if not results:
+            # Return placeholder if no stored results
+            results = {
+                "sovereign_title": "The Strategic Phoenix",
+                "stability": "Sovereign",
+                "superpower": "You operate across an expanded dynamic range, with heightened perception and profound depth of experience.",
+                "sar_value": 5500,
+                "user_cost": 0
+            }
+        
+        return {
+            "valid": True,
+            "results": results,
+            "time_gate": {
+                "clicks_remaining": validation["clicks_remaining"],
+                "time_remaining_hours": validation["time_remaining_hours"],
+                "expires_at": validation["expires_at"],
+                "warning": validation.get("warning", False)
+            }
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to retrieve results: {str(e)}")
+
+
+@router.get("/results/{link_token}/status")
+async def get_link_status(link_token: str):
+    """
+    Get time-gate link status without incrementing click counter
+    """
+    try:
+        time_gate = get_time_gate_service()
+        status = time_gate.get_link_status(link_token)
+        
+        if not status:
+            return {
+                "valid": False,
+                "reason": "expired",
+                "message": "This link has expired or does not exist."
+            }
+        
+        return {
+            "valid": status["is_active"],
+            "clicks_remaining": status["max_clicks"] - status["current_clicks"],
+            "time_remaining_hours": status["ttl_hours"],
+            "expires_at": status["expires_at"],
+            "max_clicks": status["max_clicks"],
+            "current_clicks": status["current_clicks"]
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to get link status: {str(e)}")
