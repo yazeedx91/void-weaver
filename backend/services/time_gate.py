@@ -59,12 +59,21 @@ class TimeGateService:
     
     def _rest_set(self, key: str, value: str, ex: int):
         """Set key with expiration using REST API"""
+        # Upstash REST API format: POST /set/key with body
         response = requests.post(
-            f"{self.rest_url}/set/{key}/EX/{ex}",
+            f"{self.rest_url}/set/{key}",
             headers=self.headers,
-            json=value
+            data=value  # Send value as raw body, not JSON
         )
-        return response.json()
+        result = response.json()
+        
+        # Set expiration separately
+        expire_response = requests.post(
+            f"{self.rest_url}/expire/{key}/{ex}",
+            headers=self.headers
+        )
+        
+        return result
     
     def _rest_get(self, key: str):
         """Get key using REST API"""
