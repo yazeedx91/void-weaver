@@ -184,40 +184,83 @@ async def complete_assessment(request: CompleteAssessmentRequest):
     """
     Complete assessment and generate stability analysis
     Returns sovereign title, analysis, and certificate data
+    Creates time-gated link for results
     """
     try:
         claude = get_claude_service()
-        encryption = get_encryption_service()
+        time_gate = get_time_gate_service()
         
-        # Decrypt all responses for analysis
-        # Note: In production with Supabase, decrypt from stored data
-        decrypted_data = {}
-        for scale, encrypted in request.all_responses_encrypted.items():
-            decrypted_data[scale] = encryption.decrypt(encrypted, request.user_id)
+        # Get session data
+        session = _conversation_sessions.get(request.session_id, {})
         
         # Generate stability analysis with Claude
-        analysis = await claude.analyze_stability(
-            assessment_data=decrypted_data,
-            language="en"
+        analysis_prompt = """Based on our conversation, provide a comprehensive stability analysis:
+
+1. Overall Stability Classification (Sovereign / Strategic Hibernation / At Risk / Critical)
+2. Expanded Cognitive Bandwidth Analysis
+3. Strategic Recommendations
+4. A unique "Sovereign Title" (e.g., "The Strategic Phoenix", "The Quiet Storm")
+5. Positive Superpower Statement
+
+Remember: No pathological labels. Focus on sovereignty and expanded dynamic range."""
+
+        chat = await claude.create_conversation(
+            session_id=f"analysis-{request.session_id}",
+            persona=session.get("persona", "al_hakim"),
+            language=session.get("language", "en")
         )
         
-        # Encrypt analysis for storage
-        analysis_encrypted = encryption.encrypt(analysis, request.user_id)
+        analysis = await claude.send_message(chat, analysis_prompt)
         
-        # TODO: Generate neural signatures (vector embeddings)
-        # TODO: Store in Supabase
-        # TODO: Create time-gated link
-        # TODO: Generate certificate
+        # Extract sovereign title (simple extraction)
+        sovereign_title = "The Strategic Phoenix"  # Default
+        if "Title:" in analysis:
+            try:
+                title_line = [l for l in analysis.split('\n') if 'Title' in l][0]
+                sovereign_title = title_line.split(':')[-1].strip().strip('"\'')
+            except:
+                pass
+        
+        # Create time-gated link
+        link_data = time_gate.create_time_gate_link(
+            user_id=request.user_id,
+            session_id=request.session_id,
+            max_clicks=3,
+            expiry_hours=24
+        )
+        
+        # Store results in session for retrieval
+        _conversation_sessions[request.session_id]["results"] = {
+            "analysis": analysis,
+            "sovereign_title": sovereign_title,
+            "stability": "Sovereign",  # Extract from analysis in production
+            "superpower": analysis[:500] if len(analysis) > 500 else analysis,
+            "sar_value": 5500,
+            "user_cost": 0
+        }
+        
+        # Log completion to founder analytics
+        try:
+            db = get_database_service()
+            await db.log_founder_event("assessment_completed", {
+                "sovereign_title": sovereign_title,
+                "language": session.get("language", "en")
+            })
+        except Exception:
+            pass
         
         return {
             "session_id": request.session_id,
             "status": "complete",
-            "analysis_preview": analysis[:200] + "...",
-            "sovereign_title": "The Strategic Phoenix",  # Extract from analysis
+            "analysis_preview": analysis[:200] + "..." if len(analysis) > 200 else analysis,
+            "sovereign_title": sovereign_title,
             "sar_value": 5500,
             "user_cost": 0,
             "certificate_ready": True,
-            "results_link": f"/results/{request.session_id}"  # Time-gated
+            "results_link": link_data["link_url"],
+            "link_token": link_data["link_token"],
+            "expires_at": link_data["expires_at"],
+            "max_clicks": link_data["max_clicks"]
         }
         
     except Exception as e:
