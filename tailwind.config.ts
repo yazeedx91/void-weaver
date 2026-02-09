@@ -63,6 +63,7 @@ export default {
         "emerald-glow": "hsl(var(--emerald-glow))",
         "crimson-glow": "hsl(var(--crimson-glow))",
         "teal-glow": "hsl(var(--teal-glow))",
+        "gold-glow": "hsl(var(--gold-glow))",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -72,6 +73,7 @@ export default {
       fontFamily: {
         display: ["Space Grotesk", "sans-serif"],
         body: ["Inter", "sans-serif"],
+        arabic: ["Noto Kufi Arabic", "sans-serif"],
       },
       keyframes: {
         "accordion-down": {
