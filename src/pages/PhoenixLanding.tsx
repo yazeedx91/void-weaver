@@ -41,8 +41,8 @@ export default function PhoenixLanding() {
   const { setStage } = useAssessment();
 
   const handleBegin = () => {
-    setStage('onboarding');
-    navigate('/onboarding');
+    setStage('personality');
+    navigate('/hakim');
   };
 
   return (
