@@ -1,150 +1,369 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --emerald-primary: #4F46E5;
-  --emerald-bright: #6366F1;
-  --gold: #FFD700;
-  --obsidian: #020617;
-  --pearl: #E2E8F0;
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Noto+Kufi+Arabic:wght@300;400;500;600;700&display=swap');
+
+@layer base {
+  :root {
+    /* Deep Void Theme - Breathing Emerald */
+    --background: 222 47% 2%;
+    --foreground: 210 40% 96%;
+
+    --card: 222 47% 4%;
+    --card-foreground: 210 40% 96%;
+
+    --popover: 222 47% 4%;
+    --popover-foreground: 210 40% 96%;
+
+    --primary: 160 84% 39%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 222 47% 8%;
+    --secondary-foreground: 210 40% 96%;
+
+    --muted: 222 47% 12%;
+    --muted-foreground: 215 20% 55%;
+
+    --accent: 160 84% 39%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 222 30% 15%;
+    --input: 222 30% 15%;
+    --ring: 160 84% 39%;
+
+    --radius: 1rem;
+
+    /* Custom Neuro-Aesthetic Colors */
+    --void: 222 47% 2%;
+    --obsidian: 222 47% 4%;
+    --obsidian-light: 222 47% 8%;
+    --indigo-glow: 239 84% 67%;
+    --emerald-glow: 160 84% 39%;
+    --emerald-dim: 160 70% 30%;
+    --crimson-glow: 0 72% 51%;
+    --teal-glow: 174 84% 45%;
+    --gold-glow: 43 96% 56%;
+    --gold: 43 96% 56%;
+    
+    /* Glassmorphism */
+    --glass-bg: 222 47% 8% / 0.4;
+    --glass-border: 210 40% 96% / 0.1;
+    --glass-highlight: 210 40% 96% / 0.05;
+
+    /* Pearl Colors */
+    --pearl-50: 210 40% 98%;
+    --pearl-100: 210 40% 96%;
+    --pearl-200: 210 35% 92%;
+    --pearl-300: 210 30% 88%;
+    --pearl-400: 210 25% 78%;
+    --pearl-500: 210 20% 65%;
+    --pearl-600: 210 18% 50%;
+    --pearl-700: 210 16% 35%;
+
+    /* Moonlight */
+    --moonlight: 222 47% 25%;
+    --moonlight-dim: 222 47% 15%;
+    --moonlight-silver: 222 30% 45%;
+  }
+
+  /* Pearl Moonlight — Sovereigness Sanctuary Mode */
+  .sanctuary-pearl {
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
+    --card: 210 40% 96%;
+    --card-foreground: 222 47% 11%;
+    --popover: 210 40% 96%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 160 84% 36%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 93%;
+    --secondary-foreground: 222 47% 20%;
+    --muted: 210 40% 90%;
+    --muted-foreground: 215 20% 45%;
+    --accent: 160 60% 40%;
+    --accent-foreground: 210 40% 98%;
+    --border: 214 32% 85%;
+    --input: 214 32% 85%;
+    --ring: 160 84% 36%;
+    --void: 210 40% 98%;
+    --obsidian: 210 40% 96%;
+    --glass-bg: 210 40% 96% / 0.6;
+    --glass-border: 222 47% 20% / 0.1;
+    --glass-highlight: 0 0% 100% / 0.3;
+    --emerald-glow: 160 84% 36%;
+    --gold-glow: 43 96% 46%;
+  }
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    font-family: 'Inter', sans-serif;
+    transition: background-color 0.5s ease, color 0.3s ease;
+  }
+
+  .font-arabic {
+    font-family: 'Noto Kufi Arabic', sans-serif;
+  }
+
+  [dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3, [dir="rtl"] h4, [dir="rtl"] h5, [dir="rtl"] h6 {
+    font-family: 'Noto Kufi Arabic', sans-serif;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
+  }
 }
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(135deg, #020617 0%, #1e1b4b 100%);
-  min-height: 100vh;
-}
+@layer components {
+  /* Glassmorphism Card */
+  .glass-card {
+    @apply relative overflow-hidden rounded-2xl;
+    background: hsl(var(--glass-bg));
+    backdrop-filter: blur(64px);
+    -webkit-backdrop-filter: blur(64px);
+    border: 1px solid hsl(var(--glass-border));
+  }
 
-/* Glassmorphism effect */
-.glass {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(226, 232, 240, 0.1);
-  border-radius: 16px;
-}
+  .glass-card::before {
+    content: '';
+    @apply absolute inset-0 rounded-2xl pointer-events-none;
+    background: linear-gradient(
+      135deg,
+      hsl(var(--glass-highlight)) 0%,
+      transparent 50%
+    );
+  }
 
-.glass-pearl {
-  background: rgba(248, 250, 252, 0.95);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(203, 213, 225, 0.3);
-  border-radius: 16px;
-}
+  /* Glass component for breathing emerald */
+  .glass {
+    @apply relative overflow-hidden rounded-2xl;
+    background: hsl(var(--obsidian) / 0.6);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid hsl(var(--emerald-glow) / 0.15);
+  }
 
-/* Breathing animation for key elements */
-.breathing {
-  animation: breathing 4s ease-in-out infinite;
-}
+  /* Pearl glass for sanctuary */
+  .glass-pearl {
+    @apply relative overflow-hidden rounded-2xl;
+    background: hsl(var(--pearl-100) / 0.9);
+    backdrop-filter: blur(24px);
+    border: 1px solid hsl(var(--moonlight) / 0.1);
+  }
 
-/* Gold accent glow */
-.gold-glow {
-  text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+  /* Ethereal Gradient Background */
+  .void-bg {
+    background: hsl(var(--void));
+    position: relative;
+    overflow: hidden;
+  }
+
+  .void-bg::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+      ellipse at 30% 20%,
+      hsl(var(--emerald-glow) / 0.12) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 70% 80%,
+      hsl(var(--gold-glow) / 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 50% 50%,
+      hsl(var(--emerald-glow) / 0.05) 0%,
+      transparent 70%
+    );
+    animation: drift 20s ease-in-out infinite;
+  }
+
+  /* Obsidian Gradient */
+  .bg-obsidian-gradient {
+    background: linear-gradient(
+      180deg,
+      hsl(var(--void)) 0%,
+      hsl(var(--obsidian)) 50%,
+      hsl(var(--void)) 100%
+    );
+  }
+
+  /* Emerald Gradient */
+  .bg-emerald-gradient {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--emerald-glow)) 0%,
+      hsl(var(--emerald-dim)) 100%
+    );
+  }
+
+  /* Life Line Progress */
+  .life-line {
+    @apply h-0.5 rounded-full transition-all duration-500;
+    box-shadow: 0 0 20px currentColor, 0 0 40px currentColor;
+  }
+
+  /* Option Card */
+  .option-card {
+    @apply relative overflow-hidden rounded-xl p-4 cursor-pointer transition-all duration-300;
+    background: hsl(var(--glass-bg));
+    border: 1px solid hsl(var(--glass-border));
+  }
+
+  .option-card:hover {
+    border-color: hsl(var(--emerald-glow) / 0.5);
+    background: hsl(222 47% 10% / 0.6);
+  }
+
+  /* Color utilities */
+  .text-emerald-glow {
+    color: hsl(var(--emerald-glow));
+  }
+
+  .text-gold-glow, .text-gold {
+    color: hsl(var(--gold-glow));
+  }
+
+  .text-pearl-200 {
+    color: hsl(var(--pearl-200));
+  }
+
+  .text-pearl-300 {
+    color: hsl(var(--pearl-300));
+  }
+
+  .text-pearl-400 {
+    color: hsl(var(--pearl-400));
+  }
+
+  .text-pearl-500 {
+    color: hsl(var(--pearl-500));
+  }
+
+  .text-pearl-600 {
+    color: hsl(var(--pearl-600));
+  }
+
+  .text-pearl-700 {
+    color: hsl(var(--pearl-700));
+  }
+
+  .text-moonlight-dim {
+    color: hsl(var(--moonlight-dim));
+  }
+
+  .bg-moonlight {
+    background: hsl(var(--moonlight));
+  }
+
+  .bg-pearl-200 {
+    background: hsl(var(--pearl-200));
+  }
+
+  .bg-pearl-300 {
+    background: hsl(var(--pearl-300));
+  }
+
+  .bg-obsidian-light {
+    background: hsl(var(--obsidian-light));
+  }
+
+  .border-emerald-glow {
+    border-color: hsl(var(--emerald-glow));
+  }
+
+  /* Animations */
+  @keyframes drift {
+    0%, 100% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    25% {
+      transform: translate(2%, 1%) rotate(1deg);
+    }
+    50% {
+      transform: translate(-1%, 2%) rotate(-1deg);
+    }
+    75% {
+      transform: translate(-2%, -1%) rotate(0.5deg);
+    }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% {
+      opacity: 0.5;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  /* Ripple Effect */
+  .ripple {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple-animation 600ms linear;
+    background: hsl(var(--emerald-glow) / 0.3);
+  }
+
+  @keyframes ripple-animation {
+    to {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
 }
 
 /* Scrollbar styling */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #020617;
+  background: hsl(var(--obsidian));
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #4F46E5, #6366F1);
-  border-radius: 4px;
+  background: hsl(var(--emerald-glow) / 0.3);
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #6366F1;
+  background: hsl(var(--emerald-glow) / 0.5);
 }
 
-/* Selection color */
-::selection {
-  background: rgba(79, 70, 229, 0.3);
-  color: #FFD700;
-}
-
-/* Responsive Design - Mobile First */
-@media (max-width: 768px) {
-  /* Landing page adjustments */
-  h1 {
-    font-size: 2.5rem !important;
-  }
-  
-  h2 {
-    font-size: 1.5rem !important;
-  }
-  
-  /* Glass containers padding */
-  .glass, .glass-pearl {
-    padding: 1rem !important;
-  }
-  
-  /* Quick exit button mobile */
-  .quick-exit-mobile {
-    top: 1rem;
-    right: 1rem;
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
-  }
-  
-  /* Assessment chat mobile */
-  .chat-message {
-    max-width: 90% !important;
-  }
-  
-  /* Founder dashboard mobile */
-  .dashboard-grid {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-@media (max-width: 640px) {
-  /* Extra small screens */
-  .phoenix-icon {
-    font-size: 3rem !important;
-  }
-  
-  /* Button sizing */
-  button {
-    padding: 0.75rem 1.5rem !important;
-    font-size: 0.875rem !important;
-  }
-  
-  /* Scales grid */
-  .scales-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 0.5rem !important;
-  }
-}
-
-/* Touch-friendly targets */
-@media (hover: none) and (pointer: coarse) {
-  button, a, input, textarea {
-    min-height: 44px;
-    min-width: 44px;
-  }
-}
-
-/* Landscape mobile optimization */
-@media (max-width: 896px) and (orientation: landscape) {
-  .min-h-screen {
-    min-height: auto;
-  }
-}
-
-/* Print styles */
+/* Print styles for certificate */
 @media print {
-  .glass, .glass-pearl {
+  body {
+    background: white;
+    color: black;
+  }
+  
+  .glass, .glass-card {
     background: white;
     border: 1px solid #ccc;
   }
