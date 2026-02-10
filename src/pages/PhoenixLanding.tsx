@@ -173,6 +173,19 @@ export default function PhoenixLanding() {
           </div>
         </motion.div>
 
+        {/* Sovereigness Sanctuary CTA */}
+        <motion.div variants={fadeUp}>
+          <motion.button
+            onClick={() => navigate('/sovereigness')}
+            className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl font-body text-sm text-accent border border-accent/30 bg-accent/5 hover:bg-accent/10 transition-colors"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <Shield className="w-4 h-4" />
+            {t('sovereigness.enter')}
+          </motion.button>
+        </motion.div>
+
         {/* Founder note */}
         <motion.p
           variants={fadeUp}
