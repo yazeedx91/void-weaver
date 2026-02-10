@@ -17,6 +17,7 @@ import MentalHealthAssessment from "./pages/MentalHealthAssessment";
 import CommunicationAssessment from "./pages/CommunicationAssessment";
 import Generating from "./pages/Generating";
 import Dashboard from "./pages/Dashboard";
+import SovereignessSanctuary from "./pages/SovereignessSanctuary";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -40,6 +41,7 @@ const App = () => (
                   <Route path="/personality" element={<PersonalityAssessment />} />
                   <Route path="/mental-health" element={<MentalHealthAssessment />} />
                   <Route path="/communication" element={<CommunicationAssessment />} />
+                  <Route path="/sovereigness" element={<SovereignessSanctuary />} />
                   <Route path="/generating" element={<Generating />} />
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="*" element={<NotFound />} />
