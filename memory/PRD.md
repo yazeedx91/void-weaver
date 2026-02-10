@@ -137,11 +137,11 @@ Build FLUX-DNA as a sentient, AI-native sanctuary that:
 
 ## Access URLs
 
-- **App**: https://flux-sanctuary.preview.emergentagent.com/
-- **Assessment**: https://flux-sanctuary.preview.emergentagent.com/assessment
-- **Sanctuary**: https://flux-sanctuary.preview.emergentagent.com/sanctuary
-- **Founder**: https://flux-sanctuary.preview.emergentagent.com/founder-ops
-- **API Docs**: https://flux-sanctuary.preview.emergentagent.com/api/docs
+- **App**: https://neural-sanctuary.preview.emergentagent.com/
+- **Assessment**: https://neural-sanctuary.preview.emergentagent.com/assessment
+- **Sanctuary**: https://neural-sanctuary.preview.emergentagent.com/sanctuary
+- **Founder**: https://neural-sanctuary.preview.emergentagent.com/founder-ops
+- **API Docs**: https://neural-sanctuary.preview.emergentagent.com/api/docs
 
 ---
 

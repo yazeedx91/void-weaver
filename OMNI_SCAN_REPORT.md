@@ -227,11 +227,11 @@ The complete Void-Weaver build is **LIVE AND FUNCTIONAL** at:
 
 | Page | URL | Status |
 |------|-----|--------|
-| Homepage | https://flux-sanctuary.preview.emergentagent.com/ | ✅ Working |
-| Assessment | https://flux-sanctuary.preview.emergentagent.com/assessment | ✅ Working |
-| Sanctuary | https://flux-sanctuary.preview.emergentagent.com/sanctuary | ✅ Working |
-| Founder | https://flux-sanctuary.preview.emergentagent.com/founder-ops | ✅ Working |
-| API Docs | https://flux-sanctuary.preview.emergentagent.com/api/docs | ✅ Working |
+| Homepage | https://neural-sanctuary.preview.emergentagent.com/ | ✅ Working |
+| Assessment | https://neural-sanctuary.preview.emergentagent.com/assessment | ✅ Working |
+| Sanctuary | https://neural-sanctuary.preview.emergentagent.com/sanctuary | ✅ Working |
+| Founder | https://neural-sanctuary.preview.emergentagent.com/founder-ops | ✅ Working |
+| API Docs | https://neural-sanctuary.preview.emergentagent.com/api/docs | ✅ Working |
 
 ---
 

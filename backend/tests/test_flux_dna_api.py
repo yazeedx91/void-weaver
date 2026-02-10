@@ -8,7 +8,7 @@ import os
 import time
 
 # Use the public URL for testing
-BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://flux-sanctuary.preview.emergentagent.com')
+BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://neural-sanctuary.preview.emergentagent.com')
 
 # Test credentials
 FOUNDER_PASSWORD = "PhoenixSovereign2026!"

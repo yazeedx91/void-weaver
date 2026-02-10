@@ -3,7 +3,7 @@
 # Runs at 9:00 AM AST (6:00 AM UTC)
 
 # Configuration - use environment variable or default
-BACKEND_URL="${FLUX_BACKEND_URL:-https://flux-sanctuary.preview.emergentagent.com}"
+BACKEND_URL="${FLUX_BACKEND_URL:-https://neural-sanctuary.preview.emergentagent.com}"
 FOUNDER_PASSWORD="PhoenixSovereign2026!"
 LOG_FILE="/var/log/flux-dna-pulse.log"
 

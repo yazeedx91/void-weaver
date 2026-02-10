@@ -13,8 +13,8 @@
 ### 1. Core Systems Verification
 | Component | Status | Test Command |
 |-----------|--------|--------------|
-| Backend API | ✅ ACTIVE | `curl https://flux-sanctuary.preview.emergentagent.com/api/health` |
-| Frontend | ✅ ACTIVE | `curl https://flux-sanctuary.preview.emergentagent.com/` |
+| Backend API | ✅ ACTIVE | `curl https://neural-sanctuary.preview.emergentagent.com/api/health` |
+| Frontend | ✅ ACTIVE | `curl https://neural-sanctuary.preview.emergentagent.com/` |
 | Claude AI Integration | ✅ ACTIVE | `/api/assessment/start` returns AI response |
 | Supabase Database | ✅ CONNECTED | Schema deployed, RLS active |
 | Upstash Redis | ✅ CONNECTED | Time-gate links working |
@@ -51,7 +51,7 @@ CORS_ORIGINS=https://your-domain.com,https://www.your-domain.com
 ```
 
 ### Option B: Emergent Preview URL (Current)
-- URL: `https://flux-sanctuary.preview.emergentagent.com`
+- URL: `https://neural-sanctuary.preview.emergentagent.com`
 - Status: ✅ Active and functional
 
 ---
@@ -125,7 +125,7 @@ sudo service cron status
 ```bash
 # Test the pulse script
 chmod +x /app/scripts/daily-pulse.sh
-FLUX_BACKEND_URL="https://flux-sanctuary.preview.emergentagent.com" /app/scripts/daily-pulse.sh
+FLUX_BACKEND_URL="https://neural-sanctuary.preview.emergentagent.com" /app/scripts/daily-pulse.sh
 
 # Check logs
 cat /var/log/flux-dna-pulse.log
@@ -179,19 +179,19 @@ cat /var/log/flux-dna-pulse.log
 
 ```bash
 # 1. Health Check
-curl -s https://flux-sanctuary.preview.emergentagent.com/api/health | jq
+curl -s https://neural-sanctuary.preview.emergentagent.com/api/health | jq
 
 # 2. Assessment Flow
-curl -s -X POST https://flux-sanctuary.preview.emergentagent.com/api/assessment/start \
+curl -s -X POST https://neural-sanctuary.preview.emergentagent.com/api/assessment/start \
   -H "Content-Type: application/json" \
   -d '{"language":"en","persona":"al_hakim","user_email":"test@test.com"}'
 
 # 3. Founder Dashboard
-curl -s https://flux-sanctuary.preview.emergentagent.com/api/founder/metrics \
+curl -s https://neural-sanctuary.preview.emergentagent.com/api/founder/metrics \
   -H "Authorization: Bearer PhoenixSovereign2026!"
 
 # 4. Certificate Generation
-curl -s -X POST https://flux-sanctuary.preview.emergentagent.com/api/certificate/preview \
+curl -s -X POST https://neural-sanctuary.preview.emergentagent.com/api/certificate/preview \
   -H "Content-Type: application/json" \
   -d '{"session_id":"test","user_id":"test","sovereign_title":"The Phoenix"}' \
   -o test_cert.pdf
