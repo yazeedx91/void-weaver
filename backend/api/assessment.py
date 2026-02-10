@@ -319,26 +319,49 @@ async def submit_responses(request: SubmitResponsesRequest):
 async def complete_assessment(request: CompleteAssessmentRequest):
     """
     Complete assessment and generate stability analysis
+    
+    NEURAL-FIRST: Transitions to CEREMONIAL mode
     Returns sovereign title, analysis, and certificate data
     Creates time-gated link for results
     """
     try:
         claude = get_claude_service()
         time_gate = get_time_gate_service()
+        neural_router = get_neural_router()
         
         # Get session data (or create a default)
         session = _conversation_sessions.get(request.session_id, {
             "persona": "al_hakim",
             "language": "en",
-            "messages": []
+            "messages": [],
+            "neural_mode": "phoenix",
+            "neural_state": "assessment"
         })
         
         # Store session if it doesn't exist
         if request.session_id not in _conversation_sessions:
             _conversation_sessions[request.session_id] = session
         
+        # === NEURAL TRANSITION TO CEREMONIAL MODE ===
+        state_transition = await neural_router.route(
+            session_id=request.session_id,
+            user_id=request.user_id,
+            message="I want to complete my assessment and see my results",
+            current_mode=NeuralMode(session.get("neural_mode", "phoenix")),
+            osint_risk=session.get("osint_risk", 0.0)
+        )
+        
+        # Get ceremonial system prompt
+        ceremonial_prompt = neural_router.get_persona_system_prompt(
+            state=UserState.CELEBRATION,
+            mode=NeuralMode.CEREMONIAL,
+            language=session.get("language", "en")
+        )
+        
         # Generate stability analysis with Claude
-        analysis_prompt = """Based on our conversation, provide a comprehensive stability analysis:
+        analysis_prompt = f"""{ceremonial_prompt}
+
+Based on our conversation, provide a comprehensive stability analysis:
 
 1. Overall Stability Classification (Sovereign / Strategic Hibernation / At Risk / Critical)
 2. Expanded Cognitive Bandwidth Analysis
@@ -346,7 +369,8 @@ async def complete_assessment(request: CompleteAssessmentRequest):
 4. A unique "Sovereign Title" (e.g., "The Strategic Phoenix", "The Quiet Storm")
 5. Positive Superpower Statement
 
-Remember: No pathological labels. Focus on sovereignty and expanded dynamic range."""
+Remember: No pathological labels. Focus on sovereignty and expanded dynamic range.
+This is a CEREMONY - announce their results with reverence and celebration."""
 
         chat = await claude.create_conversation(
             session_id=f"analysis-{request.session_id}",
@@ -383,12 +407,17 @@ Remember: No pathological labels. Focus on sovereignty and expanded dynamic rang
             "user_cost": 0
         }
         
+        # Update neural state to celebration
+        _conversation_sessions[request.session_id]["neural_mode"] = NeuralMode.CEREMONIAL.value
+        _conversation_sessions[request.session_id]["neural_state"] = UserState.CELEBRATION.value
+        
         # Log completion to founder analytics
         try:
             db = get_database_service()
             await db.log_founder_event("assessment_completed", {
                 "sovereign_title": sovereign_title,
-                "language": session.get("language", "en")
+                "language": session.get("language", "en"),
+                "neural_mode": "ceremonial"
             })
         except Exception:
             pass
@@ -404,8 +433,23 @@ Remember: No pathological labels. Focus on sovereignty and expanded dynamic rang
             "superpower": analysis[:500] if len(analysis) > 500 else analysis,
             "scores": None,
             "sar_value": 5500,
-            "created_at": datetime.utcnow().isoformat()
+            "created_at": datetime.now(timezone.utc).isoformat()
         }
+        
+        # Generate neural directive for ceremonial mode
+        neural_directive = NeuralDirective(
+            should_pivot=True,
+            pivot_to_mode="ceremonial",
+            ui_commands={
+                "enable_ceremonial_mode": True,
+                "pulse_color": "gold",
+                "show_confetti": True,
+                "reveal_animation": True
+            },
+            persona_adjustment="celebratory",
+            detected_state="celebration",
+            emergency_resources=False
+        )
         
         return {
             "session_id": request.session_id,
@@ -419,7 +463,9 @@ Remember: No pathological labels. Focus on sovereignty and expanded dynamic rang
             "certificate_link": f"/api/certificate/download/{link_data['link_token']}",
             "link_token": link_data["link_token"],
             "expires_at": link_data["expires_at"],
-            "max_clicks": link_data["max_clicks"]
+            "max_clicks": link_data["max_clicks"],
+            # NEURAL-FIRST: Ceremonial mode commands
+            "neural_directive": neural_directive.model_dump()
         }
         
     except Exception as e:
