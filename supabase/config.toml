@@ -1,0 +1,4 @@
+project_id = "hdaglgaytdwvpfsrvxaa"
+
+[functions.hakim-chat]
+verify_jwt = false
