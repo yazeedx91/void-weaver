@@ -20,6 +20,8 @@ from api.assessment import router as assessment_router
 from api.founder import router as founder_router
 from api.sanctuary import router as sanctuary_router
 from api.certificate import router as certificate_router
+from api.osint import router as osint_router
+from api.vault import router as vault_router
 
 # Configure logging
 logging.basicConfig(
