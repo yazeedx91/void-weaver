@@ -1,14 +1,18 @@
 """
 FLUX-DNA Founder Dashboard API
-The Intelligence Director
+The Intelligence Director - AI-DRIVEN STRATEGIC BRIEFINGS
+Version: 2026.3.0
+
+AI-Powered Daily Pulse with Claude Strategic Analysis
 """
 from fastapi import APIRouter, HTTPException, Header, Depends
 from pydantic import BaseModel
 from typing import Dict, List, Optional
-from datetime import datetime, timedelta
+from datetime import datetime, timezone, timedelta
 import os
 
 from services.email_service import get_email_service
+from services.claude_service import get_claude_service
 
 router = APIRouter(prefix="/api/founder", tags=["Founder Dashboard"])
 
