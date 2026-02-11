@@ -14,7 +14,69 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      assessment_results: {
+        Row: {
+          communication_answers: Json
+          created_at: string
+          eq_score: number | null
+          id: string
+          mental_health_answers: Json
+          personality_answers: Json
+          personality_score: number | null
+          user_id: string
+          wellness_score: number | null
+        }
+        Insert: {
+          communication_answers?: Json
+          created_at?: string
+          eq_score?: number | null
+          id?: string
+          mental_health_answers?: Json
+          personality_answers?: Json
+          personality_score?: number | null
+          user_id: string
+          wellness_score?: number | null
+        }
+        Update: {
+          communication_answers?: Json
+          created_at?: string
+          eq_score?: number | null
+          id?: string
+          mental_health_answers?: Json
+          personality_answers?: Json
+          personality_score?: number | null
+          user_id?: string
+          wellness_score?: number | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          display_name: string | null
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
