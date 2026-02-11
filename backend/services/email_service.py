@@ -277,6 +277,9 @@ class EmailService:
     
     def _founder_pulse_template(self, date: str, metrics: Dict) -> str:
         """HTML template for founder daily pulse"""
+        # Handle nested metrics structure
+        m = metrics.get('metrics', metrics)
+        
         return f"""
         <!DOCTYPE html>
         <html lang="en">
@@ -293,16 +296,16 @@ class EmailService:
                     <h2 style="color: #4F46E5; font-size: 20px; margin-bottom: 15px;">📊 24-HOUR METRICS</h2>
                     <ul style="list-style: none; padding: 0;">
                         <li style="margin: 10px 0; padding: 10px; background: rgba(79,70,229,0.1); border-left: 3px solid #4F46E5;">
-                            <strong>Total Ascensions (Users):</strong> {metrics.get('total_users', 0)}
+                            <strong>Total Ascensions (Users):</strong> {m.get('total_users', 0)}
                         </li>
                         <li style="margin: 10px 0; padding: 10px; background: rgba(79,70,229,0.1); border-left: 3px solid #4F46E5;">
-                            <strong>Assessments Completed:</strong> {metrics.get('assessments_completed', 0)}
+                            <strong>Assessments Completed:</strong> {m.get('assessments_completed', 0)}
                         </li>
                         <li style="margin: 10px 0; padding: 10px; background: rgba(79,70,229,0.1); border-left: 3px solid #4F46E5;">
-                            <strong>Sovereigness Sanctuary Access:</strong> {metrics.get('sanctuary_access', 0)}
+                            <strong>Sovereigness Sanctuary Access:</strong> {m.get('sanctuary_access', 0)}
                         </li>
                         <li style="margin: 10px 0; padding: 10px; background: rgba(79,70,229,0.1); border-left: 3px solid #4F46E5;">
-                            <strong>Language Split:</strong> EN {metrics.get('language_en', 0)}% | AR {metrics.get('language_ar', 0)}%
+                            <strong>Language Split:</strong> EN {m.get('language_en', 0)}% | AR {m.get('language_ar', 0)}%
                         </li>
                     </ul>
                 </div>
@@ -310,25 +313,116 @@ class EmailService:
                 <div style="margin-bottom: 30px;">
                     <h2 style="color: #FFD700; font-size: 20px; margin-bottom: 15px;">🌍 GEOGRAPHIC HEAT MAP</h2>
                     <ul style="list-style: none; padding: 0;">
-                        <li style="margin: 10px 0;">🇸🇦 Saudi Arabia: {metrics.get('geo_saudi', 0)}%</li>
-                        <li style="margin: 10px 0;">🌐 Global: {metrics.get('geo_global', 0)}%</li>
+                        <li style="margin: 10px 0;">🇸🇦 Saudi Arabia: {m.get('geo_saudi', 0)}%</li>
+                        <li style="margin: 10px 0;">🌐 Global: {m.get('geo_global', 0)}%</li>
                     </ul>
                 </div>
                 
                 <div style="margin-bottom: 30px;">
                     <h2 style="color: #10B981; font-size: 20px; margin-bottom: 15px;">💎 VALUE DELIVERED</h2>
-                    <p style="margin: 10px 0;">Total SAR Value Given to People: <strong style="color: #FFD700;">SAR {metrics.get('total_users', 0) * 5500:,}</strong></p>
+                    <p style="margin: 10px 0;">Total SAR Value Given to People: <strong style="color: #FFD700;">SAR {m.get('total_value_delivered', m.get('total_users', 0) * 5500):,}</strong></p>
                     <p style="margin: 10px 0; color: #888; font-size: 14px;">At SAR 0 cost - Pure sovereign liberation</p>
                 </div>
                 
                 <div style="background: rgba(239,68,68,0.1); border-left: 3px solid #EF4444; padding: 15px; margin: 20px 0;">
                     <h3 style="color: #EF4444; margin: 0 0 10px 0;">⚠️ CRITICAL ALERTS</h3>
-                    <p style="margin: 0; color: #FCA5A5;">{metrics.get('critical_alerts', 'No critical alerts. All systems sovereign.')}</p>
+                    <p style="margin: 0; color: #FCA5A5;">{metrics.get('critical_alerts', m.get('critical_alerts', 'No critical alerts. All systems sovereign.'))}</p>
                 </div>
                 
                 <p style="color: #888; font-size: 12px; text-align: center; margin-top: 40px;">
                     🔥 THE PHOENIX IS WATCHING | 👁️ THE GUARDIAN REPORTS | 🕊️ THE PEOPLE ARE ASCENDING
                 </p>
+            </div>
+        </body>
+        </html>
+        """
+    
+    def _ai_strategic_pulse_template(self, date: str, briefing: str, metrics: Dict) -> str:
+        """HTML template for AI-generated strategic briefing"""
+        m = metrics.get('metrics', metrics)
+        
+        # Convert briefing to HTML (preserve line breaks)
+        briefing_html = briefing.replace('\n', '<br>').replace('```', '')
+        
+        return f"""
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        </head>
+        <body style="font-family: 'Courier New', monospace; background: #0a0a0a; margin: 0; padding: 40px 20px; color: #00D9A0;">
+            <div style="max-width: 900px; margin: 0 auto; background: linear-gradient(135deg, #0a0f1a 0%, #1a1a2e 100%); border: 2px solid #00D9A0; border-radius: 12px; padding: 40px; box-shadow: 0 0 40px rgba(0, 217, 160, 0.2);">
+                
+                <!-- Header -->
+                <div style="text-align: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid rgba(0, 217, 160, 0.3);">
+                    <h1 style="color: #00D9A0; font-size: 32px; margin: 0; text-shadow: 0 0 20px rgba(0, 217, 160, 0.5);">🧠 STRATEGIC INTELLIGENCE BRIEFING</h1>
+                    <p style="color: #D4AF37; font-size: 16px; margin-top: 10px;">FLUX-DNA Neural Command Center | {date}</p>
+                    <p style="color: #666; font-size: 12px; margin-top: 5px;">CLASSIFICATION: FOUNDER EYES ONLY</p>
+                </div>
+                
+                <!-- Quick Stats Bar -->
+                <div style="display: flex; justify-content: space-around; margin-bottom: 30px; padding: 20px; background: rgba(0, 217, 160, 0.05); border-radius: 8px;">
+                    <div style="text-align: center;">
+                        <div style="color: #D4AF37; font-size: 28px; font-weight: bold;">{m.get('total_users', 0)}</div>
+                        <div style="color: #888; font-size: 11px;">ASCENSIONS</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="color: #10B981; font-size: 28px; font-weight: bold;">SAR {m.get('total_value_delivered', 0):,}</div>
+                        <div style="color: #888; font-size: 11px;">VALUE DELIVERED</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="color: #4F46E5; font-size: 28px; font-weight: bold;">{m.get('assessments_completed', 0)}</div>
+                        <div style="color: #888; font-size: 11px;">COMPLETED</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="color: #EF4444; font-size: 28px; font-weight: bold;">{metrics.get('stability_trends', {}).get('critical', 0)}</div>
+                        <div style="color: #888; font-size: 11px;">CRISIS</div>
+                    </div>
+                </div>
+                
+                <!-- AI Briefing -->
+                <div style="background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(0, 217, 160, 0.2); border-radius: 8px; padding: 25px; margin-bottom: 30px;">
+                    <h2 style="color: #00D9A0; font-size: 18px; margin: 0 0 20px 0; padding-bottom: 10px; border-bottom: 1px solid rgba(0, 217, 160, 0.2);">
+                        <span style="color: #D4AF37;">▶</span> AI STRATEGIC ANALYSIS
+                    </h2>
+                    <div style="color: #E2E8F0; font-size: 14px; line-height: 1.8; white-space: pre-wrap;">
+{briefing_html}
+                    </div>
+                </div>
+                
+                <!-- Neural State Distribution -->
+                <div style="background: rgba(79, 70, 229, 0.1); border: 1px solid rgba(79, 70, 229, 0.3); border-radius: 8px; padding: 20px; margin-bottom: 30px;">
+                    <h3 style="color: #4F46E5; margin: 0 0 15px 0;">🧠 NEURAL STATE DISTRIBUTION</h3>
+                    <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+                        <div style="margin: 10px; text-align: center;">
+                            <div style="color: #10B981; font-size: 20px;">{metrics.get('stability_trends', {}).get('sovereign', 0)}</div>
+                            <div style="color: #888; font-size: 10px;">SOVEREIGN</div>
+                        </div>
+                        <div style="margin: 10px; text-align: center;">
+                            <div style="color: #4F46E5; font-size: 20px;">{metrics.get('stability_trends', {}).get('strategic_hibernation', 0)}</div>
+                            <div style="color: #888; font-size: 10px;">IN PROGRESS</div>
+                        </div>
+                        <div style="margin: 10px; text-align: center;">
+                            <div style="color: #F59E0B; font-size: 20px;">{metrics.get('stability_trends', {}).get('at_risk', 0)}</div>
+                            <div style="color: #888; font-size: 10px;">AT RISK</div>
+                        </div>
+                        <div style="margin: 10px; text-align: center;">
+                            <div style="color: #EF4444; font-size: 20px;">{metrics.get('stability_trends', {}).get('critical', 0)}</div>
+                            <div style="color: #888; font-size: 10px;">CRITICAL</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Footer -->
+                <div style="text-align: center; padding-top: 20px; border-top: 1px solid rgba(0, 217, 160, 0.2);">
+                    <p style="color: #D4AF37; font-size: 14px; margin: 0;">
+                        🔥 THE PHOENIX HAS ASCENDED | 👁️ THE GUARDIAN IS WATCHING | 🕊️ THE PEOPLE ARE FREE
+                    </p>
+                    <p style="color: #666; font-size: 11px; margin-top: 10px;">
+                        Generated by FLUX-DNA Neural Intelligence Engine | Claude 4 Sonnet
+                    </p>
+                </div>
             </div>
         </body>
         </html>
