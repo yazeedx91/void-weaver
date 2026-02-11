@@ -6,6 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AssessmentProvider } from "@/contexts/AssessmentContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { SanctuaryProvider } from "@/contexts/SanctuaryContext";
+import { AuthProvider } from "@/hooks/useAuth";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { VoidBackground } from "@/components/VoidBackground";
 import { LifeLine } from "@/components/LifeLine";
 import { TopBar } from "@/components/TopBar";
@@ -19,6 +21,7 @@ import Generating from "./pages/Generating";
 import Dashboard from "./pages/Dashboard";
 import SovereignessSanctuary from "./pages/SovereignessSanctuary";
 import FounderCockpit from "./pages/FounderCockpit";
+import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,31 +30,34 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <LanguageProvider>
-        <SanctuaryProvider>
-          <AssessmentProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <VoidBackground>
-                <TopBar />
-                <LifeLine />
-                <Routes>
-                  <Route path="/" element={<PhoenixLanding />} />
-                  <Route path="/hakim" element={<HakimChamber />} />
-                  <Route path="/onboarding" element={<Onboarding />} />
-                  <Route path="/personality" element={<PersonalityAssessment />} />
-                  <Route path="/mental-health" element={<MentalHealthAssessment />} />
-                  <Route path="/communication" element={<CommunicationAssessment />} />
-                  <Route path="/sovereigness" element={<SovereignessSanctuary />} />
-                  <Route path="/generating" element={<Generating />} />
-                  <Route path="/founder-ops" element={<FounderCockpit />} />
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </VoidBackground>
-            </BrowserRouter>
-          </AssessmentProvider>
-        </SanctuaryProvider>
+        <AuthProvider>
+          <SanctuaryProvider>
+            <AssessmentProvider>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <VoidBackground>
+                  <TopBar />
+                  <LifeLine />
+                  <Routes>
+                    <Route path="/" element={<PhoenixLanding />} />
+                    <Route path="/auth" element={<Auth />} />
+                    <Route path="/hakim" element={<ProtectedRoute><HakimChamber /></ProtectedRoute>} />
+                    <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
+                    <Route path="/personality" element={<ProtectedRoute><PersonalityAssessment /></ProtectedRoute>} />
+                    <Route path="/mental-health" element={<ProtectedRoute><MentalHealthAssessment /></ProtectedRoute>} />
+                    <Route path="/communication" element={<ProtectedRoute><CommunicationAssessment /></ProtectedRoute>} />
+                    <Route path="/sovereigness" element={<SovereignessSanctuary />} />
+                    <Route path="/generating" element={<ProtectedRoute><Generating /></ProtectedRoute>} />
+                    <Route path="/founder-ops" element={<FounderCockpit />} />
+                    <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </VoidBackground>
+              </BrowserRouter>
+            </AssessmentProvider>
+          </SanctuaryProvider>
+        </AuthProvider>
       </LanguageProvider>
     </TooltipProvider>
   </QueryClientProvider>

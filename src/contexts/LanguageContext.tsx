@@ -49,6 +49,22 @@ const translations: Record<Language, Record<string, string>> = {
     'pillar.psychological': 'Psychological Guardian',
     'pillar.economic': 'Economic Empowerment',
     
+    // Auth
+    'auth.login_title': 'Welcome Back',
+    'auth.login_subtitle': 'Sign in to continue your journey',
+    'auth.signup_title': 'Create Your Sanctuary',
+    'auth.signup_subtitle': 'Begin your path to self-discovery',
+    'auth.email': 'Email',
+    'auth.email_placeholder': 'you@example.com',
+    'auth.password': 'Password',
+    'auth.display_name': 'Display Name',
+    'auth.name_placeholder': 'Your name',
+    'auth.login_cta': 'Sign In',
+    'auth.signup_cta': 'Create Account',
+    'auth.have_account': 'Already have an account?',
+    'auth.no_account': 'Don\'t have an account?',
+    'auth.signout': 'Sign Out',
+
     // Common
     'common.loading': 'Loading...',
     'common.continue': 'Continue',
@@ -92,6 +108,22 @@ const translations: Record<Language, Record<string, string>> = {
     'pillar.psychological': 'الحارس النفسي',
     'pillar.economic': 'التمكين الاقتصادي',
     
+    // Auth
+    'auth.login_title': 'مرحباً بعودتك',
+    'auth.login_subtitle': 'سجّل دخولك لمتابعة رحلتك',
+    'auth.signup_title': 'أنشئ ملاذك',
+    'auth.signup_subtitle': 'ابدأ رحلتك نحو اكتشاف الذات',
+    'auth.email': 'البريد الإلكتروني',
+    'auth.email_placeholder': 'you@example.com',
+    'auth.password': 'كلمة المرور',
+    'auth.display_name': 'الاسم',
+    'auth.name_placeholder': 'اسمك',
+    'auth.login_cta': 'تسجيل الدخول',
+    'auth.signup_cta': 'إنشاء حساب',
+    'auth.have_account': 'لديك حساب بالفعل؟',
+    'auth.no_account': 'ليس لديك حساب؟',
+    'auth.signout': 'تسجيل الخروج',
+
     // Common
     'common.loading': 'جاري التحميل...',
     'common.continue': 'متابعة',
