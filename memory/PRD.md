@@ -1,203 +1,132 @@
 # FLUX-DNA Product Requirements Document
-## Lovable Rewrite - Vite + React + Supabase Edition
+## Decoupled Architecture - Vite Frontend + FastAPI Backend
 
-**Version**: 3.0.0 (Lovable Rewrite)  
+**Version**: 3.1.0 (Decoupled Architecture)  
 **Last Updated**: February 11, 2026  
-**Status**: ✅ **SYNCED WITH GITHUB - LIVE**
+**Status**: ✅ **BOTH SYSTEMS OPERATIONAL**
 
 ---
 
-## Architecture Change Summary
+## 🏗️ DECOUPLED ARCHITECTURE
 
-The project has been completely rewritten in Lovable with the following stack changes:
-
-| Component | Previous | Current |
-|-----------|----------|---------|
-| Frontend | Next.js 15 | **Vite + React 18 + TypeScript** |
-| Backend | FastAPI (Python) | **Supabase Edge Functions (Deno)** |
-| Database | Supabase (manual schema) | **Supabase with auto-generated types** |
-| Auth | Custom JWT | **Supabase Auth (email/password)** |
-| AI | Claude via FastAPI | **Gemini 3 Flash via Lovable Gateway** |
-| State | React Context | **React Context + TanStack Query** |
+| Layer | Technology | Port | Status |
+|-------|------------|------|--------|
+| Frontend | Vite + React 18 (Lovable) | 3000 | ✅ RUNNING |
+| Backend | FastAPI (Python) | 8001 | ✅ RUNNING |
+| Database | Supabase PostgreSQL | - | ✅ CONNECTED |
+| AI | Claude 4 Sonnet + Gemini 3 Flash | - | ✅ AVAILABLE |
 
 ---
 
-## New Tech Stack
+## Restored Backend Files
 
-| Layer | Technology |
-|-------|------------|
-| Frontend | Vite 5.4, React 18, TypeScript 5.8 |
-| Styling | Tailwind CSS 3.4, Framer Motion 11 |
-| Components | Shadcn/UI (Radix primitives) |
-| Database | Supabase PostgreSQL |
-| Auth | Supabase Auth |
-| AI Chat | Supabase Edge Function → Lovable AI Gateway |
-| Routing | React Router DOM 6 |
-| State | TanStack Query, React Context |
+### Core Server
+- `backend/server.py` - FastAPI gateway
 
----
+### API Routes
+- `backend/api/assessment.py` - Neural-First Assessment
+- `backend/api/founder.py` - AI Strategic Briefing
+- `backend/api/osint.py` - OSINT Safety Radar
+- `backend/api/vault.py` - Forensic Vault with AI Vision
+- `backend/api/certificate.py` - PDF Certificate Engine
+- `backend/api/sanctuary.py` - Sovereigness Sanctuary
+- `backend/api/health.py` - Health check
 
-## Supabase Schema
+### Services
+- `backend/services/neural_router.py` - **AI-driven state detection**
+- `backend/services/osint_safety.py` - **OSINT Safety Shield**
+- `backend/services/claude_service.py` - Claude AI integration
+- `backend/services/time_gate.py` - Redis time-gated links
+- `backend/services/certificate_engine.py` - PDF generation
+- `backend/services/email_service.py` - Resend daily pulse
+- `backend/services/encryption.py` - AES-256-GCM
+- `backend/services/agentic_guardian.py` - Agentic AI
+- `backend/services/database.py` - Supabase connection
 
-### Tables
-
-**profiles**
-```sql
-- id: UUID (PK)
-- user_id: UUID (FK → auth.users)
-- display_name: TEXT
-- avatar_url: TEXT
-- created_at: TIMESTAMP
-- updated_at: TIMESTAMP
-```
-
-**assessment_results**
-```sql
-- id: UUID (PK)
-- user_id: UUID (FK → auth.users)
-- personality_answers: JSONB
-- mental_health_answers: JSONB
-- communication_answers: JSONB
-- personality_score: INTEGER
-- wellness_score: INTEGER
-- eq_score: INTEGER
-- created_at: TIMESTAMP
-```
-
-### Edge Functions
-
-**hakim-chat** (`/supabase/functions/hakim-chat/index.ts`)
-- Streams AI responses from Lovable AI Gateway
-- Uses Gemini 3 Flash model
-- Al-Hakim persona with Arabic/English support
-- Marks assessment completion with `[ASSESSMENT_COMPLETE]`
+### Tests
+- `backend/tests/test_neural_first_architecture.py`
+- `backend/tests/test_fortress_integration.py`
+- `backend/tests/test_sentinel_protocol.py`
+- `backend/tests/test_certificate_api.py`
+- `backend/tests/test_flux_dna_api.py`
 
 ---
 
-## Pages & Routes
+## Frontend (Lovable) - Port 3000
 
-| Route | Page | Auth Required |
-|-------|------|---------------|
+### Pages
+| Route | Component | Auth |
+|-------|-----------|------|
 | `/` | PhoenixLanding | No |
-| `/auth` | Auth (Sign In/Up) | No |
-| `/hakim` | HakimChamber (AI Chat) | **Yes** |
-| `/onboarding` | Onboarding | Yes |
-| `/personality` | PersonalityAssessment | Yes |
-| `/mental-health` | MentalHealthAssessment | Yes |
-| `/communication` | CommunicationAssessment | Yes |
-| `/generating` | Generating (Loading) | Yes |
-| `/dashboard` | Dashboard (Results) | Yes |
+| `/auth` | Auth | No |
+| `/hakim` | HakimChamber | Yes |
+| `/dashboard` | Dashboard | Yes |
 | `/sovereigness` | SovereignessSanctuary | No |
-| `/founder-ops` | FounderCockpit | Password Gate |
+| `/founder-ops` | FounderCockpit | Password |
+
+### Supabase Integration
+- Auth via `@supabase/supabase-js`
+- Edge Function: `hakim-chat` (Gemini 3 Flash)
+- Tables: `profiles`, `assessment_results`
 
 ---
 
-## Authentication Flow
+## Backend (FastAPI) - Port 8001
 
-1. User clicks "Sign In" → `/auth`
-2. Email + Password signup/login via Supabase Auth
-3. Profile auto-created via database trigger
-4. Protected routes redirect to `/auth` if not logged in
-5. Session persisted in localStorage
-
----
-
-## Key Components
-
-### New Components
-- `TopBar.tsx` - Navigation with auth state
-- `ProtectedRoute.tsx` - Auth guard
-- `AssessmentVessel.tsx` - Glass card for assessments
-- `VoidBackground.tsx` - Dark theme background
-- `LifeLine.tsx` - Animated line decoration
-- `ShaderLoader.tsx` - Loading animations
-
-### Contexts
-- `AssessmentContext.tsx` - Assessment state management
-- `LanguageContext.tsx` - i18n (EN/AR)
-- `SanctuaryContext.tsx` - Sanctuary state
-
-### Hooks
-- `useAuth.tsx` - Supabase auth state
-- `use-toast.ts` - Toast notifications
-- `use-mobile.tsx` - Mobile detection
+### API Endpoints
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/health` | GET | Fortress status |
+| `/api/assessment/start` | POST | Start + Neural Directive |
+| `/api/assessment/message` | POST | Chat + State Detection |
+| `/api/assessment/complete` | POST | Complete + Certificate |
+| `/api/osint/check` | POST | OSINT Safety Radar |
+| `/api/vault/submit` | POST | Evidence + AI Vision |
+| `/api/founder/metrics` | GET | Dashboard metrics |
+| `/api/founder/strategic-briefing` | POST | AI Briefing |
+| `/api/founder/send-ai-pulse` | POST | Email daily pulse |
+| `/api/certificate/download/{token}` | GET | PDF download |
 
 ---
 
 ## Environment Variables
 
+### Frontend (`/app/.env`)
 ```env
-VITE_SUPABASE_PROJECT_ID="hdaglgaytdwvpfsrvxaa"
-VITE_SUPABASE_PUBLISHABLE_KEY="eyJ..."
-VITE_SUPABASE_URL="https://hdaglgaytdwvpfsrvxaa.supabase.co"
+VITE_SUPABASE_URL=https://hdaglgaytdwvpfsrvxaa.supabase.co
+VITE_SUPABASE_PUBLISHABLE_KEY=eyJ...
 ```
 
----
-
-## What's Been Removed
-
-The following from the previous FastAPI backend have been removed:
-- `/backend/` - Entire FastAPI codebase
-- Neural Router service
-- Time-Gate links (Redis)
-- Certificate Engine (ReportLab)
-- OSINT Safety Radar
-- Email Service (Resend)
-- All Python tests
-
----
-
-## What's Changed
-
-### Founder Cockpit
-- **Previous**: Real metrics from FastAPI, AI-driven strategic briefing
-- **Current**: Animated mock data, simulated live feed
-- **Password**: Changed from `PhoenixSovereign2026!` to `phoenix2024`
-
-### Al-Hakim Chat
-- **Previous**: Claude 4 Sonnet via FastAPI
-- **Current**: Gemini 3 Flash via Supabase Edge Function
-- **Streaming**: Yes (SSE)
-
-### Dashboard
-- **Previous**: AI-generated analysis
-- **Current**: Score calculations from stored answers
+### Backend (`/app/backend/.env`)
+```env
+EMERGENT_LLM_KEY=...
+SUPABASE_URL=...
+UPSTASH_REDIS_REST_URL=...
+RESEND_API_KEY=...
+TAVILY_API_KEY=...
+```
 
 ---
 
 ## Access URLs
 
-- **Preview**: https://neural-sanctuary.preview.emergentagent.com/
-- **Supabase**: https://hdaglgaytdwvpfsrvxaa.supabase.co
+- **Frontend**: https://neural-sanctuary.preview.emergentagent.com/
+- **Backend API**: https://neural-sanctuary.preview.emergentagent.com/api/
+- **API Docs**: https://neural-sanctuary.preview.emergentagent.com/api/docs
 
 ---
 
-## Tasks to Integrate
+## Credentials
 
-### If you want to restore FastAPI features:
-
-1. **Recreate Backend Directory**
-   - Restore `/backend/` with FastAPI server
-   - Re-add Neural Router, Time-Gate, Certificate Engine
-   - Connect Supabase from backend
-
-2. **Add API Routes to Frontend**
-   - Update `src/lib/api.ts` (create if needed)
-   - Add Strategic Briefing to FounderCockpit
-
-3. **Restore Daily Pulse**
-   - Re-add Resend email integration
-   - Create cron job for 9 AM AST
+| Service | Password/Key |
+|---------|--------------|
+| Founder Cockpit (Frontend) | `phoenix2024` |
+| Founder Dashboard (Backend) | `PhoenixSovereign2026!` |
+| Supabase | In `.env` files |
 
 ---
 
-## Git Status
+🔥 **DECOUPLED ARCHITECTURE OPERATIONAL**
+🧠 **NEURAL ROUTER RESTORED**
+👁️ **OSINT RADAR ACTIVE**
 
-✅ **Workspace is now identical to GitHub repository** (`yazeedx91/void-weaver` main branch)
-
-Commit: `84451a6 - Load Dashboard from DB`
-
----
-
-*FLUX-DNA Lovable Edition v3.0.0*
-*Synced February 11, 2026*
