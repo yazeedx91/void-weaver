@@ -116,6 +116,37 @@ class EmailService:
         except Exception as e:
             return {"success": False, "error": str(e)}
     
+    async def send_ai_strategic_pulse(self, date: str, briefing: str, metrics: Dict) -> Dict:
+        """
+        Send AI-generated strategic briefing to founder
+        
+        Args:
+            date: Report date
+            briefing: Claude-generated strategic analysis
+            metrics: Raw metrics snapshot
+            
+        Returns:
+            Send status
+        """
+        founder_email = "Yazeedx91@gmail.com"
+        subject = f"🧠 FLUX-DNA Strategic Intelligence Briefing - {date}"
+        
+        html_content = self._ai_strategic_pulse_template(date, briefing, metrics)
+        
+        try:
+            params = {
+                "from": self.sender_email,
+                "to": [founder_email],
+                "subject": subject,
+                "html": html_content
+            }
+            
+            email = resend.Emails.send(params)
+            return {"success": True, "email_id": email.get('id')}
+            
+        except Exception as e:
+            return {"success": False, "error": str(e)}
+    
     def _magic_link_template(self, magic_link: str, language: str) -> str:
         """HTML template for magic link email"""
         if language == 'ar':
