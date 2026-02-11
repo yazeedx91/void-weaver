@@ -1,0 +1,14 @@
+# Railway Ignore - Only deploy backend
+frontend-next/
+database/
+scripts/
+memory/
+test_reports/
+*.md
+.git/
+.emergent/
+__pycache__/
+*.pyc
+.pytest_cache/
+node_modules/
+.next/
