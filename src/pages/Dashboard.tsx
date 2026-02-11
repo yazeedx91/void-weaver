@@ -1,8 +1,11 @@
 import { motion } from 'framer-motion';
 import { useAssessment } from '@/contexts/AssessmentContext';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/integrations/supabase/client';
+import { useEffect, useState } from 'react';
 
-function ScoreCard({ 
+function ScoreCard({
   title, 
   score, 
   color, 
@@ -62,9 +65,33 @@ function TraitBadge({ label, value, delay }: { label: string; value: string; del
 
 export default function Dashboard() {
   const { userName, personalityAnswers, mentalHealthAnswers, communicationAnswers, reset } = useAssessment();
+  const { user } = useAuth();
   const navigate = useNavigate();
+  const [scores, setScores] = useState<{ personality: number; wellness: number; eq: number } | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  // Calculate scores (simplified scoring)
+  useEffect(() => {
+    if (!user) { setLoading(false); return; }
+    supabase
+      .from('assessment_results')
+      .select('personality_score, wellness_score, eq_score')
+      .eq('user_id', user.id)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (data) {
+          setScores({
+            personality: data.personality_score ?? 65,
+            wellness: data.wellness_score ?? 65,
+            eq: data.eq_score ?? 65,
+          });
+        }
+        setLoading(false);
+      });
+  }, [user]);
+
+  // Calculate scores from context as fallback
   const calculateScore = (answers: typeof personalityAnswers, maxPerQuestion: number) => {
     if (answers.length === 0) return 65;
     const total = answers.reduce((sum, a) => sum + a.value, 0);
@@ -72,9 +99,9 @@ export default function Dashboard() {
     return Math.round((total / max) * 100);
   };
 
-  const personalityScore = calculateScore(personalityAnswers, 5);
-  const wellnessScore = 100 - calculateScore(mentalHealthAnswers, 3); // Inverted for wellness
-  const eqScore = calculateScore(communicationAnswers, 5);
+  const personalityScore = scores?.personality ?? calculateScore(personalityAnswers, 5);
+  const wellnessScore = scores?.wellness ?? (100 - calculateScore(mentalHealthAnswers, 3));
+  const eqScore = scores?.eq ?? calculateScore(communicationAnswers, 5);
 
   const handleRetake = () => {
     reset();
