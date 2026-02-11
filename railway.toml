@@ -1,0 +1,12 @@
+# FLUX-DNA Backend - Railway Deployment
+
+[build]
+builder = "dockerfile"
+dockerfilePath = "backend/Dockerfile"
+
+[deploy]
+startCommand = "cd backend && uvicorn server:app --host 0.0.0.0 --port ${PORT:-8080}"
+healthcheckPath = "/api/health"
+healthcheckTimeout = 10
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 3
