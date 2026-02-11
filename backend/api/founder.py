@@ -222,7 +222,7 @@ async def get_analytics_timeline(
         timeline = []
         
         for i in range(days):
-            date = datetime.utcnow() - timedelta(days=i)
+            date = datetime.now(timezone.utc) - timedelta(days=i)
             timeline.append({
                 "date": date.strftime("%Y-%m-%d"),
                 "users": 0,
