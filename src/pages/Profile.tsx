@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { User, Save, Loader2, Camera } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/hooks/use-toast';
 
 export default function Profile() {
@@ -92,8 +93,24 @@ export default function Profile() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-accent" />
+      <div className="min-h-screen flex items-center justify-center px-4 pt-20 pb-10">
+        <div className="glass-card w-full max-w-md p-8 space-y-8">
+          <div className="text-center space-y-2">
+            <Skeleton className="h-8 w-48 mx-auto" />
+            <Skeleton className="h-4 w-64 mx-auto" />
+          </div>
+          <div className="flex justify-center">
+            <Skeleton className="w-24 h-24 rounded-full" />
+          </div>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-24" />
+              <Skeleton className="h-10 w-full" />
+            </div>
+            <Skeleton className="h-3 w-40" />
+            <Skeleton className="h-10 w-full" />
+          </div>
+        </div>
       </div>
     );
   }
