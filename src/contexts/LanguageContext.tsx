@@ -65,6 +65,15 @@ const translations: Record<Language, Record<string, string>> = {
     'auth.no_account': 'Don\'t have an account?',
     'auth.signout': 'Sign Out',
 
+    // Profile
+    'profile.title': 'Your Profile',
+    'profile.subtitle': 'Manage your identity',
+    'profile.display_name': 'Display Name',
+    'profile.avatar_url': 'Avatar URL',
+    'profile.save': 'Save Changes',
+    'profile.saved': 'Profile updated!',
+    'profile.error': 'Error saving profile',
+
     // Common
     'common.loading': 'Loading...',
     'common.continue': 'Continue',
@@ -123,6 +132,15 @@ const translations: Record<Language, Record<string, string>> = {
     'auth.have_account': 'لديك حساب بالفعل؟',
     'auth.no_account': 'ليس لديك حساب؟',
     'auth.signout': 'تسجيل الخروج',
+
+    // Profile
+    'profile.title': 'ملفك الشخصي',
+    'profile.subtitle': 'أدر هويتك',
+    'profile.display_name': 'الاسم المعروض',
+    'profile.avatar_url': 'رابط الصورة',
+    'profile.save': 'حفظ التغييرات',
+    'profile.saved': 'تم تحديث الملف الشخصي!',
+    'profile.error': 'خطأ في حفظ الملف',
 
     // Common
     'common.loading': 'جاري التحميل...',

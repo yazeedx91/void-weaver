@@ -23,6 +23,7 @@ import Dashboard from "./pages/Dashboard";
 import SovereignessSanctuary from "./pages/SovereignessSanctuary";
 import FounderCockpit from "./pages/FounderCockpit";
 import Auth from "./pages/Auth";
+import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -54,6 +55,7 @@ const App = () => (
                     <Route path="/sovereigness" element={<SovereignessSanctuary />} />
                     <Route path="/generating" element={<ProtectedRoute><Generating /></ProtectedRoute>} />
                     <Route path="/founder-ops" element={<FounderCockpit />} />
+                    <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
                     <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>

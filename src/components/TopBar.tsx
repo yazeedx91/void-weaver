@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Shield, Globe, Moon, Sun, LogOut, LogIn } from 'lucide-react';
+import { Shield, Globe, Moon, Sun, LogOut, LogIn, User } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useSanctuary } from '@/contexts/SanctuaryContext';
 import { useAuth } from '@/hooks/useAuth';
@@ -49,15 +49,23 @@ export function TopBar() {
           {isPerl ? <Moon className="w-3.5 h-3.5" /> : <Sun className="w-3.5 h-3.5" />}
         </button>
 
-        {/* Auth Button */}
+        {/* Auth Buttons */}
         {user ? (
-          <button
-            onClick={async () => { await signOut(); navigate('/'); }}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-body text-muted-foreground hover:text-foreground transition-colors bg-muted/20 hover:bg-muted/40 border border-border/30"
-          >
-            <LogOut className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">{t('auth.signout')}</span>
-          </button>
+          <>
+            <button
+              onClick={() => navigate('/profile')}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-body text-muted-foreground hover:text-foreground transition-colors bg-muted/20 hover:bg-muted/40 border border-border/30"
+            >
+              <User className="w-3.5 h-3.5" />
+            </button>
+            <button
+              onClick={async () => { await signOut(); navigate('/'); }}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-body text-muted-foreground hover:text-foreground transition-colors bg-muted/20 hover:bg-muted/40 border border-border/30"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">{t('auth.signout')}</span>
+            </button>
+          </>
         ) : (
           <button
             onClick={() => navigate('/auth')}
