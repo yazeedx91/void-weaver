@@ -13,6 +13,7 @@ import { LifeLine } from "@/components/LifeLine";
 import { TopBar } from "@/components/TopBar";
 import PhoenixLanding from "./pages/PhoenixLanding";
 import HakimChamber from "./pages/HakimChamber";
+import HakimChamberNeural from "./pages/HakimChamberNeural";
 import Onboarding from "./pages/Onboarding";
 import PersonalityAssessment from "./pages/PersonalityAssessment";
 import MentalHealthAssessment from "./pages/MentalHealthAssessment";
@@ -42,7 +43,10 @@ const App = () => (
                   <Routes>
                     <Route path="/" element={<PhoenixLanding />} />
                     <Route path="/auth" element={<Auth />} />
-                    <Route path="/hakim" element={<ProtectedRoute><HakimChamber /></ProtectedRoute>} />
+                    {/* Neural Router version - FastAPI backend */}
+                    <Route path="/hakim" element={<ProtectedRoute><HakimChamberNeural /></ProtectedRoute>} />
+                    {/* Original Supabase version (backup) */}
+                    <Route path="/hakim-supabase" element={<ProtectedRoute><HakimChamber /></ProtectedRoute>} />
                     <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
                     <Route path="/personality" element={<ProtectedRoute><PersonalityAssessment /></ProtectedRoute>} />
                     <Route path="/mental-health" element={<ProtectedRoute><MentalHealthAssessment /></ProtectedRoute>} />
