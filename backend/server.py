@@ -22,6 +22,7 @@ from api.sanctuary import router as sanctuary_router
 from api.certificate import router as certificate_router
 from api.osint import router as osint_router
 from api.vault import router as vault_router
+from api.groq import router as groq_router
 
 # Configure logging
 logging.basicConfig(
@@ -56,6 +57,7 @@ app.include_router(sanctuary_router, tags=["Sovereigness Sanctuary"])
 app.include_router(certificate_router, tags=["Sovereign Certificate"])
 app.include_router(osint_router, tags=["OSINT Safety Radar"])
 app.include_router(vault_router, tags=["Forensic Vault"])
+app.include_router(groq_router, tags=["Groq Fast Inference"])
 
 # Root endpoint
 @app.get("/")
@@ -71,6 +73,7 @@ async def root():
         "people": "FREE",
         "features": {
             "8_scale_oracle": "Claude 4 Sonnet (Al-Hakim & Al-Sheikha)",
+            "groq_compound": "Ultra-Fast Reasoning Model",
             "zero_knowledge": "AES-256-GCM Client-Side Encryption",
             "sovereigness_sanctuary": "4-Pillar Protection System",
             "time_gate_links": "24-Hour / 3-Click Self-Destruct",
