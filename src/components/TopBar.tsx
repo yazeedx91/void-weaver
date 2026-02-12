@@ -1,15 +1,35 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Shield, Globe, Moon, Sun, LogOut, LogIn, User } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useSanctuary } from '@/contexts/SanctuaryContext';
 import { useAuth } from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 
 export function TopBar() {
   const { t, toggleLanguage, lang } = useLanguage();
   const { toggleMode, isPerl } = useSanctuary();
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
+  const [displayName, setDisplayName] = useState('');
+  const [avatarUrl, setAvatarUrl] = useState('');
+
+  useEffect(() => {
+    if (!user) return;
+    supabase
+      .from('profiles')
+      .select('display_name, avatar_url')
+      .eq('user_id', user.id)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (data) {
+          setDisplayName(data.display_name || '');
+          setAvatarUrl(data.avatar_url || '');
+        }
+      });
+  }, [user]);
 
   const handleQuickExit = () => {
     window.location.replace('https://weather.com');
@@ -56,7 +76,13 @@ export function TopBar() {
               onClick={() => navigate('/profile')}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-body text-muted-foreground hover:text-foreground transition-colors bg-muted/20 hover:bg-muted/40 border border-border/30"
             >
-              <User className="w-3.5 h-3.5" />
+              <Avatar className="w-5 h-5">
+                {avatarUrl ? <AvatarImage src={avatarUrl} alt={displayName} /> : null}
+                <AvatarFallback className="bg-secondary text-foreground text-[10px]">
+                  <User className="w-3 h-3" />
+                </AvatarFallback>
+              </Avatar>
+              {displayName && <span className="hidden sm:inline max-w-[80px] truncate">{displayName}</span>}
             </button>
             <button
               onClick={async () => { await signOut(); navigate('/'); }}
