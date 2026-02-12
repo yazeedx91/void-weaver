@@ -129,11 +129,10 @@ async def get_analytics_timeline(
     Get analytics timeline for last N days
     """
     try:
-        # TODO: Query founder_analytics table from Supabase
         timeline = []
         
         for i in range(days):
-            date = datetime.utcnow() - timedelta(days=i)
+            date = datetime.now(timezone.utc) - timedelta(days=i)
             timeline.append({
                 "date": date.strftime("%Y-%m-%d"),
                 "users": 0,
@@ -148,3 +147,98 @@ async def get_analytics_timeline(
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to fetch timeline: {str(e)}")
+
+
+@router.post("/strategic-briefing")
+async def generate_strategic_briefing(authorized: bool = Depends(verify_founder_password)):
+    """
+    AI-DRIVEN STRATEGIC BRIEFING
+    Uses Claude 4 Sonnet to analyze metrics and generate executive intelligence
+    """
+    try:
+        # Get current metrics
+        metrics = await get_founder_metrics(authorized=True)
+        
+        # Generate AI briefing
+        claude = get_claude_service()
+        
+        briefing_prompt = f"""You are the FLUX-DNA Strategic Intelligence Director generating a daily briefing for the Founder.
+
+CURRENT METRICS (Last 24 Hours):
+- Total Ascensions (Users): {metrics['metrics']['total_users']}
+- Assessments Completed: {metrics['metrics']['assessments_completed']}
+- Sanctuary Mode Activations: {metrics['metrics']['sanctuary_access']}
+- Value Delivered: SAR {metrics['metrics']['total_value_delivered']:,}
+- Language Distribution: EN {metrics['metrics']['language_en']}% | AR {metrics['metrics']['language_ar']}%
+- Geographic: Saudi {metrics['metrics']['geo_saudi']}% | Global {metrics['metrics']['geo_global']}%
+
+NEURAL STATE DISTRIBUTION:
+{metrics.get('neural_distribution', {})}
+
+STABILITY TRENDS:
+- Sovereign (Completed): {metrics['stability_trends']['sovereign']}
+- Strategic Hibernation (In Progress): {metrics['stability_trends']['strategic_hibernation']}
+- At Risk (Distress Detected): {metrics['stability_trends']['at_risk']}
+- Critical (Crisis Mode): {metrics['stability_trends']['critical']}
+
+ALERTS:
+{metrics['critical_alerts']}
+
+Generate an executive strategic briefing in TERMINAL STYLE with:
+1. 📊 SITUATION REPORT - Brief summary of platform health
+2. 📈 TREND ANALYSIS - Key patterns observed
+3. ⚠️ RISK ASSESSMENT - Any concerns requiring attention
+4. 💎 VALUE IMPACT - SAR value delivered to Saudi population
+5. 🎯 STRATEGIC RECOMMENDATIONS - 2-3 actionable insights
+6. 🔮 FORECAST - Expected trends for next 24-48 hours
+
+Keep it concise, data-driven, and actionable. Use monospace terminal aesthetic."""
+
+        chat = await claude.create_conversation(
+            session_id=f"briefing-{datetime.now(timezone.utc).strftime('%Y%m%d')}",
+            persona="al_hakim",
+            language="en"
+        )
+        
+        briefing = await claude.send_message(chat, briefing_prompt)
+        
+        return {
+            "status": "success",
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "briefing": briefing,
+            "metrics_snapshot": metrics
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to generate briefing: {str(e)}")
+
+
+@router.post("/send-ai-pulse")
+async def send_ai_driven_pulse(authorized: bool = Depends(verify_founder_password)):
+    """
+    AI-DRIVEN DAILY PULSE
+    Generates strategic briefing with Claude and sends to Founder
+    """
+    try:
+        # Generate strategic briefing
+        briefing_response = await generate_strategic_briefing(authorized=True)
+        
+        email_service = get_email_service()
+        today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        
+        # Send AI-enhanced pulse
+        result = await email_service.send_ai_strategic_pulse(
+            date=today,
+            briefing=briefing_response["briefing"],
+            metrics=briefing_response["metrics_snapshot"]
+        )
+        
+        return {
+            "status": "sent" if result["success"] else "failed",
+            "email_id": result.get("email_id"),
+            "briefing_preview": briefing_response["briefing"][:500] + "...",
+            "error": result.get("error")
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to send AI pulse: {str(e)}")
