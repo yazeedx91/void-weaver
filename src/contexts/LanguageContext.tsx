@@ -64,6 +64,9 @@ const translations: Record<Language, Record<string, string>> = {
     'auth.have_account': 'Already have an account?',
     'auth.no_account': 'Don\'t have an account?',
     'auth.signout': 'Sign Out',
+    'auth.signout_confirm_title': 'Sign out?',
+    'auth.signout_confirm_desc': 'Are you sure you want to sign out?',
+    'auth.cancel': 'Cancel',
 
     // Profile
     'profile.title': 'Your Profile',
@@ -132,6 +135,9 @@ const translations: Record<Language, Record<string, string>> = {
     'auth.have_account': 'لديك حساب بالفعل؟',
     'auth.no_account': 'ليس لديك حساب؟',
     'auth.signout': 'تسجيل الخروج',
+    'auth.signout_confirm_title': 'تسجيل الخروج؟',
+    'auth.signout_confirm_desc': 'هل أنت متأكد أنك تريد تسجيل الخروج؟',
+    'auth.cancel': 'إلغاء',
 
     // Profile
     'profile.title': 'ملفك الشخصي',

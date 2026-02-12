@@ -7,6 +7,11 @@ import { useAuth } from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import {
+  AlertDialog, AlertDialogAction, AlertDialogCancel,
+  AlertDialogContent, AlertDialogDescription, AlertDialogFooter,
+  AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 
 export function TopBar() {
   const { t, toggleLanguage, lang } = useLanguage();
@@ -84,13 +89,31 @@ export function TopBar() {
               </Avatar>
               {displayName && <span className="hidden sm:inline max-w-[80px] truncate">{displayName}</span>}
             </button>
-            <button
-              onClick={async () => { await signOut(); navigate('/'); }}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-body text-muted-foreground hover:text-foreground transition-colors bg-muted/20 hover:bg-muted/40 border border-border/30"
-            >
-              <LogOut className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">{t('auth.signout')}</span>
-            </button>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <button
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-body text-muted-foreground hover:text-foreground transition-colors bg-muted/20 hover:bg-muted/40 border border-border/30"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">{t('auth.signout')}</span>
+                </button>
+              </AlertDialogTrigger>
+              <AlertDialogContent className="bg-card border-border">
+                <AlertDialogHeader>
+                  <AlertDialogTitle className="text-foreground">{t('auth.signout_confirm_title')}</AlertDialogTitle>
+                  <AlertDialogDescription>{t('auth.signout_confirm_desc')}</AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel className="border-border/50">{t('auth.cancel')}</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={async () => { await signOut(); navigate('/'); }}
+                    className="bg-destructive text-destructive-foreground hover:bg-destructive/80"
+                  >
+                    {t('auth.signout')}
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </>
         ) : (
           <button
