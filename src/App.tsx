@@ -11,6 +11,7 @@ import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { VoidBackground } from "@/components/VoidBackground";
 import { LifeLine } from "@/components/LifeLine";
 import { TopBar } from "@/components/TopBar";
+import { ModeShimmer } from "@/components/ModeShimmer";
 import PhoenixLanding from "./pages/PhoenixLanding";
 import HakimChamber from "./pages/HakimChamber";
 import HakimChamberNeural from "./pages/HakimChamberNeural";
@@ -39,6 +40,7 @@ const App = () => (
               <Sonner />
               <BrowserRouter>
                 <VoidBackground>
+                  <ModeShimmer />
                   <TopBar />
                   <LifeLine />
                   <Routes>
