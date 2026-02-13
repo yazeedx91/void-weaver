@@ -11,10 +11,17 @@ interface SanctuaryContextType {
 const SanctuaryContext = createContext<SanctuaryContextType | undefined>(undefined);
 
 export function SanctuaryProvider({ children }: { children: ReactNode }) {
-  const [mode, setMode] = useState<SanctuaryMode>('void');
+  const [mode, setMode] = useState<SanctuaryMode>(() => {
+    const saved = localStorage.getItem('sanctuary-mode');
+    return saved === 'pearl' ? 'pearl' : 'void';
+  });
 
   const toggleMode = useCallback(() => {
-    setMode(prev => prev === 'void' ? 'pearl' : 'void');
+    setMode(prev => {
+      const next = prev === 'void' ? 'pearl' : 'void';
+      localStorage.setItem('sanctuary-mode', next);
+      return next;
+    });
   }, []);
 
   const isPerl = mode === 'pearl';
