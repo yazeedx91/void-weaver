@@ -24,7 +24,7 @@ const translations: Record<Language, Record<string, string>> = {
     'hero.ascensions': 'Ascensions',
     'hero.lives_touched': 'Lives Touched',
     'hero.encryption': 'Zero-Knowledge Encryption Active',
-    'hero.founder_note': 'Built by Yazeed — for every mind that society called "too much."',
+    'hero.founder_note': 'Built by Yazeed — because dynamic range deserves better instruments.',
     
     // Navigation
     'nav.exit': '← Exit',
@@ -96,7 +96,7 @@ const translations: Record<Language, Record<string, string>> = {
     'hero.ascensions': 'الصعودات',
     'hero.lives_touched': 'حياة تأثرت',
     'hero.encryption': 'تشفير صفري المعرفة نشط',
-    'hero.founder_note': 'بناه يزيد — لكل عقل وصفه المجتمع بأنه "أكثر من اللازم".',
+    'hero.founder_note': 'بناه يزيد — لأن النطاق الديناميكي يستحق أدوات أفضل.',
     
     // Navigation
     'nav.exit': 'خروج →',
