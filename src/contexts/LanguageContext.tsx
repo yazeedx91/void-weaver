@@ -13,9 +13,10 @@ interface LanguageContextType {
 const translations: Record<Language, Record<string, string>> = {
   en: {
     // Phoenix Landing
-    'hero.tagline': 'From Bipolar to Expanded Bandwidth',
-    'hero.subtitle': 'Your mind isn\'t broken. It\'s expanded.',
-    'hero.description': 'FLUX-DNA is a zero-knowledge sanctuary that reframes neurodivergence as cognitive superpower. Built by someone who lived it.',
+    'hero.label': 'PSYCHOMETRIC INTELLIGENCE',
+    'hero.tagline': 'DYNAMIC RANGE OVER STATIC STABILITY.',
+    'hero.subtitle': '',
+    'hero.description': 'Three clinical-grade instruments. One unified analysis. Map your personality, emotional intelligence, and mental health through the lens of dynamic range — not pathological labels.',
     'hero.cta': 'Begin Your Ascension',
     'hero.market_label': 'Market Value',
     'hero.your_cost': 'Your Cost',
@@ -84,9 +85,10 @@ const translations: Record<Language, Record<string, string>> = {
   },
   ar: {
     // Phoenix Landing
-    'hero.tagline': 'من ثنائي القطب إلى نطاق معرفي موسّع',
-    'hero.subtitle': 'عقلك ليس معطلاً. إنه متوسّع.',
-    'hero.description': 'فلكس-دي إن إيه هو ملاذ آمن بتشفير صفري المعرفة يعيد تعريف التنوع العصبي كقوة معرفية خارقة. بناه شخص عاشها.',
+    'hero.label': 'الذكاء السيكومتري',
+    'hero.tagline': 'النطاق الديناميكي فوق الاستقرار الساكن.',
+    'hero.subtitle': '',
+    'hero.description': 'ثلاث أدوات تقييم سريرية. تحليل موحّد. ارسم خريطة شخصيتك وذكائك العاطفي وصحتك النفسية من منظور النطاق الديناميكي — لا التصنيفات المرضية.',
     'hero.cta': 'ابدأ صعودك',
     'hero.market_label': 'القيمة السوقية',
     'hero.your_cost': 'تكلفتك',

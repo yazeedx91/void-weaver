@@ -96,17 +96,16 @@ export default function PhoenixLanding() {
           </motion.div>
         </motion.div>
 
-        {/* Main Heading */}
-        <motion.div variants={fadeUp} className="space-y-4">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-bold leading-tight">
-            <span className="text-foreground">{t('hero.tagline').split(' ').slice(0, -2).join(' ')} </span>
-            <span className="bg-gradient-to-r from-emerald-glow to-gold-glow bg-clip-text text-transparent">
-              {t('hero.tagline').split(' ').slice(-2).join(' ')}
+        {/* Label + Main Heading */}
+        <motion.div variants={fadeUp} className="space-y-5">
+          <p className="text-sm font-body uppercase tracking-[0.3em] text-emerald-glow/70">
+            {t('hero.label')}
+          </p>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-bold leading-tight tracking-tight">
+            <span className="bg-gradient-to-r from-foreground via-foreground to-emerald-glow bg-clip-text text-transparent">
+              {t('hero.tagline')}
             </span>
           </h1>
-          <p className="text-xl md:text-2xl text-emerald-glow/80 font-display font-light">
-            {t('hero.subtitle')}
-          </p>
         </motion.div>
 
         {/* Description */}
