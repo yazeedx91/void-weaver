@@ -12,11 +12,54 @@ interface LanguageContextType {
 
 const translations: Record<Language, Record<string, string>> = {
   en: {
-    // Phoenix Landing
+    // Phoenix Landing - Hero
     'hero.label': 'PSYCHOMETRIC INTELLIGENCE',
-    'hero.tagline': 'DYNAMIC RANGE OVER STATIC STABILITY.',
-    'hero.subtitle': '',
+    'hero.tagline_1': 'DYNAMIC RANGE',
+    'hero.tagline_2': 'OVER STATIC STABILITY.',
     'hero.description': 'Three clinical-grade instruments. One unified analysis. Map your personality, emotional intelligence, and mental health through the lens of dynamic range — not pathological labels.',
+    'hero.badge_1': 'HEXACO-60',
+    'hero.badge_2': 'DASS-21',
+    'hero.badge_3': 'TEIQue-SF',
+
+    // Landing - Assessment Section
+    'assess.label': 'THE ASSESSMENT',
+    'assess.title': 'Three dimensions. One profile.',
+    'assess.hexaco_title': 'HEXACO-60',
+    'assess.hexaco_sub': 'Personality Architecture',
+    'assess.hexaco_desc': '60 items mapping six core dimensions — Honesty, Emotionality, Extraversion, Agreeableness, Conscientiousness, and Openness.',
+    'assess.dass_title': 'DASS-21',
+    'assess.dass_sub': 'Dynamic Range Scan',
+    'assess.dass_desc': '21 items measuring depression, anxiety, and stress amplitudes — reframed through clinical range rather than pathology.',
+    'assess.teiq_title': 'TEIQue-SF',
+    'assess.teiq_sub': 'Emotional Intelligence',
+    'assess.teiq_desc': '30 items across four factors — Well-being, Self-Control, Emotionality, and Sociability with Global EI composite.',
+
+    // Landing - Philosophy Section
+    'phil.label': 'THE PHILOSOPHY',
+    'phil.title': 'Clinical reframing, not clinical labels.',
+    'phil.from_1': '"Unstable"',
+    'phil.to_1': 'High Amplitude',
+    'phil.from_2': '"Severe Stress"',
+    'phil.to_2': 'Peak Processing',
+    'phil.from_3': '"Clinical Flag"',
+    'phil.to_3': 'Dynamic Range Alert',
+
+    // Landing - CTA Section
+    'cta.title': 'Begin Your Analysis',
+    'cta.subtitle': '111 QUESTIONS. ZERO SIGN-UP REQUIRED.',
+    'cta.button': 'BEGIN ASSESSMENT',
+    'cta.note': 'NO SIGN-UP REQUIRED / AES-256 ENCRYPTED',
+
+    // Landing - Founder Section
+    'founder.label': 'FOUNDER\'S IDENTITY',
+    'founder.title': 'The Source',
+    'founder.quote': 'FLUX wasn\'t built in a lab; it was built in the tides. As a creator living with Bipolar disorder, I realized that the world tries to \'fix\' our range instead of measuring its power. I built FLUX to bridge the gap between clinical precision and the lived experience of high-amplitude minds. This is my journey, quantified.',
+    'founder.name': 'Yazeed Shaheen',
+    'founder.role': 'CREATOR / FLUX',
+    'founder.linkedin': 'PROFESSIONAL SYNTHESIS',
+    'founder.whatsapp': 'DIRECT SIGNAL',
+    'founder.science': 'Verified Science',
+
     'hero.cta': 'Begin Your Ascension',
     'hero.market_label': 'Market Value',
     'hero.your_cost': 'Your Cost',
@@ -84,11 +127,54 @@ const translations: Record<Language, Record<string, string>> = {
     'common.back': 'Back',
   },
   ar: {
-    // Phoenix Landing
+    // Phoenix Landing - Hero
     'hero.label': 'الذكاء السيكومتري',
-    'hero.tagline': 'النطاق الديناميكي فوق الاستقرار الساكن.',
-    'hero.subtitle': '',
+    'hero.tagline_1': 'النطاق الديناميكي',
+    'hero.tagline_2': 'فوق الاستقرار الساكن.',
     'hero.description': 'ثلاث أدوات تقييم سريرية. تحليل موحّد. ارسم خريطة شخصيتك وذكائك العاطفي وصحتك النفسية من منظور النطاق الديناميكي — لا التصنيفات المرضية.',
+    'hero.badge_1': 'HEXACO-60',
+    'hero.badge_2': 'DASS-21',
+    'hero.badge_3': 'TEIQue-SF',
+
+    // Landing - Assessment Section
+    'assess.label': 'التقييم',
+    'assess.title': 'ثلاثة أبعاد. ملف واحد.',
+    'assess.hexaco_title': 'HEXACO-60',
+    'assess.hexaco_sub': 'هندسة الشخصية',
+    'assess.hexaco_desc': '٦٠ عنصرًا يرسمون ستة أبعاد أساسية — الصدق، العاطفة، الانبساطية، الوفاق، الضمير، والانفتاح.',
+    'assess.dass_title': 'DASS-21',
+    'assess.dass_sub': 'مسح النطاق الديناميكي',
+    'assess.dass_desc': '٢١ عنصرًا تقيس سعات الاكتئاب والقلق والإجهاد — معاد تأطيرها من خلال النطاق السريري بدلاً من المرض.',
+    'assess.teiq_title': 'TEIQue-SF',
+    'assess.teiq_sub': 'الذكاء العاطفي',
+    'assess.teiq_desc': '٣٠ عنصرًا عبر أربعة عوامل — الرفاهية، ضبط النفس، العاطفة، والاجتماعية مع مركب الذكاء العاطفي الشامل.',
+
+    // Landing - Philosophy Section
+    'phil.label': 'الفلسفة',
+    'phil.title': 'إعادة تأطير سريري، لا تصنيفات سريرية.',
+    'phil.from_1': '"غير مستقر"',
+    'phil.to_1': 'سعة عالية',
+    'phil.from_2': '"إجهاد شديد"',
+    'phil.to_2': 'معالجة ذروة',
+    'phil.from_3': '"علامة سريرية"',
+    'phil.to_3': 'تنبيه نطاق ديناميكي',
+
+    // Landing - CTA Section
+    'cta.title': 'ابدأ تحليلك',
+    'cta.subtitle': '١١١ سؤال. بدون تسجيل.',
+    'cta.button': 'ابدأ التقييم',
+    'cta.note': 'بدون تسجيل / تشفير AES-256',
+
+    // Landing - Founder Section
+    'founder.label': 'هوية المؤسس',
+    'founder.title': 'المصدر',
+    'founder.quote': 'فلكس لم يُبنَ في مختبر؛ بل بُني في المد والجزر. كمبدع يعيش مع اضطراب ثنائي القطب، أدركت أن العالم يحاول "إصلاح" نطاقنا بدلاً من قياس قوته. بنيت فلكس لسد الفجوة بين الدقة السريرية والتجربة الحية للعقول ذات السعة العالية. هذه رحلتي، مُقاسة.',
+    'founder.name': 'يزيد شاهين',
+    'founder.role': 'المبتكر / فلكس',
+    'founder.linkedin': 'التركيب المهني',
+    'founder.whatsapp': 'إشارة مباشرة',
+    'founder.science': 'علم موثّق',
+
     'hero.cta': 'ابدأ صعودك',
     'hero.market_label': 'القيمة السوقية',
     'hero.your_cost': 'تكلفتك',
