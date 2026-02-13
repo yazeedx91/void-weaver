@@ -2,29 +2,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useAssessment } from '@/contexts/AssessmentContext';
-import { Shield, Zap, Heart, Brain } from 'lucide-react';
-import { useState, useEffect } from 'react';
-
-function AnimatedCounter({ target, duration = 2000 }: { target: number; duration?: number }) {
-  const [count, setCount] = useState(0);
-  
-  useEffect(() => {
-    let start = 0;
-    const step = target / (duration / 16);
-    const timer = setInterval(() => {
-      start += step;
-      if (start >= target) {
-        setCount(target);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(start));
-      }
-    }, 16);
-    return () => clearInterval(timer);
-  }, [target, duration]);
-
-  return <span>{count.toLocaleString()}</span>;
-}
+import { Shield, ArrowRight, Lock, Linkedin, MessageCircle } from 'lucide-react';
 
 const stagger = {
   animate: { transition: { staggerChildren: 0.12 } },
@@ -33,6 +11,13 @@ const stagger = {
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
   animate: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
+};
+
+const sectionFade = {
+  initial: { opacity: 0, y: 50 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: '-80px' },
+  transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
 };
 
 export default function PhoenixLanding() {
@@ -45,154 +30,272 @@ export default function PhoenixLanding() {
     navigate('/hakim');
   };
 
-  return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-20 relative overflow-hidden">
-      {/* Floating emerald orbs */}
-      <motion.div
-        className="absolute top-1/4 left-1/4 w-[400px] h-[400px] rounded-full opacity-20 pointer-events-none"
-        style={{ background: 'radial-gradient(circle, hsl(var(--emerald-glow) / 0.4) 0%, transparent 70%)' }}
-        animate={{ x: [0, 30, -20, 0], y: [0, -20, 30, 0], scale: [1, 1.1, 0.95, 1] }}
-        transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
-      />
-      <motion.div
-        className="absolute bottom-1/4 right-1/4 w-[300px] h-[300px] rounded-full opacity-15 pointer-events-none"
-        style={{ background: 'radial-gradient(circle, hsl(var(--gold-glow) / 0.3) 0%, transparent 70%)' }}
-        animate={{ x: [0, -25, 15, 0], y: [0, 25, -15, 0], scale: [1, 0.9, 1.1, 1] }}
-        transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
-      />
+  const instruments = [
+    { key: 'hexaco', title: t('assess.hexaco_title'), sub: t('assess.hexaco_sub'), desc: t('assess.hexaco_desc') },
+    { key: 'dass', title: t('assess.dass_title'), sub: t('assess.dass_sub'), desc: t('assess.dass_desc') },
+    { key: 'teiq', title: t('assess.teiq_title'), sub: t('assess.teiq_sub'), desc: t('assess.teiq_desc') },
+  ];
 
-      <motion.div
-        className="relative z-10 max-w-3xl mx-auto text-center space-y-10"
-        variants={stagger}
-        initial="initial"
-        animate="animate"
-      >
-        {/* Phoenix Icon */}
-        <motion.div variants={fadeUp} className="flex justify-center">
+  const reframes = [
+    { from: t('phil.from_1'), to: t('phil.to_1') },
+    { from: t('phil.from_2'), to: t('phil.to_2') },
+    { from: t('phil.from_3'), to: t('phil.to_3') },
+  ];
+
+  return (
+    <div className="min-h-screen w-full overflow-x-hidden">
+
+      {/* ═══════════════ HERO SECTION ═══════════════ */}
+      <section className="min-h-screen flex items-center justify-center px-4 py-32 relative">
+        {/* Ambient glow */}
+        <div
+          className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-20 pointer-events-none blur-3xl"
+          style={{ background: 'radial-gradient(circle, hsl(var(--indigo-glow) / 0.3) 0%, transparent 70%)' }}
+        />
+
+        <motion.div
+          className="relative z-10 max-w-3xl mx-auto text-center"
+          variants={stagger}
+          initial="initial"
+          animate="animate"
+        >
+          {/* Hero Card */}
           <motion.div
-            className="w-24 h-24 rounded-full flex items-center justify-center relative"
-            style={{
-              background: 'linear-gradient(135deg, hsl(var(--emerald-glow) / 0.2), hsl(var(--gold-glow) / 0.15))',
-              border: '1px solid hsl(var(--emerald-glow) / 0.3)',
-            }}
-            animate={{
-              boxShadow: [
-                '0 0 30px hsl(160 84% 39% / 0.2), 0 0 60px hsl(160 84% 39% / 0.1)',
-                '0 0 50px hsl(160 84% 39% / 0.4), 0 0 100px hsl(160 84% 39% / 0.15)',
-                '0 0 30px hsl(160 84% 39% / 0.2), 0 0 60px hsl(160 84% 39% / 0.1)',
-              ],
-            }}
-            transition={{ duration: 3, repeat: Infinity }}
+            variants={fadeUp}
+            className="glass-card px-8 py-14 sm:px-14 sm:py-20 space-y-8"
           >
-            <Brain className="w-10 h-10 text-emerald-glow" />
-            {/* Orbital ring */}
-            <motion.div
-              className="absolute inset-[-8px] rounded-full border border-emerald-glow/20"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-            >
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-gold-glow" />
-            </motion.div>
+            {/* Label */}
+            <p className="text-xs sm:text-sm font-body uppercase tracking-[0.35em] text-muted-foreground">
+              {t('hero.label')}
+            </p>
+
+            {/* Headline */}
+            <div className="space-y-1">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-bold tracking-tight text-foreground">
+                {t('hero.tagline_1')}
+              </h1>
+              <p className="text-2xl sm:text-3xl md:text-4xl font-display font-light tracking-tight text-muted-foreground">
+                {t('hero.tagline_2')}
+              </p>
+            </div>
+
+            {/* Description */}
+            <p className="text-muted-foreground font-body text-base sm:text-lg leading-relaxed max-w-lg mx-auto">
+              {t('hero.description')}
+            </p>
+
+            {/* Instrument Badges */}
+            <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+              {[t('hero.badge_1'), t('hero.badge_2'), t('hero.badge_3')].map((badge) => (
+                <span
+                  key={badge}
+                  className="px-5 py-2 rounded-full text-xs font-body uppercase tracking-widest text-muted-foreground border border-border/50 bg-secondary/30"
+                >
+                  {badge}
+                </span>
+              ))}
+            </div>
           </motion.div>
         </motion.div>
+      </section>
 
-        {/* Label + Main Heading */}
-        <motion.div variants={fadeUp} className="space-y-5">
-          <p className="text-sm font-body uppercase tracking-[0.3em] text-emerald-glow/70">
-            {t('hero.label')}
+      {/* ═══════════════ ASSESSMENT SECTION ═══════════════ */}
+      <motion.section
+        {...sectionFade}
+        className="px-4 py-24 sm:py-32"
+      >
+        <div className="max-w-5xl mx-auto space-y-16">
+          {/* Section Header */}
+          <div className="text-center space-y-4">
+            <p className="text-xs font-body uppercase tracking-[0.35em] text-muted-foreground">
+              {t('assess.label')}
+            </p>
+            <h2 className="text-3xl sm:text-4xl font-display font-bold text-foreground">
+              {t('assess.title')}
+            </h2>
+          </div>
+
+          {/* Instrument Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {instruments.map((inst, i) => (
+              <motion.div
+                key={inst.key}
+                className="glass-card p-8 space-y-4 text-start"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: i * 0.15 }}
+              >
+                <h3 className="text-lg font-display font-bold text-foreground">
+                  {inst.title}
+                </h3>
+                <p className="text-sm font-body uppercase tracking-wider text-emerald-glow/80">
+                  {inst.sub}
+                </p>
+                <p className="text-sm font-body text-muted-foreground leading-relaxed">
+                  {inst.desc}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </motion.section>
+
+      {/* ═══════════════ PHILOSOPHY SECTION ═══════════════ */}
+      <motion.section
+        {...sectionFade}
+        className="px-4 py-24 sm:py-32"
+      >
+        <div className="max-w-4xl mx-auto space-y-16">
+          {/* Section Header */}
+          <div className="text-center space-y-4">
+            <p className="text-xs font-body uppercase tracking-[0.35em] text-muted-foreground">
+              {t('phil.label')}
+            </p>
+            <h2 className="text-3xl sm:text-4xl font-display font-bold text-foreground">
+              {t('phil.title')}
+            </h2>
+          </div>
+
+          {/* Reframing Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {reframes.map((r, i) => (
+              <motion.div
+                key={i}
+                className="glass-card p-8 text-center space-y-4"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.12 }}
+              >
+                <p className="text-sm font-body text-muted-foreground/60 line-through">
+                  {r.from}
+                </p>
+                <ArrowRight className="w-4 h-4 mx-auto text-emerald-glow/60 rotate-90" />
+                <p className="text-lg font-display font-semibold text-emerald-glow">
+                  {r.to}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </motion.section>
+
+      {/* ═══════════════ CTA SECTION ═══════════════ */}
+      <motion.section
+        {...sectionFade}
+        className="px-4 py-24 sm:py-32"
+      >
+        <div className="max-w-3xl mx-auto text-center space-y-8">
+          <h2 className="text-3xl sm:text-4xl font-display font-bold text-foreground">
+            {t('cta.title')}
+          </h2>
+          <p className="text-sm font-body uppercase tracking-[0.25em] text-muted-foreground">
+            {t('cta.subtitle')}
           </p>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-bold leading-tight tracking-tight">
-            <span className="bg-gradient-to-r from-foreground via-foreground to-emerald-glow bg-clip-text text-transparent">
-              {t('hero.tagline')}
-            </span>
-          </h1>
-        </motion.div>
 
-        {/* Description */}
-        <motion.p
-          variants={fadeUp}
-          className="text-foreground/60 font-body text-lg leading-relaxed max-w-xl mx-auto"
-        >
-          {t('hero.description')}
-        </motion.p>
-
-        {/* Value Counter */}
-        <motion.div
-          variants={fadeUp}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8"
-        >
-          <div className="glass-card px-6 py-4 text-center">
-            <p className="text-xs text-muted-foreground font-body uppercase tracking-wider">{t('hero.market_label')}</p>
-            <p className="text-2xl font-display font-bold text-foreground/50 line-through">SAR 5,500</p>
-          </div>
-          <div className="glass-card px-6 py-4 text-center border-emerald-glow/30">
-            <p className="text-xs text-emerald-glow font-body uppercase tracking-wider">{t('hero.your_cost')}</p>
-            <p className="text-2xl font-display font-bold text-emerald-glow">{t('hero.free')}</p>
-          </div>
-        </motion.div>
-
-        {/* CTA */}
-        <motion.div variants={fadeUp}>
           <motion.button
             onClick={handleBegin}
-            className="group relative px-10 py-5 rounded-2xl font-display font-semibold text-lg text-background overflow-hidden"
+            className="group relative px-12 py-5 rounded-xl font-display font-semibold text-sm uppercase tracking-[0.2em] text-background overflow-hidden"
             style={{
-              background: 'linear-gradient(135deg, hsl(var(--emerald-glow)), hsl(var(--emerald-glow) / 0.8))',
+              background: 'linear-gradient(135deg, hsl(var(--foreground)), hsl(var(--foreground) / 0.85))',
             }}
             whileHover={{ scale: 1.03, y: -2 }}
             whileTap={{ scale: 0.97 }}
           >
-            <span className="relative z-10">{t('hero.cta')}</span>
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-gold-glow/20 to-transparent"
-              initial={{ x: '-100%' }}
-              whileHover={{ x: '100%' }}
-              transition={{ duration: 0.6 }}
-            />
+            <span className="relative z-10">{t('cta.button')}</span>
           </motion.button>
-        </motion.div>
 
-        {/* Stats */}
-        <motion.div
-          variants={fadeUp}
-          className="flex items-center justify-center gap-8 text-muted-foreground/60"
-        >
-          <div className="flex items-center gap-2">
-            <Zap className="w-4 h-4 text-gold-glow" />
-            <span className="text-sm font-body">
-              <AnimatedCounter target={1247} /> {t('hero.ascensions')}
+          <p className="text-xs font-body uppercase tracking-widest text-muted-foreground/50 flex items-center justify-center gap-2">
+            <Lock className="w-3 h-3" />
+            {t('cta.note')}
+          </p>
+        </div>
+      </motion.section>
+
+      {/* ═══════════════ FOUNDER SECTION ═══════════════ */}
+      <motion.section
+        {...sectionFade}
+        className="px-4 py-24 sm:py-32"
+      >
+        <div className="max-w-3xl mx-auto space-y-12">
+          {/* Section Header */}
+          <div className="text-center space-y-4">
+            <p className="text-xs font-body uppercase tracking-[0.35em] text-muted-foreground">
+              {t('founder.label')}
+            </p>
+            <h2 className="text-3xl sm:text-4xl font-display font-bold text-foreground">
+              {t('founder.title')}
+            </h2>
+          </div>
+
+          {/* Quote */}
+          <blockquote className="glass-card p-8 sm:p-12">
+            <p className="text-base sm:text-lg font-body text-muted-foreground leading-relaxed italic">
+              "{t('founder.quote')}"
+            </p>
+          </blockquote>
+
+          {/* Founder Identity */}
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div className="text-center sm:text-start">
+              <p className="text-lg font-display font-bold text-foreground">
+                {t('founder.name')}
+              </p>
+              <p className="text-xs font-body uppercase tracking-widest text-muted-foreground">
+                {t('founder.role')}
+              </p>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <a
+                href="https://www.linkedin.com/in/yazeed-shaheen-583847180/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-body uppercase tracking-wider text-muted-foreground border border-border/50 bg-secondary/20 hover:bg-secondary/40 transition-colors"
+              >
+                <Linkedin className="w-4 h-4" />
+                <span className="hidden sm:inline">{t('founder.linkedin')}</span>
+                <span className="sm:hidden">LinkedIn</span>
+              </a>
+              <a
+                href="https://wa.me/966533632262"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-body uppercase tracking-wider text-muted-foreground border border-border/50 bg-secondary/20 hover:bg-secondary/40 transition-colors"
+              >
+                <MessageCircle className="w-4 h-4" />
+                <span className="hidden sm:inline">{t('founder.whatsapp')}</span>
+                <span className="sm:hidden">WhatsApp</span>
+              </a>
+            </div>
+          </div>
+
+          {/* Science badge */}
+          <div className="text-center">
+            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-body uppercase tracking-widest text-emerald-glow/70 border border-emerald-glow/20 bg-emerald-glow/5">
+              <Shield className="w-3.5 h-3.5" />
+              {t('founder.science')}
             </span>
           </div>
-          <div className="w-px h-4 bg-border/30" />
-          <div className="flex items-center gap-2">
-            <Heart className="w-4 h-4 text-emerald-glow" />
-            <span className="text-sm font-body">
-              <AnimatedCounter target={3891} /> {t('hero.lives_touched')}
-            </span>
-          </div>
-        </motion.div>
+        </div>
+      </motion.section>
 
-        {/* Sovereigness Sanctuary CTA */}
-        <motion.div variants={fadeUp}>
-          <motion.button
-            onClick={() => navigate('/sovereigness')}
-            className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl font-body text-sm text-accent border border-accent/30 bg-accent/5 hover:bg-accent/10 transition-colors"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <Shield className="w-4 h-4" />
-            {t('sovereigness.enter')}
-          </motion.button>
-        </motion.div>
-
-        {/* Founder note */}
-        <motion.p
-          variants={fadeUp}
-          className="text-xs text-muted-foreground/40 font-body max-w-md mx-auto"
+      {/* Sovereigness Sanctuary Link */}
+      <motion.section
+        {...sectionFade}
+        className="px-4 pb-24 text-center"
+      >
+        <motion.button
+          onClick={() => navigate('/sovereigness')}
+          className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl font-body text-sm text-accent border border-accent/30 bg-accent/5 hover:bg-accent/10 transition-colors"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
         >
-          {t('hero.founder_note')}
-        </motion.p>
-      </motion.div>
+          <Shield className="w-4 h-4" />
+          {t('sovereigness.enter')}
+        </motion.button>
+      </motion.section>
     </div>
   );
 }
