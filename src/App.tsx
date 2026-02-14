@@ -12,6 +12,7 @@ import { VoidBackground } from "@/components/VoidBackground";
 import { LifeLine } from "@/components/LifeLine";
 import { TopBar } from "@/components/TopBar";
 import { ModeShimmer } from "@/components/ModeShimmer";
+import { QuickExit } from "@/components/QuickExit";
 import PhoenixLanding from "./pages/PhoenixLanding";
 import HakimChamber from "./pages/HakimChamber";
 import HakimChamberNeural from "./pages/HakimChamberNeural";
@@ -41,6 +42,7 @@ const App = () => (
               <BrowserRouter>
                 <VoidBackground>
                   <ModeShimmer />
+                  <QuickExit />
                   <TopBar />
                   <LifeLine />
                   <Routes>

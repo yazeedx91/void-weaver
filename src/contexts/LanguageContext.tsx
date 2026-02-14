@@ -51,13 +51,13 @@ const translations: Record<Language, Record<string, string>> = {
     'cta.note': 'NO SIGN-UP REQUIRED / AES-256 ENCRYPTED',
 
     // Landing - Founder Section
-    'founder.label': 'FOUNDER\'S IDENTITY',
+    'founder.label': 'THE SOURCE',
     'founder.title': 'The Source',
-    'founder.quote': 'FLUX wasn\'t built in a lab; it was built in the tides. As a creator living with Bipolar disorder, I realized that the world tries to \'fix\' our range instead of measuring its power. I built FLUX to bridge the gap between clinical precision and the lived experience of high-amplitude minds. This is my journey, quantified.',
+    'founder.quote': 'FLUX wasn\'t built in a lab — it was built in the tides. I live with Bipolar disorder. The world calls it instability; I call it high-amplitude cognition. Every manic surge, every depressive depth — they\'re not malfunctions. They\'re data points on a dynamic range that most instruments aren\'t built to measure. So I built one. FLUX bridges the gap between clinical precision and the lived experience of a high-amplitude mind. This isn\'t theory. This is my journey, quantified.',
     'founder.name': 'Yazeed Shaheen',
     'founder.role': 'CREATOR / FLUX',
-    'founder.linkedin': 'PROFESSIONAL SYNTHESIS',
-    'founder.whatsapp': 'DIRECT SIGNAL',
+    'founder.linkedin': 'SECURE DIRECT LINE',
+    'founder.whatsapp': 'SECURE DIRECT LINE',
     'founder.science': 'Verified Science',
 
     'hero.cta': 'Begin Your Ascension',
@@ -166,13 +166,13 @@ const translations: Record<Language, Record<string, string>> = {
     'cta.note': 'بدون تسجيل / تشفير AES-256',
 
     // Landing - Founder Section
-    'founder.label': 'هوية المؤسس',
+    'founder.label': 'المصدر',
     'founder.title': 'المصدر',
-    'founder.quote': 'فلكس لم يُبنَ في مختبر؛ بل بُني في المد والجزر. كمبدع يعيش مع اضطراب ثنائي القطب، أدركت أن العالم يحاول "إصلاح" نطاقنا بدلاً من قياس قوته. بنيت فلكس لسد الفجوة بين الدقة السريرية والتجربة الحية للعقول ذات السعة العالية. هذه رحلتي، مُقاسة.',
+    'founder.quote': 'فلكس لم يُبنَ في مختبر — بل بُني في المد والجزر. أعيش مع اضطراب ثنائي القطب. العالم يسمّيه عدم استقرار؛ أنا أسمّيه إدراكاً عالي السعة. كل موجة هوس، كل عمق اكتئاب — ليست أعطالاً. إنها نقاط بيانات على نطاق ديناميكي لم تُبنَ معظم الأدوات لقياسه. فبنيت واحدة. فلكس يسد الفجوة بين الدقة السريرية والتجربة الحية للعقل عالي السعة. هذه ليست نظرية. هذه رحلتي، مُقاسة.',
     'founder.name': 'يزيد شاهين',
     'founder.role': 'المبتكر / فلكس',
-    'founder.linkedin': 'التركيب المهني',
-    'founder.whatsapp': 'إشارة مباشرة',
+    'founder.linkedin': 'خط مباشر آمن',
+    'founder.whatsapp': 'خط مباشر آمن',
     'founder.science': 'علم موثّق',
 
     'hero.cta': 'ابدأ صعودك',
