@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import '../styles/HakimChamber.css';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useAssessment } from '@/contexts/AssessmentContext';
 import { Brain, Send, Shield, Sparkles } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import { motion, AnimatePresence } from 'framer-motion';
 
 type Msg = { role: 'user' | 'assistant'; content: string };
 
@@ -130,12 +131,7 @@ function ChatBubble({ role, text, isLatest }: ChatBubbleProps) {
             isHakim
               ? 'bg-muted/30 text-foreground/90 border border-emerald-glow/10 rounded-tl-md'
               : 'bg-emerald-glow/15 text-foreground border border-emerald-glow/20 rounded-tr-md'
-          }`}
-          style={
-            isHakim && isLatest
-              ? { boxShadow: '0 0 25px hsl(160 84% 39% / 0.08), 0 0 50px hsl(160 84% 39% / 0.04)' }
-              : undefined
-          }
+          } ${isHakim && isLatest ? 'hakim-glow' : ''}`}
         >
           {isHakim && (
             <div className="absolute -left-0 -top-0 w-8 h-8 rounded-full flex items-center justify-center -translate-x-10 -translate-y-1">
@@ -315,8 +311,7 @@ export default function HakimChamber() {
       {/* Chat area */}
       <div
         ref={scrollRef}
-        className="flex-1 overflow-y-auto px-4 sm:px-6 py-6 max-w-2xl mx-auto w-full"
-        style={{ paddingLeft: '3.5rem' }}
+        className="flex-1 overflow-y-auto px-4 sm:px-6 py-6 max-w-2xl mx-auto w-full chat-area-padding"
       >
         <AnimatePresence mode="popLayout">
           {messages.map((msg, i) => (
@@ -332,8 +327,7 @@ export default function HakimChamber() {
         {isTyping && (
           <div className="flex justify-start mb-4">
             <div
-              className="glass-card rounded-2xl rounded-tl-md border border-emerald-glow/10"
-              style={{ boxShadow: '0 0 20px hsl(160 84% 39% / 0.06)' }}
+              className="glass-card rounded-2xl rounded-tl-md border border-emerald-glow/10 typing-glow"
             >
               <TypingIndicator />
             </div>

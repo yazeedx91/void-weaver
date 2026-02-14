@@ -6,6 +6,7 @@ import { useAssessment } from '@/contexts/AssessmentContext';
 import { Brain, Send, Shield, Sparkles, AlertTriangle, Heart, Phone } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { fluxAPI, NeuralDirective } from '@/lib/flux-api';
+import '../styles/HakimChamberNeural.css';
 
 type Msg = { role: 'user' | 'assistant'; content: string };
 
@@ -177,16 +178,9 @@ function ChatBubble({ role, text, isLatest, pulseColor }: ChatBubbleProps) {
         <div
           className={`relative rounded-2xl px-5 py-4 font-body text-sm leading-relaxed ${
             isHakim
-              ? 'bg-muted/30 text-foreground/90 border rounded-tl-md'
-              : 'text-foreground border rounded-tr-md'
-          }`}
-          style={isHakim ? {
-            borderColor: `${pulseColor}20`,
-            boxShadow: isLatest ? `0 0 25px ${pulseColor}15` : undefined,
-          } : {
-            background: `${pulseColor}15`,
-            borderColor: `${pulseColor}25`,
-          }}
+              ? 'bg-muted/30 text-foreground/90 border rounded-tl-md neural-message-border'
+              : 'text-foreground border rounded-tr-md neural-user-bg'
+          } ${isHakim && isLatest ? 'neural-message-glow' : ''}`}
         >
           {isHakim && (
             <div className="absolute -left-0 -top-0 w-8 h-8 rounded-full flex items-center justify-center -translate-x-10 -translate-y-1">
@@ -498,8 +492,8 @@ export default function HakimChamber() {
             {getModeHeader()}
           </h2>
           <div className="flex items-center gap-1.5">
-            <Shield className="w-2.5 h-2.5" style={{ color: `${pulseColor}60` }} />
-            <span className="text-[10px] font-body" style={{ color: `${pulseColor}50` }}>
+            <Shield className="w-2.5 h-2.5 neural-shield-icon" />
+            <span className="text-[10px] font-body neural-status-text">
               {detectedState === 'crisis' 
                 ? 'Support Active' 
                 : detectedState === 'distress'
@@ -513,8 +507,7 @@ export default function HakimChamber() {
       {/* Chat area */}
       <div
         ref={scrollRef}
-        className="flex-1 overflow-y-auto px-4 sm:px-6 py-6 max-w-2xl mx-auto w-full"
-        style={{ paddingLeft: '3.5rem' }}
+        className="flex-1 overflow-y-auto px-4 sm:px-6 py-6 max-w-2xl mx-auto w-full neural-chat-padding"
       >
         <AnimatePresence mode="popLayout">
           {messages.map((msg, i) => (
@@ -531,12 +524,7 @@ export default function HakimChamber() {
         {isTyping && (
           <div className="flex justify-start mb-4">
             <div
-              className="rounded-2xl rounded-tl-md border"
-              style={{ 
-                borderColor: `${pulseColor}10`,
-                boxShadow: `0 0 20px ${pulseColor}06`,
-                background: 'hsl(var(--muted) / 0.3)'
-              }}
+              className="rounded-2xl rounded-tl-md border neural-typing-box"
             >
               <TypingIndicator pulseColor={pulseColor} />
             </div>
@@ -578,20 +566,14 @@ export default function HakimChamber() {
                   <input
                     ref={inputRef}
                     type="text"
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                    placeholder={lang === 'ar' ? 'اكتب ردك هنا...' : 'Type your response...'}
-                    disabled={isTyping}
-                    className="flex-1 px-4 py-3 rounded-xl bg-secondary/40 border font-body text-sm text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:ring-2 transition-all disabled:opacity-50"
-                    style={{ borderColor: `${pulseColor}20` }}
-                    dir={lang === 'ar' ? 'rtl' : 'ltr'}
+                    className="w-full px-4 py-3 rounded-xl border border-border/20 bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring neural-input-border"
+                    placeholder={lang === 'ar' ? 'اكتب رسالتك هنا...' : 'Type your message here...'}
+                    title={lang === 'ar' ? 'حقل إدخال الرسالة' : 'Message input field'}
                   />
                   <motion.button
                     onClick={handleSend}
                     disabled={isTyping || !inputValue.trim()}
-                    className="p-3 rounded-xl disabled:opacity-30 transition-opacity"
-                    style={{ background: pulseColor, color: 'hsl(var(--background))' }}
+                    className="p-3 rounded-xl disabled:opacity-30 transition-opacity neural-send-button"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >

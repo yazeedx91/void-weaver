@@ -1,0 +1,55 @@
+.neural-border {
+  border-color: var(--pulse-color)20;
+}
+
+.neural-glow {
+  box-shadow: 0 0 25px hsl(160 84% 39% / 0.08), 0 0 50px hsl(160 84% 39% / 0.04);
+}
+
+.neural-chat-padding {
+  padding-left: 3.5rem;
+}
+
+.neural-typing-glow {
+  box-shadow: 0 0 20px hsl(160 84% 39% / 0.06);
+}
+
+.neural-input-glow {
+  box-shadow: 0 0 30px hsl(160 84% 39% / 0.1);
+}
+
+.neural-message-border {
+  border-color: var(--pulse-color)20;
+}
+
+.neural-message-glow {
+  box-shadow: 0 0 25px var(--pulse-color)15;
+}
+
+.neural-user-bg {
+  background: var(--pulse-color)15;
+  border-color: var(--pulse-color)25;
+}
+
+.neural-typing-box {
+  border-color: var(--pulse-color)10;
+  box-shadow: 0 0 20px var(--pulse-color)06;
+  background: hsl(var(--muted) / 0.3);
+}
+
+.neural-input-border {
+  border-color: var(--pulse-color)20;
+}
+
+.neural-send-button {
+  background: var(--pulse-color);
+  color: hsl(var(--background));
+}
+
+.neural-shield-icon {
+  color: var(--pulse-color)60;
+}
+
+.neural-status-text {
+  color: var(--pulse-color)50;
+}
