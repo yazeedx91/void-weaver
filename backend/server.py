@@ -23,6 +23,10 @@ from api.certificate import router as certificate_router
 from api.osint import router as osint_router
 from api.vault import router as vault_router
 from api.groq import router as groq_router
+from health.comprehensive_health import get_health_router
+
+# Import security middleware
+from security.zero_day_middleware import ZeroDayProtectionMiddleware
 
 # Configure logging
 logging.basicConfig(
@@ -49,8 +53,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Zero-Day Protection Middleware
+app.add_middleware(ZeroDayProtectionMiddleware)
+
 # Include routers
 app.include_router(health_router, tags=["Health"])
+app.include_router(get_health_router(), tags=["Comprehensive Health"])
 app.include_router(assessment_router, tags=["Assessment"])
 app.include_router(founder_router, tags=["Founder Dashboard"])
 app.include_router(sanctuary_router, tags=["Sovereigness Sanctuary"])
