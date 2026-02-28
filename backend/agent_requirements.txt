@@ -1,0 +1,12 @@
+# 🧬 OMEGA-1 AGENTIC SYSTEM - ADDITIONAL REQUIREMENTS
+# Add these to existing requirements.txt
+
+# LangGraph & LangChain (missing from current requirements)
+langgraph==0.0.26
+langchain==0.1.0
+langchain-openai==0.0.5
+langchain-core==0.1.7
+
+# Additional dependencies for agent functionality
+beautifulsoup4==4.12.2
+lxml==4.9.3

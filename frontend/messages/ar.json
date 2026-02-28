@@ -1,0 +1,106 @@
+{
+  "common": {
+    "appName": "FLUX-DNA",
+    "loading": "جاري التحميل...",
+    "error": "خطأ",
+    "success": "نجح",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "close": "إغلاق",
+    "search": "بحث",
+    "filter": "تصفية",
+    "settings": "الإعدادات",
+    "profile": "ملفي",
+    "logout": "خروج آمن"
+  },
+  "landing": {
+    "hero": {
+      "headline": "Beyond the Spectrum: Mastering High-Amplitude Consciousness",
+      "subheadline": "Your mind isn't broken; it is a super-scaled architecture. FLUX-DNA is the first Zero-Knowledge Sanctuary designed to decode your neural tides, transforming neurodivergence into a strategic superpower. Built by a creator who survived the depths to map the heights.",
+      "arabicHeadline": "ما وراء الأفق: ترويض اتساع المدار العصبي",
+      "arabicSubheadline": "عقلك مو عطلان، عقلك \"معماريّ\" متقدم. FLUX-DNA هو الملاذ السيادي الأول اللي يفك شفرات تذبذبك العصبي، ويحوّل التنوع العصبي إلى قوة استراتيجية خارقة. صُمم من قلب التجربة، لمن يعيشها."
+    },
+    "source": {
+      "title": "THE SOURCE",
+      "arabicTitle": "المنبع",
+      "body": "FLUX wasn't forged in a laboratory; it was built in the sovereign tides. As a creator traversing the Bipolar landscape, I realized the world tries to \"mute\" our range instead of measuring its velocity. I built FLUX to bridge the abyss between clinical precision and the raw power of high-amplitude minds. This is my journey, quantified for your ascension.",
+      "arabicBody": "FLUX ما انولد في مختبر؛ انولد وسط الأمواج. كصانع يعيش تجربة الاضطراب الوجداني، استوعبت إن العالم يحاول \"يصلح\" أبعادنا بدل ما يقيس قوتها. بنيت FLUX عشان أردم الفجوة بين الدقة الطبية وبين التجربة الحيّة للعقول عالية المدى. هذي رحلتي، مرقمنة ومتاحة لك."
+    },
+    "contact": {
+      "cta": "Secure a Direct Line",
+      "arabicCta": "تواصل مباشر مع المؤسس",
+      "linkedin": "LinkedIn",
+      "whatsapp": "WhatsApp"
+    }
+  },
+  "navigation": {
+    "dashboard": "مركز القيادة",
+    "messages": "الرسائل",
+    "analytics": "التحليلات",
+    "tools": "الأدوات",
+    "memory": "الذاكرة",
+    "approvals": "الموافقات"
+  },
+  "agent": {
+    "status": {
+      "thinking": "يفكر",
+      "planning": "يخطط",
+      "executing": "ينفذ",
+      "reflecting": "يعكس",
+      "completed": "مكتمل",
+      "error": "خطأ"
+    },
+    "actions": {
+      "start": "بدء المهمة",
+      "pause": "إيقاف مؤقت",
+      "stop": "إيقاف",
+      "reset": "إعادة تعيين",
+      "approve": "موافقة",
+      "reject": "رفض"
+    },
+    "messages": {
+      "placeholder": "اكتب هدفك أو مهمتك هنا...",
+      "noMessages": "لا توجد رسائل",
+      "startConversation": "ابدأ محادثة مع الوكيل",
+      "agentTyping": "الوكيل يكتب..."
+    }
+  },
+  "data": {
+    "noData": "لا توجد بيانات",
+    "searchResults": "نتائج البحث",
+    "files": "الملفات",
+    "documents": "الوثائق",
+    "metadata": "البيانات الوصفية",
+    "timestamp": "الطابع الزمني",
+    "source": "المصدر",
+    "size": "الحجم",
+    "tags": "الوسوم"
+  },
+  "approvals": {
+    "pending": "في انتظار الموافقة",
+    "approved": "موافق عليه",
+    "rejected": "مرفوض",
+    "expired": "منتهي الصلاحية",
+    "noApprovals": "لا توجد موافقات معلقة",
+    "riskLevel": "مستوى الخطورة",
+    "low": "منخفض",
+    "medium": "متوسط",
+    "high": "عالي",
+    "requestDetails": "تفاصيل الطلب"
+  },
+  "time": {
+    "now": "الآن",
+    "today": "اليوم",
+    "yesterday": "أمس",
+    "minutesAgo": "منذ دقائق",
+    "hoursAgo": "منذ ساعات",
+    "daysAgo": "منذ أيام",
+    "hijri": "التقويم الهجري",
+    "gregorian": "التقويم الميلادي"
+  },
+  "currency": {
+    "sar": "ر.س"
+  }
+}

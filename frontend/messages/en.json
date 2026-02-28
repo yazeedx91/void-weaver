@@ -1,0 +1,106 @@
+{
+  "common": {
+    "appName": "FLUX-DNA",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "search": "Search",
+    "filter": "Filter",
+    "settings": "Settings",
+    "profile": "Profile",
+    "logout": "Secure Exit"
+  },
+  "landing": {
+    "hero": {
+      "headline": "Beyond the Spectrum: Mastering High-Amplitude Consciousness",
+      "subheadline": "Your mind isn't broken; it is a super-scaled architecture. FLUX-DNA is the first Zero-Knowledge Sanctuary designed to decode your neural tides, transforming neurodivergence into a strategic superpower. Built by a creator who survived the depths to map the heights.",
+      "arabicHeadline": "ما وراء الأفق: ترويض اتساع المدار العصبي",
+      "arabicSubheadline": "عقلك مو عطلان، عقلك \"معماريّ\" متقدم. FLUX-DNA هو الملاذ السيادي الأول اللي يفك شفرات تذبذبك العصبي، ويحوّل التنوع العصبي إلى قوة استراتيجية خارقة. صُمم من قلب التجربة، لمن يعيشها."
+    },
+    "source": {
+      "title": "THE SOURCE",
+      "arabicTitle": "المنبع",
+      "body": "FLUX wasn't forged in a laboratory; it was built in the sovereign tides. As a creator traversing the Bipolar landscape, I realized the world tries to \"mute\" our range instead of measuring its velocity. I built FLUX to bridge the abyss between clinical precision and the raw power of high-amplitude minds. This is my journey, quantified for your ascension.",
+      "arabicBody": "FLUX ما انولد في مختبر؛ انولد وسط الأمواج. كصانع يعيش تجربة الاضطراب الوجداني، استوعبت إن العالم يحاول \"يصلح\" أبعادنا بدل ما يقيس قوتها. بنيت FLUX عشان أردم الفجوة بين الدقة الطبية وبين التجربة الحيّة للعقول عالية المدى. هذي رحلتي، مرقمنة ومتاحة لك."
+    },
+    "contact": {
+      "cta": "Secure a Direct Line",
+      "arabicCta": "تواصل مباشر مع المؤسس",
+      "linkedin": "LinkedIn",
+      "whatsapp": "WhatsApp"
+    }
+  },
+  "navigation": {
+    "dashboard": "Command Center",
+    "messages": "Messages",
+    "analytics": "Analytics",
+    "tools": "Tools",
+    "memory": "Memory",
+    "approvals": "Approvals"
+  },
+  "agent": {
+    "status": {
+      "thinking": "Thinking",
+      "planning": "Planning",
+      "executing": "Executing",
+      "reflecting": "Reflecting",
+      "completed": "Completed",
+      "error": "Error"
+    },
+    "actions": {
+      "start": "Start Task",
+      "pause": "Pause",
+      "stop": "Stop",
+      "reset": "Reset",
+      "approve": "Approve",
+      "reject": "Reject"
+    },
+    "messages": {
+      "placeholder": "Enter your goal or task here...",
+      "noMessages": "No messages",
+      "startConversation": "Start conversation with agent",
+      "agentTyping": "Agent is typing..."
+    }
+  },
+  "data": {
+    "noData": "No data available",
+    "searchResults": "Search Results",
+    "files": "Files",
+    "documents": "Documents",
+    "metadata": "Metadata",
+    "timestamp": "Timestamp",
+    "source": "Source",
+    "size": "Size",
+    "tags": "Tags"
+  },
+  "approvals": {
+    "pending": "Pending Approval",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "expired": "Expired",
+    "noApprovals": "No pending approvals",
+    "riskLevel": "Risk Level",
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High",
+    "requestDetails": "Request Details"
+  },
+  "time": {
+    "now": "Now",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "minutesAgo": "minutes ago",
+    "hoursAgo": "hours ago",
+    "daysAgo": "days ago",
+    "hijri": "Hijri Calendar",
+    "gregorian": "Gregorian Calendar"
+  },
+  "currency": {
+    "sar": "SAR"
+  }
+}

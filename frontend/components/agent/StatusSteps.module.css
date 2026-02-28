@@ -1,0 +1,25 @@
+/* StatusSteps Component Styles */
+.status-progress-bar {
+  transition: all 0.5s ease;
+}
+
+.status-step-icon {
+  transition: transform 0.2s ease;
+}
+
+.status-step-icon:hover {
+  transform: scale(1.1);
+}
+
+.status-step-active {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
