@@ -23,6 +23,7 @@ from api.certificate import router as certificate_router
 from api.osint import router as osint_router
 from api.vault import router as vault_router
 from api.groq import router as groq_router
+from api.billing import router as billing_router
 from health.comprehensive_health import get_health_router
 
 # Import security middleware
@@ -66,6 +67,7 @@ app.include_router(certificate_router, tags=["Sovereign Certificate"])
 app.include_router(osint_router, tags=["OSINT Safety Radar"])
 app.include_router(vault_router, tags=["Forensic Vault"])
 app.include_router(groq_router, tags=["Groq Fast Inference"])
+app.include_router(billing_router, tags=["Billing"])
 
 # Root endpoint
 @app.get("/")

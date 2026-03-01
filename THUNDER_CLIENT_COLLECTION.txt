@@ -1,0 +1,232 @@
+# 🚀 ShaheenPulse AI - Thunder Client Stress Test Collection
+# Import this collection manually into Thunder Client
+
+## Collection Name: SHAHEEN_STRESS_TEST
+
+### Request 1: 🧠 VITALITY_INDEX_BASELINE
+**Method**: GET
+**URL**: http://localhost:3000/api/vitality/baseline
+**Headers**:
+- Content-Type: application/json
+- X-Shaheen-Auth: industrial-test-token
+**Description**: Get baseline Vitality Index™ metrics before stress test
+
+---
+
+### Request 2: ⚡ INDUSTRIAL_FAILURE_SIMULATION
+**Method**: POST
+**URL**: http://localhost:3000/api/simulate/industrial-failure
+**Headers**:
+- Content-Type: application/json
+- X-Shaheen-Auth: industrial-test-token
+- X-Shaheen-Test-Mode: stress-test
+**Body** (JSON):
+```json
+{
+  "simulation_type": "model_drift",
+  "drift_percentage": 15,
+  "target_system": "aeon_core",
+  "failure_scenario": "industrial_sensor_degradation",
+  "parameters": {
+    "accuracy_degradation": 0.15,
+    "latency_increase": 0.25,
+    "energy_consumption_spike": 0.30,
+    "performance_degradation": 0.20,
+    "error_rate_increase": 0.10
+  },
+  "expected_response": {
+    "phalanx_twin_gating": true,
+    "aeon_self_healing": true,
+    "vitality_recovery": true,
+    "industrial_compliance": true
+  }
+}
+```
+**Description**: Simulate 15% Model Drift Industrial Failure to test Phalanx™ Twin-Gating and Aeon™ Self-Healing
+
+---
+
+### Request 3: 🛡️ PHALANX_TWIN_GATING_VERIFY
+**Method**: GET
+**URL**: http://localhost:3000/api/phalanx/twin-gating/status
+**Headers**:
+- Content-Type: application/json
+- X-Shaheen-Auth: industrial-test-token
+**Description**: Verify Phalanx™ Twin-Gating caught the industrial failure
+
+---
+
+### Request 4: 🔄 AEON_SELF_HEALING_VERIFY
+**Method**: GET
+**URL**: http://localhost:3000/api/aeon/self-healing/status
+**Headers**:
+- Content-Type: application/json
+- X-Shaheen-Auth: industrial-test-token
+**Description**: Verify Aeon™ Self-Healing event was triggered
+
+---
+
+### Request 5: 📊 VITALITY_INDEX_POST_STRESS
+**Method**: GET
+**URL**: http://localhost:3000/api/vitality/current
+**Headers**:
+- Content-Type: application/json
+- X-Shaheen-Auth: industrial-test-token
+**Description**: Get Vitality Index™ after stress test and recovery
+
+---
+
+### Request 6: 🔍 SYSTEM_HEALTH_CHECK
+**Method**: GET
+**URL**: http://localhost:3000/vitality-check
+**Headers**:
+- Content-Type: application/json
+**Description**: Overall system health verification
+
+---
+
+### Request 7: 📈 PERFORMANCE_METRICS
+**Method**: GET
+**URL**: http://localhost:3000/api/metrics/performance
+**Headers**:
+- Content-Type: application/json
+- X-Shaheen-Auth: industrial-test-token
+**Description**: Get detailed performance metrics for stress test analysis
+
+---
+
+## 🧪 Test Scripts
+
+### Pre-request Script (for all requests):
+```javascript
+// Pre-request script for ShaheenPulse AI Stress Test
+// Set up test environment variables
+
+if (!pm.environment.get("test_start_time")) {
+    pm.environment.set("test_start_time", new Date().toISOString());
+}
+
+// Generate unique test ID for this run
+const testId = 'SHAHEEN_TEST_' + Date.now();
+pm.environment.set("test_id", testId);
+
+// Log test initiation
+console.log('🚀 ShaheenPulse AI Stress Test Started: ' + testId);
+
+// Set authentication token if not present
+if (!pm.environment.get("auth_token")) {
+    pm.environment.set("auth_token", "industrial-test-token");
+}
+```
+
+### Post-response Script (for all requests):
+```javascript
+// Post-response script for ShaheenPulse AI Stress Test
+
+// Log response details
+console.log('📊 Response Status: ' + pm.response.code);
+console.log('📊 Response Time: ' + pm.response.responseTime + 'ms');
+
+// Parse response body if JSON
+try {
+    const response = pm.response.json();
+    
+    // Check for industrial compliance
+    if (response.industrial_compliance) {
+        pm.test('✅ Industrial Compliance Verified', () => {
+            pm.expect(response.industrial_compliance).to.be.true;
+        });
+    }
+    
+    // Check for Phalanx Twin-Gating
+    if (response.phalanx_twin_gating) {
+        pm.test('🛡️ Phalanx Twin-Gating Active', () => {
+            pm.expect(response.phalanx_twin_gating).to.be.true;
+        });
+    }
+    
+    // Check for Aeon Self-Healing
+    if (response.aeon_self_healing) {
+        pm.test('🔄 Aeon Self-Healing Triggered', () => {
+            pm.expect(response.aeon_self_healing).to.be.true;
+        });
+    }
+    
+    // Check Vitality Index recovery
+    if (response.vitality_index) {
+        pm.test('📊 Vitality Index Within Acceptable Range', () => {
+            pm.expect(response.vitality_index).to.be.above(0.7);
+        });
+    }
+    
+    // Check response time for industrial requirements
+    pm.test('⚡ Response Time < 100ms', () => {
+        pm.expect(pm.response.responseTime).to.be.below(100);
+    });
+    
+} catch (e) {
+    console.log('⚠️ Error parsing response:', e.message);
+}
+
+// Store test results for analysis
+const testResult = {
+    test_id: pm.environment.get("test_id"),
+    timestamp: new Date().toISOString(),
+    status_code: pm.response.code,
+    response_time: pm.response.responseTime,
+    success: pm.response.code >= 200 && pm.response.code < 300
+};
+
+// Store in environment for later analysis
+const results = pm.environment.get("test_results") || [];
+results.push(testResult);
+pm.environment.set("test_results", JSON.stringify(results));
+
+console.log('📈 Test Result:', JSON.stringify(testResult, null, 2));
+```
+
+---
+
+## 🌍 Environment Variables
+
+Set these in your Thunder Client environment:
+
+- **base_url**: http://localhost:3000
+- **auth_token**: industrial-test-token
+- **test_id**: (auto-generated)
+- **test_start_time**: (auto-generated)
+
+---
+
+## 📋 Test Execution Order
+
+1. **VITALITY_INDEX_BASELINE** - Get baseline metrics
+2. **INDUSTRIAL_FAILURE_SIMULATION** - Trigger 15% model drift
+3. **PHALANX_TWIN_GATING_VERIFY** - Verify twin-gating activation
+4. **AEON_SELF_HEALING_VERIFY** - Verify self-healing trigger
+5. **VITALITY_INDEX_POST_STRESS** - Check recovery metrics
+6. **SYSTEM_HEALTH_CHECK** - Overall system health
+7. **PERFORMANCE_METRICS** - Detailed performance analysis
+
+---
+
+## 🎯 Expected Test Results
+
+- ✅ Industrial Compliance Verified
+- 🛡️ Phalanx Twin-Gating Active
+- 🔄 Aeon Self-Healing Triggered
+- 📊 Vitality Index > 0.7 (acceptable range)
+- ⚡ Response Time < 100ms (industrial requirement)
+
+---
+
+## 🚀 Import Instructions
+
+1. Open Thunder Client in VS Code
+2. Click "Collections" tab
+3. Click "Import" button
+4. Copy and paste each request manually
+5. Set up environment variables
+6. Run tests in sequence
+
+**🌍 Your ShaheenPulse AI industrial stress testing environment is now ready!**
