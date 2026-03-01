@@ -83,10 +83,10 @@ class PaymentGatewayFactory:
 # Configuration
 PAYMENT_CONFIG = {
     "moyasar": {
-        "api_key": "pk_test_1234567890",  # Sandbox API key
-        "secret_key": "sk_test_1234567890",  # Sandbox secret key
+        "api_key": "pk_live_fp5R9CDvB9pi8KKfkW8uw5fyibJzY1o6swAmsKRr",
+        "secret_key": "sk_live_placeholder",  # Add your secret key here
         "base_url": "https://api.moyasar.com/v1",
-        "webhook_secret": "moyasar_webhook_secret"
+        "webhook_secret": "moyasar_webhook_secret_shaheenpulse_2026"
     },
     "hyperpay": {
         "entity_id": "8ac9a7ca7e1b4c0d017e1b5e5a1c017e",
